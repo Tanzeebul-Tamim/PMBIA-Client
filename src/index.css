@@ -8,5 +8,9 @@
 
 .title {
   font-family: "Oswald", sans-serif;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
+}
+
+.title-sm {
+  font-family: "Oswald", sans-serif;
 }

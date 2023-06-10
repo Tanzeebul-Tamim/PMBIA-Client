@@ -3,4 +3,13 @@
     height: 250px;
     border: 4px solid #ecc94b;
     border-radius: 5%;
-  }
+}
+
+@media only screen and (max-width: 576px) {
+    .leaflet-container {
+        width: 180px;
+        height: 180px;
+        border: 4px solid #ecc94b;
+        border-radius: 5%;
+    }
+}
