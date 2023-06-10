@@ -13,7 +13,13 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const bannerHeight = 800;
+      let bannerHeight = null;
+      if (window.innerWidth <= 576) {
+        bannerHeight = 250
+      }
+      else {
+        bannerHeight = 800;
+      }
 
       if (scrollPosition >= bannerHeight) {
         setScrolledPastBanner(true);
@@ -29,11 +35,20 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className={`${scrolledPastBanner ? 'from-base-100 to-black' : 'from-transparent to-black'} bg-gradient-to-t duration-100 fixed z-[1500] gap-5 navbar px-5 lg:px-10 lg:py-8
-    transition ease-in-out`}>
+    <div
+      className={`${
+        scrolledPastBanner
+          ? "from-base-100 to-black"
+          : "from-transparent to-black"
+      } bg-gradient-to-t duration-100 fixed z-[1500] gap-5 navbar px-5 lg:px-10 lg:py-8
+    transition ease-in-out`}
+    >
       <div className="navbar-start gap-1 lg:gap-6 flex items-center">
-        <div onClick={() => setOpen(!open)} className="lg:hidden text-lg">{open ? <IoCloseCircleOutline /> : <CgMenuGridO />}</div>
-        <div className={`mt-2 flex flex-col bg-opacity-80 absolute duration-300 ${open ? 'top-16 right-5' : 'top-16 -right-28'} lg:hidden z-10 py-2 px-4 bg-base-100 rounded-md`}>
+        <div
+          className={`mt-2 flex flex-col bg-opacity-80 absolute duration-300 ${
+            open ? "top-10 right-5" : "top-10 -right-28"
+          } lg:hidden z-10 py-2 px-4 bg-base-100 rounded-md`}
+        >
           <ActiveLink
             to="/"
             className="block mb-2 text-sm text-white hover:text-yellow-400"
@@ -59,18 +74,13 @@ const Navbar = () => {
             Dashboard
           </ActiveLink>
         </div>
-        <div>
+        <Link to="/">
           <img
-            className="w-1/2 lg:w-[140px]"
-            src="https://www.pmbia.org/img/pmbia-logo-word-reverse.png"
+            className="lg:w-4/5"
+            src="https://i.ibb.co/7gCjkHF/pmbia-logo-word-reverse.png"
             alt="Logo"
           />
-        </div>
-        <div className="title text-start uppercase lg:block hidden text-lg">
-          <span className="text-white">Professional</span> <span className="text-yellow-500">Mountain Biking</span>{" "}
-          <br /> <span className="text-white">Instructors</span>{" "}
-          <span className="text-yellow-500">Association</span>
-        </div>
+        </Link>
       </div>
 
       <div className="navbar-center uppercase lg:block hidden">
@@ -89,28 +99,30 @@ const Navbar = () => {
           </ActiveLink>
         </div>
       </div>
-
-      <div className="navbar-end uppercase lg:hidden">
-        <div className="title-sm text-end uppercase text-[10px]">
-          <span className="text-white">Professional</span> <span className="text-yellow-600">Mountain Biking</span>{" "}
-          <br /> <span className="text-white">Instructors</span>{" "}
-          <span className="text-yellow-600">Association</span>
-        </div>       
-      </div>
-
       <div className="navbar-end lg:flex hidden">
-        <Link to="/login" className="btn btn-ghost font-light text-yellow-400 text-xl">
+        <Link
+          to="/login"
+          className="btn btn-ghost font-light text-yellow-400 text-xl"
+        >
           <div className="flex tracking-[2px] items-center gap-2">
             <CgLogIn />
             <span className="text-xl">Login</span>
           </div>
         </Link>
-        <Link to="/register" className="btn btn-ghost text-white font-light text-xl">
+        <Link
+          to="/register"
+          className="btn btn-ghost text-white font-light text-xl"
+        >
           <div className="flex tracking-[2px] items-center gap-2">
             <SlNote />
             <span className="text-xl">Register</span>
           </div>
         </Link>
+      </div>
+      <div className="navbar-end lg:hidden">
+      <div onClick={() => setOpen(!open)} className="lg:hidden text-lg">
+          {open ? <IoCloseCircleOutline /> : <CgMenuGridO />}
+        </div>
       </div>
     </div>
   );

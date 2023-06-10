@@ -13,8 +13,8 @@ const ResponsiveLogin = () => {
       </Link>
       <Link to="/register" className="btn btn-ghost font-light">
         <div className="flex tracking-[2px] items-center gap-2">
-          <SlNote className="text-md" />
-          <span className="text-md">Register</span>
+          <SlNote className="text-md text-white" />
+          <span className="text-md text-white">Register</span>
         </div>
       </Link>
     </div>
