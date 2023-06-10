@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import ActiveLink from "../../activeLink/ActiveLink";
 import { CgLogIn } from "react-icons/cg";
+import { SlNote } from "react-icons/sl";
 
 const Navbar = () => {
   return (
-    <div className="navbar p-5 bg-base-200">
+    <div className="navbar px-10 py-5 bg-base-200">
       <Link to="/" className="navbar-start gap-6 flex items-center">
         <div>
           <img
@@ -28,6 +29,11 @@ const Navbar = () => {
         <button className="btn btn-ghost font-light text-yellow-400 text-2xl">
           <div className="flex tracking-[2px] items-center  gap-2">
           <CgLogIn/><span className="text-lg">Login</span>
+          </div>
+        </button>       
+        <button className="btn btn-ghost font-light text-xl">
+          <div className="flex tracking-[2px] items-center  gap-2">
+          <SlNote/><span className="text-lg">Register</span>
           </div>
         </button>       
       </div>
