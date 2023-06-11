@@ -1,6 +1,7 @@
 import ResponsiveLogin from "./ResponsiveLogin";
 
 const Banner = () => {
+
   return (
     <div className="carousel w-full">
       <div id="slide1" className="carousel-item relative w-full">
@@ -17,21 +18,25 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase absolute z-10 font-extrabold top-[30%] left-[7%] lg:text-7xl text-lg"
+            className="uppercase lg:flex flex-col gap-4 absolute z-10 font-extrabold top-[30%] left-[7%] lg:text-7xl text-lg"
           >
-            <span className="text-yellow-500">Unlock</span>{" "}
-            <span className="text-white">Your Potential</span>
-            <br />
-            <span className="text-yellow-500">with</span>{" "}
-            <span className="text-white">comprehensive</span>
-            <br />
-            <span className="text-yellow-500">mountain</span>{" "}
-            <span className="text-white">bike courses</span>
+            <div>
+              <span className="text-yellow-500">Unlock</span>{" "}
+              <span className="text-white">Your Potential</span>
+            </div>
+            <div>
+              <span className="text-yellow-500">with</span>{" "}
+              <span className="text-white">comprehensive</span>
+            </div>
+            <div>
+              <span className="text-yellow-500">mountain</span>{" "}
+              <span className="text-white">bike courses</span>
+            </div>
           </div>
 
           <ResponsiveLogin />
 
-          <div className="absolute bottom-0 left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-200"></div>
+          <div className="absolute bottom-0 left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
         </div>
         <div className="absolute bottom-3 right-24 lg:flex lg:justify-between lg:transform -lg:translate-y-full lg:left-3 lg:right-3 lg:top-1/2">
           <a
@@ -63,16 +68,20 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase text-end absolute z-10 font-extrabold top-[30%] right-[7%] lg:text-7xl text-lg"
+            className="uppercase lg:flex flex-col gap-4 text-end absolute z-10 font-extrabold top-[30%] right-[7%] lg:text-7xl text-lg"
           >
-            <span className="text-white">Elevate</span>{" "}
-            <span className="text-yellow-500">Your Skills</span>
-            <br />
-            <span className="text-white">With</span>{" "}
-            <span className="text-yellow-500">Professional</span>
-            <br />
-            <span className="text-white">Mountain</span>{" "}
-            <span className="text-yellow-500">Bike Training</span>
+            <div>
+              <span className="text-white">Elevate</span>{" "}
+              <span className="text-yellow-500">Your Skills</span>
+            </div>
+            <div>
+              <span className="text-white">With</span>{" "}
+              <span className="text-yellow-500">Professional</span>
+            </div>
+            <div>
+              <span className="text-white">Mountain</span>{" "}
+              <span className="text-yellow-500">Bike Training</span>
+            </div>
           </div>
 
           <ResponsiveLogin />
@@ -109,16 +118,20 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase absolute z-10 font-extrabold top-[30%] left-[7%] lg:text-7xl text-lg"
+            className="uppercase lg:flex flex-col gap-4 absolute z-10 font-extrabold top-[30%] left-[7%] lg:text-7xl text-lg"
           >
-            <span className="text-yellow-500">Master</span>{" "}
-            <span className="text-white">The trails</span>
-            <br />
-            <span className="text-yellow-500">with</span>{" "}
-            <span className="text-white">expert</span>
-            <br />
-            <span className="text-yellow-500">Mountain</span>{" "}
-            <span className="text-white">Bike instructors</span>
+            <div>
+              <span className="text-yellow-500">Master</span>{" "}
+              <span className="text-white">The trails</span>
+            </div>
+            <div>
+              <span className="text-yellow-500">with</span>{" "}
+              <span className="text-white">expert</span>
+            </div>
+            <div>
+              <span className="text-yellow-500">Mountain</span>{" "}
+              <span className="text-white">Bike instructors</span>
+            </div>
           </div>
 
           <ResponsiveLogin />
@@ -145,7 +158,7 @@ const Banner = () => {
         <div className="relative">
           <img
             className="w-full"
-            src="https://img.redbull.com/images/c_crop,x_0,y_0,h_2133,w_3200/c_fill,w_1680,h_1100/q_auto,f_auto/redbullcom/2022/3/28/vurbcvhvyp8ia2zich59/tahnee-seagrave-uci-dh-world-cup-lourdes"
+            src="https://img.redbull.com/images/c_crop,x_0,y_0,h_2133,w_3200/c_fill,w_1680,h_1100/q_auto,f_auto/redbullcom/2020/10/16/cuvpicpjjdzfgveuwjwn/remy-morton-queenstown"
           />
 
           <img
@@ -155,16 +168,20 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase absolute z-10 font-extrabold top-[30%] text-end right-[7%] lg:text-7xl text-lg"
+            className="uppercase lg:flex flex-col gap-4 absolute z-10 font-extrabold top-[30%] text-end right-[7%] lg:text-7xl text-lg"
           >
-            <span className="text-yellow-500">Improve</span>{" "}
-            <span className="text-white">Your Riding</span>
-            <br />
-            <span className="text-yellow-500">Share</span>{" "}
-            <span className="text-white">Your passion</span>
-            <br />
-            <span className="text-yellow-500">empower</span>{" "}
-            <span className="text-white">yourself</span>
+            <div>
+              <span className="text-yellow-500">Improve</span>{" "}
+              <span className="text-white">Your Riding</span>
+            </div>
+            <div>
+              <span className="text-yellow-500">Share</span>{" "}
+              <span className="text-white">Your passion</span>
+            </div>
+            <div>
+              <span className="text-yellow-500">empower</span>{" "}
+              <span className="text-white">yourself</span>
+            </div>
           </div>
 
           <ResponsiveLogin />

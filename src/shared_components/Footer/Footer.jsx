@@ -2,53 +2,87 @@ import LeafletMap from "./LeafletMap/LeafletMap";
 
 const Footer = () => {
   return (
-    <div>
-      <footer className="footer p-10 bg-base-200 text-base-content">
+    <div
+      className="relative"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0, 0, 0, 0.658), rgba(0, 0, 0, 0.600)), url('https://img.redbull.com/images/c_crop,x_0,y_22,h_1920,w_3840/c_fill,w_1490,h_710/q_auto,f_auto/redbullcom/2022/11/14/vka2hezuff7cfene8ecx/robin-goomes-georgia-astle-crankworx-world-tour-2022-innsbruck')",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <footer className="footer p-10 bg-transparent text-base-content">
         <div>
-          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">Our Location</span>
+          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+            Our Location
+          </span>
           <LeafletMap></LeafletMap>
         </div>
         <div>
-          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">Opening Hours</span>
-          <span className="text-sm lg:text-lg">Monday - Friday: 8:00 AM - 10:00 PM</span>
-          <span className="text-sm lg:text-lg">Saturday: 10:00 AM - 11:00 PM</span>
+          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+            Opening Hours
+          </span>
+          <span className="text-sm lg:text-lg">
+            Monday - Friday: 8:00 AM - 10:00 PM
+          </span>
+          <span className="text-sm lg:text-lg">
+            Saturday: 10:00 AM - 11:00 PM
+          </span>
           <span className="text-sm lg:text-lg">Sunday: 12:00 PM - 9:00 PM</span>
         </div>
         <div>
-          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">Services</span>
+          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+            Services
+          </span>
           <a className="text-sm lg:text-lg link link-hover">Branding</a>
           <a className="text-sm lg:text-lg link link-hover">Design</a>
           <a className="text-sm lg:text-lg link link-hover">Marketing</a>
           <a className="text-sm lg:text-lg link link-hover">Advertisement</a>
         </div>
         <div>
-          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">Contact Us</span>
-          <span className="text-sm lg:text-lg">Duifkruid 84, 4007 SZ Tiel<br />Netherlands</span>
+          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+            Contact Us
+          </span>
+          <span className="text-sm lg:text-lg">
+            Duifkruid 84, 4007 SZ Tiel
+            <br />
+            Netherlands
+          </span>
           <span className="text-sm lg:text-lg"> Phone: +31644460635</span>
-          <span className="text-sm lg:text-lg">Email:{" "}<a className="underline" id="email" href="">info@pmbia.com</a></span>
+          <span className="text-sm lg:text-lg">
+            Email:{" "}
+            <a className="underline" id="email" href="">
+              info@pmbia.com
+            </a>
+          </span>
         </div>
         <div>
-          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">Legal</span>
+          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+            Legal
+          </span>
           <a className="text-sm lg:text-lg link link-hover">Terms of use</a>
           <a className="text-sm lg:text-lg link link-hover">Privacy policy</a>
           <a className="text-sm lg:text-lg link link-hover">Cookie policy</a>
         </div>
       </footer>
-      <footer className="footer border-t border-base-100 px-10 py-6 bg-base-200 text-base-content">
+      <footer className="footer border-t border-slate-500 px-10 py-6 bg-transparent text-base-content">
         <div className="items-center grid-flow-col">
           <img
             style={{ height: "60px" }}
             src="https://www.pmbia.org/img/icons/PMBIA-Icon-Rev-192x192.png"
             alt=""
           />
-          <p className="text-sm lg:text-lg">PMBIA Ltd. <br /> Providing quality services from professional instructors since 1992</p>
+          <p className="text-sm lg:text-lg">
+            PMBIA Ltd. <br /> Delivering exceptional services since 2005.
+          </p>
         </div>
         <div>
           <h4 className="text-center text-xs lg:text-md tracking-widest">
             © 2023 PMBIA. All rights reserved. Designed by
             <a
               href="https://www.facebook.com/tanzeebul.tamim"
-              className="uppercase ms-1 font-bold text-yellow-600 underline"
+              className="uppercase ms-1 font-bold text-sky-600 underline"
             >
               Tanzeebul Tamim
             </a>

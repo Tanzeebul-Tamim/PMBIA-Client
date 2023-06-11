@@ -3,45 +3,15 @@ import { CgLogIn, CgMenuGridO } from "react-icons/cg";
 import { SlNote } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import "./Navbar.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [scrolledPastBanner, setScrolledPastBanner] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      let bannerHeight = null;
-      if (window.innerWidth <= 576) {
-        bannerHeight = 250
-      }
-      else {
-        bannerHeight = 800;
-      }
-
-      if (scrollPosition >= bannerHeight) {
-        setScrolledPastBanner(true);
-      } else {
-        setScrolledPastBanner(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <div
-      className={`${
-        scrolledPastBanner
-          ? "from-base-100 to-black"
-          : "from-transparent to-black"
-      } bg-gradient-to-t duration-100 fixed z-[1500] gap-5 navbar px-5 lg:px-10 lg:py-8
-    transition ease-in-out`}
+      className="from-transparent to-black bg-gradient-to-t duration-100 fixed z-[1500] gap-5 navbar px-5 lg:px-10 lg:py-8 transition ease-in-out"
     >
       <div className="navbar-start gap-1 lg:gap-6 flex items-center">
         <div
@@ -73,6 +43,12 @@ const Navbar = () => {
           >
             Dashboard
           </ActiveLink>
+          <ActiveLink
+            to="/about-us"
+            className="block text-sm text-white hover:text-yellow-400"
+          >
+            About Us
+          </ActiveLink>
         </div>
         <Link to="/">
           <img
@@ -97,9 +73,12 @@ const Navbar = () => {
           <ActiveLink className="hover:text-yellow-400" to="/dashboard">
             <div>Dashboard</div>
           </ActiveLink>
+          <ActiveLink className="hover:text-yellow-400" to="/about-us">
+            <div>About Us</div>
+          </ActiveLink>
         </div>
       </div>
-      <div className="navbar-end lg:flex hidden">
+      <div className="navbar-end upp lg:flex hidden">
         <Link
           to="/login"
           className="btn btn-ghost font-light text-yellow-400 text-xl"
