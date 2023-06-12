@@ -10,7 +10,7 @@ const SectionTitle = ({title1, title2, description, textAlign}) => {
             <p className={`${textAlign && 'transform scale-x-[-1] text-end'}`}>{title2}</p>
         </span>
       </div>
-      <p className={`${textAlign && 'transform scale-x-[-1] text-end'} mt-5 text-sm lg:text-xl lg:w-1/2 description`}>
+      <p className={`${textAlign && 'transform scale-x-[-1] text-end'} mt-5 text-white text-sm lg:text-xl lg:w-1/2 description`}>
         {description}
       </p>
     </div>

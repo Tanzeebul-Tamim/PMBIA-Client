@@ -11,7 +11,7 @@ const Banner = () => {
     <AutoplaySlider
     play={true}
     cancelOnInteraction={false}
-    interval={2500} className="w-full">
+    interval={2000} className="w-full">
       <div id="slide1" className="relative w-full">
           <img
             className="w-full lg:pt-16"

@@ -1,5 +1,5 @@
 import { FaChalkboardTeacher } from "react-icons/fa";
-import { MdOutlineSchool } from "react-icons/md";
+import { IoSchoolSharp } from "react-icons/io5";
 
 const ClassCard = () => {
   return (
@@ -12,13 +12,13 @@ const ClassCard = () => {
         />
       </div>
       <div className="card-body z-50">
-        <h2 className="card-title text-yellow-600">Class Name</h2>
-        <div className="flex gap-2 items-center">
+        <h2 className="card-title text-yellow-500">Class Name</h2>
+        <div className="text-white flex gap-2 items-center">
           <FaChalkboardTeacher className="text-lg" />
           <strong>Instructor:</strong> Fabio Wibmer
         </div>
-        <div className="flex gap-2 items-center">
-          <MdOutlineSchool className="text-lg" />
+        <div className="text-white flex gap-2 items-center">
+          <IoSchoolSharp className="text-lg" />
           <strong>Attendees:</strong> 34
         </div>
       </div>

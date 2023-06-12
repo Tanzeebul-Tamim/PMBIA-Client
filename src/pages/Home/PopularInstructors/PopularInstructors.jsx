@@ -9,7 +9,7 @@ import "../PopularClasses/PopularClasses.css";
 import InstructorCard from "./InstructorCard";
 
 const popularInstructorsDes =
-  "Each of our instructor brings a unique teaching style and a wealth of practical experience, ensuring that our students receive the best instruction possible.";
+  "Get to know some of our highly skilled and experienced instructors who'll lead your way throughout this journey. Each of our instructor brings a unique teaching style and a wealth of practical experience, ensuring that our students receive the best instruction possible.";
 
 let numberOfSlides = null;
 
@@ -21,7 +21,7 @@ if (window.innerWidth > 576) {
 
 const PopularInstructors = () => {
   return (
-    <div className="px-10 mt-24 pb-20 pt-11 relative">
+    <div className="px-5 lg:px-10 lg:mt-24 mt-6 lg:mb-32 mb-12 pt-11 relative">
       <SectionTitle
         title1={"popular"}
         title2={"instructors"}
