@@ -6,6 +6,8 @@ import Title from "./Title/Title";
 
 
 const Home = () => {
+
+
     return (
         <div>
             <Banner></Banner>

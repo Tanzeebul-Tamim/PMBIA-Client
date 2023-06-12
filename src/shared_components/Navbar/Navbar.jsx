@@ -56,7 +56,7 @@ const Navbar = () => {
         </div>
         <Link to="/">
           <img
-            className="lg:w-[90%]"
+            className="lg:w-[90%] hover:scale-110 duration-200"
             src="https://i.ibb.co/7gCjkHF/pmbia-logo-word-reverse.png"
             alt="Logo"
           />
@@ -82,10 +82,10 @@ const Navbar = () => {
           </ActiveLink>
         </div>
       </div>
-      <div className="navbar-end upp lg:flex hidden">
+      <div className="navbar-end uppercase gap-5 lg:flex hidden">
         <Link
           to="/login"
-          className="btn btn-ghost font-light text-yellow-400 text-xl"
+          className="hover:scale-110 duration-200 font-light text-yellow-400 text-xl"
         >
           <div className="flex tracking-[2px] items-center gap-2">
             <CgLogIn />
@@ -94,7 +94,7 @@ const Navbar = () => {
         </Link>
         <Link
           to="/register"
-          className="btn btn-ghost text-white font-light text-xl"
+          className="hover:scale-110 duration-200 text-white font-light text-xl"
         >
           <div className="flex tracking-[2px] items-center gap-2">
             <SlNote />
