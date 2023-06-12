@@ -1,3 +1,6 @@
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { MdOutlineSchool } from "react-icons/md";
+
 const ClassCard = () => {
   return (
     <div className="card description rounded-2xl card-compact w-96 bg-base-200 mr-2 ml-2 shadow-xl">
@@ -8,11 +11,18 @@ const ClassCard = () => {
           alt="Shoes"
         />
       </div>
-      <div className="card-body">
-        <h2 className="card-title">Class Name</h2>
-        <p><strong>Instructor Name:</strong> Fabio Wibmer</p>
-        <p><strong>Total Course Attendees:</strong> 34</p>
+      <div className="card-body z-50">
+        <h2 className="card-title text-yellow-600">Class Name</h2>
+        <div className="flex gap-2 items-center">
+          <FaChalkboardTeacher className="text-lg" />
+          <strong>Instructor:</strong> Fabio Wibmer
+        </div>
+        <div className="flex gap-2 items-center">
+          <MdOutlineSchool className="text-lg" />
+          <strong>Attendees:</strong> 34
+        </div>
       </div>
+      <div className="absolute lg:bottom-0 right-0 w-1/2 h-full bg-gradient-to-r from-transparent to-base-100"></div>
     </div>
   );
 };

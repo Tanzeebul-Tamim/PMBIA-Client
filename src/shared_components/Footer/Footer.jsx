@@ -2,16 +2,7 @@ import LeafletMap from "./LeafletMap/LeafletMap";
 
 const Footer = () => {
   return (
-    <div
-      className="relative"
-      style={{
-        backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.700), rgba(0, 0, 0, 0.500)), url('https://img.redbull.com/images/c_crop,x_0,y_870,h_6750,w_15000/c_fill,w_1680,h_780/q_auto,f_auto/redbullcom/2022/7/21/khux2edp5aura3i0uy7g/red-bull-rampage')",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <div className="relative bg-gradient-to-t from-base-100 to-base-300">
       <footer className="footer p-10 bg-transparent text-base-content">
         <div>
           <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">

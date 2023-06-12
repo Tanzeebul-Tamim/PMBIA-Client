@@ -43,7 +43,7 @@ const Banner = () => {
 
           <ResponsiveLogin />
 
-          <div className="absolute lg:bottom-[6.5%] left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
+          <div className="absolute bottom-0 lg:bottom-[6.5%] left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
       </div>
 
       <div id="slide2" className="relative w-full">
@@ -77,7 +77,7 @@ const Banner = () => {
 
           <ResponsiveLogin />
 
-          <div className="absolute lg:bottom-[4%] left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
+          <div className="absolute bottom-0 lg:bottom-[4%] left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
       </div>
 
       <div id="slide3" className="relative w-full">
@@ -93,7 +93,7 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase lg:flex flex-col gap-4 absolute z-10 font-extrabold top-[30%] left-[7%] lg:text-7xl text-lg"
+            className="uppercase bottom-0 lg:flex flex-col gap-4 absolute z-10 font-extrabold top-[30%] left-[7%] lg:text-7xl text-lg"
           >
             <div>
               <span className="text-yellow-400">Master</span>{" "}
@@ -111,7 +111,7 @@ const Banner = () => {
 
           <ResponsiveLogin />
 
-          <div className="absolute lg:bottom-[4%] left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
+          <div className="absolute bottom-0 lg:bottom-[4%] left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
       </div>
 
       <div id="slide4" className="relative w-full">
@@ -145,7 +145,7 @@ const Banner = () => {
 
           <ResponsiveLogin />
 
-          <div className="absolute lg:bottom-[4%] left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
+          <div className="absolute bottom-0 lg:bottom-[4%] left-0 w-full h-[65%] bg-gradient-to-b from-transparent to-base-100"></div>
       </div>
     </AutoplaySlider>
   );
