@@ -21,7 +21,7 @@ if (window.innerWidth > 576) {
 
 const PopularInstructors = () => {
   return (
-    <div className="px-5 lg:px-10 lg:mt-24 mt-6 lg:mb-32 mb-12 pt-11 relative">
+    <div className="px-5 lg:px-10 lg:mb-32 mb-12 pt-11 relative">
       <SectionTitle
         title1={"popular"}
         title2={"instructors"}

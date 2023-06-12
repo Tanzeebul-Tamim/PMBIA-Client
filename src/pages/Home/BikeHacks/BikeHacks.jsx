@@ -14,7 +14,7 @@ const bikeHacksDes =
 let numberOfSlides = null;
 
 if (window.innerWidth > 576) {
-  numberOfSlides = 4;
+  numberOfSlides = 5;
 } else {
   numberOfSlides = 1;
 }
@@ -58,14 +58,40 @@ const BikeHacks = () => {
           },
         ]}
       >
-        <HackCard></HackCard>
-        <HackCard></HackCard>
-        <HackCard></HackCard>
-        <HackCard></HackCard>
-        <HackCard></HackCard>
-        <HackCard></HackCard>
+        <HackCard
+        videoTitle={'Beginner Mistakes & How To Avoid Making Them | Mountain Bike Skills'}
+        videoId={'Z5hLSHX_mw4'}
+        />
+        <HackCard
+        videoTitle={'MTB BASIC MAINTENANCE ROUTINE'}
+        videoId={'EviGDB8iMVA'}
+        />
+        <HackCard
+        videoTitle={'10 Hacks for Mountain Biking and Beyond'}
+        videoId={'8AwXIOJJQzI'}
+        />
+        <HackCard
+        videoTitle={'10 MTB Tips & Hacks that will knock your socks off!'}
+        videoId={'n1-hqwaL4-I'}
+        />
+        <HackCard
+        videoTitle={'5 Cheap Ways To Upgrade Your MTB | Mountain Bike Hacks'}
+        videoId={'1Lvhekc1ryI'}
+        />
+        <HackCard
+        videoTitle={'10 Easy Ways To Improve Your Mountain Biking | Progress Your Riding'}
+        videoId={'P5nGQ85ZZgM'}
+        />
+        <HackCard
+        videoTitle={'Essential First Upgrades | What To Upgrade On Your New Bike?'}
+        videoId={'vZ_iG5ixw0A'}
+        />
+        <HackCard
+        videoTitle={'7 Hardtail Hacks | Set-Up Tips & Upgrades For Your MTB'}
+        videoId={'eP1wxpKTJnM'}
+        />
       </Carousel>
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-base-300"></div>
+      <div className="absolute bottom-0 left-0 w-full h-2/3 bg-gradient-to-b from-transparent to-base-300"></div>
     </div>
   );
 };

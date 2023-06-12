@@ -1,14 +1,31 @@
-const HackCard = () => {
+import YouTube from "react-youtube";
+
+const videoOnReady = (event) => {
+  event.target.pauseVideo();
+};
+
+const HackCard = ({ videoId, videoTitle }) => {
+  const opts = {
+    height: "100%",
+    width: "100%",
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
   return (
-    <div className="w-96 mr-2 ml-2 ">
-        <img
-          className="w-full rounded-2xl"
-          src="https://img.redbull.com/images/c_crop,x_0,y_0,h_2560,w_3840/c_fill,w_350,h_231/q_auto,f_auto/redbullcom/2023/5/15/sbajrt66mlbxrjm9tcfi/tom-pidcock-xco-world-cup-nove-mesto-2023"
-        />
-      <div className="description absolute bottom-3 left-3 text-white">
-        <h2>Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
+    <div className="group h-full">
+      <div className="group-hover:scale-90 duration-200 mr-2 ml-2 rounded-lg p-2 h-full bg-base-100">
+      <YouTube
+        className="w-full duration-200"
+        videoId={videoId}
+        opts={opts}
+        onReady={videoOnReady}
+      />
+      <div className="group-hover:scale-[0.95] group-hover:left-2 mt-3 duration-200 description text-white w-3/4">
+        <p className="text-white text-sm">{videoTitle}</p>
       </div>
+    </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import LeafletMap from "./LeafletMap/LeafletMap";
 
 const Footer = () => {
   return (
-    <div className="relative bg-gradient-to-t from-base-100 to-base-300">
+    <div className="relative bg-gradient-to-t from-base-200 to-base-300">
       <footer className="footer p-10 bg-transparent text-base-content">
         <div>
           <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
