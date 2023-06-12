@@ -1,6 +1,15 @@
 const AboutUs = () => {
   return (
-    <div className="pt-40 pb-24 lg:px-10">
+    <div
+    className="pt-40 pb-24 lg:px-10"
+    style={{
+        backgroundImage:
+          "linear-gradient(rgba(0, 0, 0, 0.700), rgba(0, 0, 0, 0.450)), url('https://img.redbull.com/images/c_crop,x_0,y_178,h_1728,w_3840/c_fill,w_1680,h_780/q_auto,f_auto/redbullcom/2023/6/5/asp64xcyx7bpnkloetet/loic-bruni-leogang')",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <h1 className="title text-3xl mb-5 text-center uppercase">About Us</h1>
       <div className="text-xl flex flex-col gap-10 text-center">
         <p>

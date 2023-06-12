@@ -6,7 +6,7 @@ const Footer = () => {
       className="relative"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.658), rgba(0, 0, 0, 0.600)), url('https://img.redbull.com/images/c_crop,x_0,y_22,h_1920,w_3840/c_fill,w_1490,h_710/q_auto,f_auto/redbullcom/2022/11/14/vka2hezuff7cfene8ecx/robin-goomes-georgia-astle-crankworx-world-tour-2022-innsbruck')",
+          "linear-gradient(rgba(0, 0, 0, 0.700), rgba(0, 0, 0, 0.500)), url('https://img.redbull.com/images/c_crop,x_0,y_870,h_6750,w_15000/c_fill,w_1680,h_780/q_auto,f_auto/redbullcom/2022/7/21/khux2edp5aura3i0uy7g/red-bull-rampage')",
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -14,13 +14,13 @@ const Footer = () => {
     >
       <footer className="footer p-10 bg-transparent text-base-content">
         <div>
-          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Our Location
           </span>
           <LeafletMap></LeafletMap>
         </div>
         <div>
-          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Opening Hours
           </span>
           <span className="text-sm lg:text-lg">
@@ -32,7 +32,7 @@ const Footer = () => {
           <span className="text-sm lg:text-lg">Sunday: 12:00 PM - 9:00 PM</span>
         </div>
         <div>
-          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Services
           </span>
           <a className="text-sm lg:text-lg link link-hover">Branding</a>
@@ -41,7 +41,7 @@ const Footer = () => {
           <a className="text-sm lg:text-lg link link-hover">Advertisement</a>
         </div>
         <div>
-          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Contact Us
           </span>
           <span className="text-sm lg:text-lg">
@@ -58,7 +58,7 @@ const Footer = () => {
           </span>
         </div>
         <div>
-          <span className="uppercase text-lg lg:text-xl text-sky-500 lg:text-sky-500">
+          <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Legal
           </span>
           <a className="text-sm lg:text-lg link link-hover">Terms of use</a>
@@ -82,7 +82,7 @@ const Footer = () => {
             © 2023 PMBIA. All rights reserved. Designed by
             <a
               href="https://www.facebook.com/tanzeebul.tamim"
-              className="uppercase ms-1 font-bold text-sky-600 underline"
+              className="uppercase ms-1 font-bold text-yellow-500 underline"
             >
               Tanzeebul Tamim
             </a>

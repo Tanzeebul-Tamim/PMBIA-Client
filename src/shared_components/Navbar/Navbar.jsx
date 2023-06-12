@@ -2,9 +2,13 @@ import ActiveLink from "../../activeLink/ActiveLink";
 import { CgLogIn, CgMenuGridO } from "react-icons/cg";
 import { SlNote } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import "./Navbar.css";
+import { AiOutlineHome, AiOutlineInfoCircle } from "react-icons/ai";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { MdOutlineSchool } from "react-icons/md";
+import { LuLayoutDashboard } from "react-icons/lu";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import './Navbar.css';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -21,38 +25,38 @@ const Navbar = () => {
         >
           <ActiveLink
             to="/"
-            className="block mb-2 text-sm text-white hover:text-yellow-400"
+            className="gap-2 mb-2 text-sm text-white hover:text-yellow-400"
           >
-            Home
+            <span className="flex items-center gap-1"><AiOutlineHome className="text-xs"/>HOME</span>
           </ActiveLink>
           <ActiveLink
             to="/instructors"
             className="block mb-2 text-sm text-white hover:text-yellow-400"
           >
-            Instructors
+            <span className="flex items-center gap-1"><FaChalkboardTeacher className="text-xs"/>INSTRUCTORS</span>
           </ActiveLink>
           <ActiveLink
-            to="/sessions"
+            to="/classes"
             className="block mb-2 text-sm text-white hover:text-yellow-400"
           >
-            Sessions
+            <span className="flex items-center gap-1"><MdOutlineSchool className="text-xs"/>CLASSES</span>
           </ActiveLink>
           <ActiveLink
             to="/dashboard"
             className="block text-sm text-white hover:text-yellow-400"
           >
-            Dashboard
+            <span className="flex items-center gap-1"><LuLayoutDashboard className="text-xs"/>DASHBOARD</span>
           </ActiveLink>
           <ActiveLink
             to="/about-us"
             className="block text-sm text-white hover:text-yellow-400"
           >
-            About Us
+            <span className="flex items-center gap-1"><AiOutlineInfoCircle className="text-xs"/>ABOUT US</span>
           </ActiveLink>
         </div>
         <Link to="/">
           <img
-            className="lg:w-4/5"
+            className="lg:w-[90%]"
             src="https://i.ibb.co/7gCjkHF/pmbia-logo-word-reverse.png"
             alt="Logo"
           />
@@ -67,8 +71,8 @@ const Navbar = () => {
           <ActiveLink className="hover:text-yellow-400" to="/instructors">
             <div>Instructors</div>
           </ActiveLink>
-          <ActiveLink className="hover:text-yellow-400" to="/sessions">
-            <div>Sessions</div>
+          <ActiveLink className="hover:text-yellow-400" to="/classes">
+            <div>classes</div>
           </ActiveLink>
           <ActiveLink className="hover:text-yellow-400" to="/dashboard">
             <div>Dashboard</div>
@@ -99,7 +103,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-end lg:hidden">
-      <div onClick={() => setOpen(!open)} className="lg:hidden text-lg">
+      <div onClick={() => setOpen(!open)} className="lg:hidden text-lg duration-500">
           {open ? <IoCloseCircleOutline /> : <CgMenuGridO />}
         </div>
       </div>

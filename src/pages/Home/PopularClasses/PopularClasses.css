@@ -1,0 +1,33 @@
+.BrainhubCarousel__arrows {
+  background-color: rgb(110, 110, 110);
+  border-radius: 50%;
+  transition-property: background-color, opacity, visibility;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+  opacity: 0;
+  visibility: hidden; 
+}
+
+.popularClassSection:hover .BrainhubCarousel__arrows {
+  opacity: 1;
+  visibility: visible;
+}
+
+.BrainhubCarousel {
+  position: relative;
+}
+
+.BrainhubCarousel__arrowRight {
+  position: absolute;
+  right: 20px;
+}
+
+.BrainhubCarousel__arrowLeft {
+  position: absolute;
+  left: 20px;
+  z-index: 10;
+}
+
+.BrainhubCarousel__arrows:hover {
+  background-color: rgb(59, 59, 59) !important;
+}
