@@ -1,7 +1,7 @@
 import ActiveLink from "../../activeLink/ActiveLink";
 import { CgLogIn, CgMenuGridO } from "react-icons/cg";
 import { SlNote } from "react-icons/sl";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoMdClose } from "react-icons/io";
 import { AiOutlineHome, AiOutlineInfoCircle } from "react-icons/ai";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineSchool } from "react-icons/md";
@@ -103,8 +103,8 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-end lg:hidden">
-      <div onClick={() => setOpen(!open)} className="lg:hidden text-lg duration-500">
-          {open ? <IoCloseCircleOutline /> : <CgMenuGridO />}
+      <div onClick={() => setOpen(!open)}>
+          {open ? <IoMdClose /> : <CgMenuGridO />}
         </div>
       </div>
     </div>

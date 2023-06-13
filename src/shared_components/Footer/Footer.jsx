@@ -65,12 +65,12 @@ const Footer = () => {
             alt=""
           />
           <p className="text-sm lg:text-lg">
-            PMBIA Ltd. <br /> Delivering exceptional services since 2005.
+            PMBIA Ltd. <br /> Delivering exceptional services since 2006.
           </p>
         </div>
         <div>
           <h4 className="text-center text-xs lg:text-md tracking-widest">
-            © 2023 PMBIA. All rights reserved. Designed by
+            © 2023 PMBIA. All rights reserved. Designed & Developed by
             <a
               href="https://www.facebook.com/tanzeebul.tamim"
               className="uppercase ms-1 font-bold text-yellow-500 underline"

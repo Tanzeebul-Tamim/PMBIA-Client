@@ -12,7 +12,13 @@ const Register = () => {
   useTitle("| Register");
 
   const handleImageButtonText = (image) => {
-    setImageButtonText(image.name);
+    const imageName = image.name;
+    if (imageName.length > 40) {
+      setImageButtonText(`${image.name.slice(0,40)} . . . .`);
+    }
+    else {
+      setImageButtonText(imageName);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -24,7 +30,7 @@ const Register = () => {
   };
   return (
     <div
-      className="min-h-screen pt-40 pb-24 lg:px-10 relative"
+      className="min-h-screen pt-32 pb-24 lg:px-10 relative"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0, 0, 0, 0.600), rgba(0, 0, 0, 0.450)), url('https://img.redbull.com/images/c_crop,x_0,y_0,h_4128,w_8256/c_fill,w_1490,h_710/q_auto,f_auto/redbullcom/2022/6/21/fc9itii98dyr4imm5z1a/crankworx-stop-1-innsbruck-full-recap-program-szymon-godziek')",
