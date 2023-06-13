@@ -14,34 +14,34 @@ const Footer = () => {
           <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Opening Hours
           </span>
-          <span className="text-sm lg:text-lg">
+          <span className="text-sm description">
             Monday - Friday: 8:00 AM - 10:00 PM
           </span>
-          <span className="text-sm lg:text-lg">
+          <span className="text-sm description">
             Saturday: 10:00 AM - 11:00 PM
           </span>
-          <span className="text-sm lg:text-lg">Sunday: 12:00 PM - 9:00 PM</span>
+          <span className="text-sm description">Sunday: 12:00 PM - 9:00 PM</span>
         </div>
         <div>
           <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Services
           </span>
-          <a className="text-sm lg:text-lg link link-hover">Branding</a>
-          <a className="text-sm lg:text-lg link link-hover">Design</a>
-          <a className="text-sm lg:text-lg link link-hover">Marketing</a>
-          <a className="text-sm lg:text-lg link link-hover">Advertisement</a>
+          <a className="text-sm description link link-hover">Branding</a>
+          <a className="text-sm description link link-hover">Design</a>
+          <a className="text-sm description link link-hover">Marketing</a>
+          <a className="text-sm description link link-hover">Advertisement</a>
         </div>
         <div>
           <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Contact Us
           </span>
-          <span className="text-sm lg:text-lg">
+          <span className="text-sm description">
             Duifkruid 84, 4007 SZ Tiel
             <br />
             Netherlands
           </span>
-          <span className="text-sm lg:text-lg"> Phone: +31644460635</span>
-          <span className="text-sm lg:text-lg">
+          <span className="text-sm description"> Phone: +31644460635</span>
+          <span className="text-sm description">
             Email:{" "}
             <a className="underline" id="email" href="">
               info@pmbia.com
@@ -52,9 +52,9 @@ const Footer = () => {
           <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">
             Legal
           </span>
-          <a className="text-sm lg:text-lg link link-hover">Terms of use</a>
-          <a className="text-sm lg:text-lg link link-hover">Privacy policy</a>
-          <a className="text-sm lg:text-lg link link-hover">Cookie policy</a>
+          <a className="text-sm description link link-hover">Terms of use</a>
+          <a className="text-sm description link link-hover">Privacy policy</a>
+          <a className="text-sm description link link-hover">Cookie policy</a>
         </div>
       </footer>
       <footer className="footer border-t border-slate-500 px-10 py-6 bg-transparent text-base-content">
@@ -64,7 +64,7 @@ const Footer = () => {
             src="https://www.pmbia.org/img/icons/PMBIA-Icon-Rev-192x192.png"
             alt=""
           />
-          <p className="text-sm lg:text-lg">
+          <p className="text-sm description">
             PMBIA Ltd. <br /> Delivering exceptional services since 2006.
           </p>
         </div>

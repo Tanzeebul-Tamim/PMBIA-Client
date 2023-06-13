@@ -7,6 +7,7 @@ import {
 import Carousel, { slidesToShowPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import "./PopularClasses.css";
+import { Slide } from "react-awesome-reveal";
 
 const popularClassesDes =
   "We offer a curated collection of the most sought-after classes which are highly recommended for mountain bike enthusiasts. Discover a range of exciting and educational courses designed to enhance your MTB skills and knowledge.";
@@ -22,12 +23,14 @@ if (window.innerWidth > 576) {
 const PopularClasses = () => {
   return (
     <div className="lg:mb-32 mb-12 px-5 lg:px-10">
-      <SectionTitle
-        title1={"popular"}
-        title2={"classes"}
-        textAlign={"text-end"}
-        description={popularClassesDes}
-      />
+      <Slide direction="right">
+        <SectionTitle
+          title1={"popular"}
+          title2={"classes"}
+          textAlign={"text-end"}
+          description={popularClassesDes}
+        />
+      </Slide>
       <Carousel
         className="popularClassSection cursor-pointer"
         plugins={[

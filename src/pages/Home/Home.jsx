@@ -7,7 +7,7 @@ import Title from "./Title/Title";
 
 
 const Home = () => {
-    useTitle('| Professional Mountain Biking Instructors Association')
+    useTitle(null, location.pathname)
 
     return (
         <div>

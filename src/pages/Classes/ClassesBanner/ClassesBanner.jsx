@@ -1,22 +1,19 @@
-const InstructorsBanner = () => {
+const ClassesBanner = () => {
   return (
     <div className="relative">
-      <img
-        src="https://i.ibb.co/PY0xrB1/51389217-2197714463641092-5003903857827250176-n-1.jpg"
-        alt=""
-      />
-      <div className="z-[10] left-10 text-center absolute bottom-0">
+      <img src="https://i.ibb.co/n7jL1Jt/aa.jpg" alt="" />
+      <div className="z-[10] right-10 text-center absolute bottom-0">
         <h1 className="text-yellow-500 title lg:text-6xl uppercase font-bold">
-          Training
+          Exciting
         </h1>
         <h1 className="text-white lg:text-4xl uppercase tracking-[7px] mt-1">
-          Instructions
+          MTB Classes
         </h1>
         <h1 className="text-yellow-500 title lg:text-6xl font-bold uppercase">
-          & Guides
+          And
         </h1>
-        <h1 className="text-white lg:text-4xl uppercase tracking-[7px] mt-1">
-          Worldwide
+        <h1 className="text-white lg:text-4xl uppercase tracking-[px] mt-1">
+          Workshops
         </h1>
         <h1 className="text-white description mt-2 lg:text-lg uppercase tracking-[5px]">
           Since 2006
@@ -27,4 +24,4 @@ const InstructorsBanner = () => {
   );
 };
 
-export default InstructorsBanner;
+export default ClassesBanner;

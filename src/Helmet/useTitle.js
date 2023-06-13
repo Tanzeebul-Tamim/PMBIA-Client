@@ -1,14 +1,14 @@
 import { useEffect } from "react"
 
-const useTitle = title => {
+const useTitle = (title, location) => {
     useEffect(() => {
-        if (location.pathname == '/') {
+        if (location) {
             document.title = 'Professional Mountain Biking Instructors Association'
         }
         else {
             document.title = `PMBIA ${title}`
         }
-    }, [title])
+    }, [title, location])
 };
 
 export default useTitle;

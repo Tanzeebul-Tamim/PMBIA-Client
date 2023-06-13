@@ -7,6 +7,7 @@ import Carousel, { slidesToShowPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import "../PopularClasses/PopularClasses.css";
 import InstructorCard from "./InstructorCard";
+import { Slide } from "react-awesome-reveal";
 
 const popularInstructorsDes =
   "Get to know some of our highly skilled and experienced instructors who'll lead your way throughout this journey. Each of our instructor brings a unique teaching style and a wealth of practical experience, ensuring that our students receive the best instruction possible.";
@@ -22,11 +23,13 @@ if (window.innerWidth > 576) {
 const PopularInstructors = () => {
   return (
     <div className="px-5 lg:px-10 lg:mb-32 mb-12 pt-11 relative">
-      <SectionTitle
-        title1={"popular"}
-        title2={"instructors"}
-        description={popularInstructorsDes}
-      />
+      <Slide>
+        <SectionTitle
+          title1={"popular"}
+          title2={"instructors"}
+          description={popularInstructorsDes}
+        />
+      </Slide>
       <div>
         <Carousel
           className="popularClassSection cursor-pointer"
