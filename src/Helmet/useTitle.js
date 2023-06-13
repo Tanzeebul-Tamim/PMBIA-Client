@@ -2,7 +2,12 @@ import { useEffect } from "react"
 
 const useTitle = title => {
     useEffect(() => {
-        document.title = `PMBIA ${title}`;
+        if (location.pathname == '/') {
+            document.title = 'Professional Mountain Biking Instructors Association'
+        }
+        else {
+            document.title = `PMBIA ${title}`
+        }
     }, [title])
 };
 

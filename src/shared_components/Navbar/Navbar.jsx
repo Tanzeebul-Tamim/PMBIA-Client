@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="from-transparent to-black bg-gradient-to-t duration-100 fixed z-[1500] gap-5 navbar px-5 lg:px-10 lg:py-8 transition ease-in-out"
+      className="from-transparent to-black bg-gradient-to-t fixed z-[1500] gap-5 navbar px-5 lg:px-10 lg:py-8 transition ease-in-out"
     >
       <div className="navbar-start gap-1 lg:gap-6 flex items-center">
         <div

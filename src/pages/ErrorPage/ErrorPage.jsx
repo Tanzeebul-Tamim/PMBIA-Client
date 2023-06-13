@@ -3,12 +3,12 @@ import useTitle from "../../Helmet/useTitle";
 
 const ErrorPage = () => {
   const { error, statusText, status } = useRouteError();
-  useTitle("| Error");
+  useTitle("| Page Not Found");
   return (
     <div
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.200), #0e0d0d), url('https://img.redbull.com/images/c_crop,x_0,y_64,h_1440,w_3200/c_fill,w_1680,h_780/q_auto,f_auto/redbullcom/2022/4/22/gsuzfhoej0lwercwcpay/crankworx-stop-2-whistler-brett-rheeder')",
+          "linear-gradient(rgba(0, 0, 0, 0.200), #0e0d0d), url('https://img.redbull.com/images/c_crop,x_0,y_0,h_2560,w_3840/c_fill,w_1680,h_1100/q_auto,f_auto/redbullcom/2022/12/8/z0l0aeamwiozihqcfaj5/fabio-wibmer-video-game')",
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -16,7 +16,7 @@ const ErrorPage = () => {
       className="flex relative justify-center py-5 px-20 flex-col items-center"
     >
       <h1 className="absolute top-5 uppercase text-yellow-400 text-6xl font-bold mt-3">
-        &quot;{status} {statusText}&quot;
+        {status} {statusText}
       </h1>
       <img
         src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzMwNjMxMDY4MmZjNGQ3NmJlMDdkYjgxNmM2MjI2MWIxYjBiMDZlNSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/VqlV27H99BNBQXLOyL/giphy.gif"

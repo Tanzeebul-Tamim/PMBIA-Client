@@ -1,4 +1,8 @@
+import useTitle from "../../Helmet/useTitle";
+
 const AboutUs = () => {
+  useTitle("| About Us")
+
   return (
     <div
       className="pt-40 pb-24 lg:px-10 relative"

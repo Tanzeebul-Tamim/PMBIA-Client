@@ -12,7 +12,7 @@ const InstructorCard = () => {
           alt="Shoes"
         />
       </div>
-      <img
+      <img 
         className="group-hover:scale-110 duration-200 lg:w-[calc(8vw)] w-[calc(26vw)] lg:h-[calc(8vw)] h-[calc(26vw)] absolute lg:right-[calc(1vw)] right-[calc(4vw)] lg:bottom-[calc(25%)] bottom-[calc(27%)] rounded-full border-zinc-400 border-[2px] lg:border-[4px]"
         src="https://img.redbull.com/images/c_crop,x_154,y_0,h_2133,w_2133/c_fill,w_140,h_140/q_auto,f_auto/redbullcom/2022/2/11/tmq90ch5tbororfwlvgo/marc-marquez-portrait-sepang-2022"
         alt=""

@@ -1,3 +1,4 @@
+import useTitle from "../../Helmet/useTitle";
 import Banner from "./Banner/Banner";
 import BikeHacks from "./BikeHacks/BikeHacks";
 import PopularClasses from "./PopularClasses/PopularClasses";
@@ -6,7 +7,7 @@ import Title from "./Title/Title";
 
 
 const Home = () => {
-
+    useTitle('| Professional Mountain Biking Instructors Association')
 
     return (
         <div>

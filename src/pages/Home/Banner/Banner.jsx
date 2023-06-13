@@ -25,7 +25,7 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase lg:flex flex-col gap-4 absolute z-10 font-extrabold top-[40%] left-[7%] lg:text-7xl text-lg"
+            className="uppercase lg:flex flex-col gap-4 absolute z-10 font-extrabold lg:top-[40%] top-[30%] left-[7%] lg:text-7xl text-lg"
           >
             <div>
               <span className="text-yellow-400">Unlock</span>{" "}
@@ -59,7 +59,7 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase lg:flex flex-col gap-4 text-end absolute z-10 font-extrabold top-[40%] right-[7%] lg:text-7xl text-lg"
+            className="uppercase lg:flex flex-col gap-4 text-end absolute z-10 font-extrabold lg:top-[40%] top-[30%] right-[7%] lg:text-7xl text-lg"
           >
             <div>
               <span className="text-white">Elevate</span>{" "}
@@ -93,7 +93,7 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase bottom-0 lg:flex flex-col gap-4 absolute z-10 font-extrabold top-[40%] left-[7%] lg:text-7xl text-lg"
+            className="uppercase bottom-0 lg:flex flex-col gap-4 absolute z-10 font-extrabold lg:top-[40%] top-[30%] left-[7%] lg:text-7xl text-lg"
           >
             <div>
               <span className="text-yellow-400">Master</span>{" "}
@@ -127,7 +127,7 @@ const Banner = () => {
 
           <div
             style={{ fontFamily: "Oswald" }}
-            className="uppercase lg:flex flex-col gap-4 absolute z-10 font-extrabold top-[40%] text-end right-[7%] lg:text-7xl text-lg"
+            className="uppercase lg:flex flex-col gap-4 absolute z-10 font-extrabold lg:top-[40%] top-[30%] text-end right-[7%] lg:text-7xl text-lg"
           >
             <div>
               <span className="text-yellow-400">Improve</span>{" "}
