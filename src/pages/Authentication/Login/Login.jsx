@@ -1,19 +1,135 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaEyeSlash, FaEye, FaFacebookF, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import useTitle from "../../../Helmet/useTitle";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplateNoReload,
+  validateCaptcha,
+} from "react-simple-captcha";
+import "./Login.css";
+import { useRef } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
+import { toast } from "react-toastify";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const { signIn, setLoading, loading, googleSignIn, facebookSignIn, githubSignIn } =
+    useContext(AuthContext);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const captchaRef = useRef(null);
+  const [disabled, setDisabled] = useState(true);
   useTitle("| Login");
+
+  useEffect(() => {
+    if (location.state && location.state.showToast) {
+      toast.warning("To view detailed information, you have to login first", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
+
+  const handleFacebookSignIn = () => {
+    facebookSignIn()
+      .then((result) => {
+        const loggedUser = result.user;
+        navigate(from, { replace: true });
+        console.log(loggedUser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
+  const handleGithubSignIn = () => {
+    githubSignIn()
+      .then((result) => {
+        const loggedUser = result.user;
+        navigate(from, { replace: true });
+        console.log(loggedUser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        const loggedUser = result.user;
+        navigate(from, { replace: true });
+        console.log(loggedUser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    signIn(email, password)
+      .then((result) => {
+        const createdUser = result.user;
+        navigate(from, { replace: true });
+        console.log(createdUser);
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.code === "auth/wrong-password") {
+          setError("Incorrect password!");
+          setLoading(false);
+        } else if (error.code === "auth/user-not-found") {
+          setError("User not found! Enter a verified email.");
+          setLoading(false);
+        } else if (error.code === "auth/too-many-requests") {
+          setError("Too many unsuccessful attempts! Try again later.");
+          setLoading(false);
+        }
+      });
+  };
+
+  const handleValidateCaptcha = () => {
+    const captchaValue = captchaRef.current.value;
+    if (validateCaptcha(captchaValue)) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   return (
     <div
-      className="min-h-screen pt-40 pb-24 lg:px-10 relative"
+      className="min-h-screen pt-32 pb-24 lg:px-10 relative"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0, 0, 0, 0.600), rgba(0, 0, 0, 0.450)), url('https://img.redbull.com/images/c_crop,x_0,y_64,h_1440,w_3200/c_fill,w_1680,h_780/q_auto,f_auto/redbullcom/2022/4/22/gsuzfhoej0lwercwcpay/crankworx-stop-2-whistler-brett-rheeder')",
@@ -22,7 +138,10 @@ const Login = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="flex items-center justify-center gap-20 flex-col lg:flex-row">
+      <form
+        onSubmit={handleLogin}
+        className="flex items-center justify-center gap-20 flex-col lg:flex-row"
+      >
         <div className="z-10 text-center lg:text-left">
           <h1 className="text-5xl font-bold title uppercase text-yellow-500">
             Login now!
@@ -48,6 +167,8 @@ const Login = () => {
               </label>
               <input
                 type="email"
+                name="email"
+                required
                 placeholder="Enter your email"
                 className="input input-bordered"
               />
@@ -60,13 +181,16 @@ const Login = () => {
               </label>
               <input
                 type={showPassword ? "text" : "password"}
+                autoComplete="off"
+                name="password"
+                required
                 placeholder="Enter your password"
                 className="input input-bordered"
               />
               <div
                 style={{
                   position: "absolute",
-                  top: "43%",
+                  top: "60%",
                   right: "10px",
                   cursor: "pointer",
                   fontSize: "20px",
@@ -75,33 +199,71 @@ const Login = () => {
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </div>
+            </div>
+            <div className="z-[10] form-control">
+              <label className="label">
+                <span className="uppercase label-text font-bold tracking-widest text-white">
+                  <p className="mb-1">Enter captcha code</p>
+                  <p className="font-light">
+                    <LoadCanvasTemplateNoReload />
+                  </p>
+                </span>
+              </label>
+              <input
+                onBlur={handleValidateCaptcha}
+                type="text"
+                required
+                ref={captchaRef}
+                name="captcha"
+                placeholder="Enter the above text"
+                className="input input-bordered"
+              />
               <label className="label">
                 <Link to="/register" className="label-text-alt link link-hover">
                   Don&apos; have an account? Please{" "}
                   <span className="text-yellow-500">Register</span>
                 </Link>
               </label>
+              <p className={`text-red-600 ${error ? 'visible' : 'invisible'}`}>
+                {error ? error : 'a'}
+              </p>
             </div>
             <div className="divider text-white">Or continue with</div>
             <div className="z-[10] justify-center gap-10 flex">
-              <div className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle">
+              <button
+                formNoValidate
+                onClick={handleGoogleSignIn}
+                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
+              >
                 <FcGoogle className="text-2xl" />
-              </div>
-              <div className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle">
+              </button>
+              <button
+                formNoValidate
+                onClick={handleFacebookSignIn}
+                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
+              >
                 <FaFacebookF className="text-2xl text-[#1877F2]" />
-              </div>
-              <div className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle">
+              </button>
+              <button
+                formNoValidate
+                onClick={handleGithubSignIn}
+                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
+              >
                 <FaGithub className="text-2xl" />
-              </div>
+              </button>
             </div>
             <div className="z-[10] form-control mt-6">
-              <button className="btn bg-yellow-500 hover:bg-yellow-600 text-white text-xl">
-                Login
+              <button
+                disabled={disabled || (loading && true)}
+                type="submit"
+                className="btn bg-yellow-500 disabled:bg-yellow-900 disabled:text-stone-500 hover:bg-yellow-600 text-white text-xl"
+              >
+                 {loading ? <TbFidgetSpinner className="text-2xl text-stone-400 animate-spin" /> : 'Login'}
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </form>
       <div className="absolute lg:bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-base-300"></div>
     </div>
   );

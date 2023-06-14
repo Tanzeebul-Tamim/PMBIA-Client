@@ -7,7 +7,7 @@ import Title from "./Title/Title";
 
 
 const Home = () => {
-    useTitle(null, location.pathname)
+    useTitle(null, location.pathname);
 
     return (
         <div>

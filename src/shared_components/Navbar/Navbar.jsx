@@ -1,22 +1,31 @@
 import ActiveLink from "../../activeLink/ActiveLink";
-import { CgLogIn, CgMenuGridO } from "react-icons/cg";
+import { CgMenuGridO } from "react-icons/cg";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { SlNote } from "react-icons/sl";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineHome, AiOutlineInfoCircle } from "react-icons/ai";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineSchool } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import './Navbar.css';
+import "./Navbar.css";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { user, logOut, loading } = useContext(AuthContext);
+
+  console.log(user);
+
+  const handleLogOut = () => {
+    logOut()
+      .then()
+      .catch((error) => console.error(error));
+  };
 
   return (
-    <div
-      className="from-transparent to-black bg-gradient-to-t fixed z-[1500] gap-5 navbar px-5 lg:px-10 lg:py-8 transition ease-in-out"
-    >
+    <div className="from-transparent to-black bg-gradient-to-t fixed z-[1500] gap-5 navbar px-5 lg:px-10 lg:py-8 transition ease-in-out">
       <div className="navbar-start gap-1 lg:gap-6 flex items-center">
         <div
           className={`mt-2 flex flex-col bg-opacity-80 absolute duration-300 ${
@@ -27,31 +36,46 @@ const Navbar = () => {
             to="/"
             className="gap-2 mb-2 text-sm text-white hover:text-yellow-400"
           >
-            <span className="flex items-center gap-1"><AiOutlineHome className="text-xs"/>HOME</span>
+            <span className="flex items-center gap-1">
+              <AiOutlineHome className="text-xs" />
+              HOME
+            </span>
           </ActiveLink>
           <ActiveLink
             to="/instructors"
             className="block mb-2 text-sm text-white hover:text-yellow-400"
           >
-            <span className="flex items-center gap-1"><FaChalkboardTeacher className="text-xs"/>INSTRUCTORS</span>
+            <span className="flex items-center gap-1">
+              <FaChalkboardTeacher className="text-xs" />
+              INSTRUCTORS
+            </span>
           </ActiveLink>
           <ActiveLink
             to="/classes"
             className="block mb-2 text-sm text-white hover:text-yellow-400"
           >
-            <span className="flex items-center gap-1"><MdOutlineSchool className="text-xs"/>CLASSES</span>
+            <span className="flex items-center gap-1">
+              <MdOutlineSchool className="text-xs" />
+              CLASSES
+            </span>
           </ActiveLink>
           <ActiveLink
             to="/dashboard"
             className="block text-sm text-white hover:text-yellow-400"
           >
-            <span className="flex items-center gap-1"><LuLayoutDashboard className="text-xs"/>DASHBOARD</span>
+            <span className="flex items-center gap-1">
+              <LuLayoutDashboard className="text-xs" />
+              DASHBOARD
+            </span>
           </ActiveLink>
           <ActiveLink
             to="/about-us"
             className="block text-sm text-white hover:text-yellow-400"
           >
-            <span className="flex items-center gap-1"><AiOutlineInfoCircle className="text-xs"/>ABOUT US</span>
+            <span className="flex items-center gap-1">
+              <AiOutlineInfoCircle className="text-xs" />
+              ABOUT US
+            </span>
           </ActiveLink>
         </div>
         <Link to="/">
@@ -82,28 +106,98 @@ const Navbar = () => {
           </ActiveLink>
         </div>
       </div>
-      <div className="navbar-end uppercase gap-5 lg:flex hidden">
-        <Link
-          to="/login"
-          className="hover:scale-110 duration-200 font-light text-yellow-400 text-xl"
-        >
-          <div className="flex tracking-[2px] items-center gap-2">
-            <CgLogIn />
-            <span className="text-xl">Login</span>
+      {loading ? (
+        <div className="navbar-end uppercase gap-7 lg:flex hidden">
+          <button
+            onClick={handleLogOut}
+            className="hover:scale-110 duration-200 text-yellow-400 font-light text-xl"
+          >
+            <div className="flex tracking-[2px] items-center gap-2">
+              <FiLogOut />
+              <span className="text-xl uppercase">Logout</span>
+            </div>
+          </button>
+          <div>
+            <img
+              className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
+              src="https://i.ibb.co/yktKPFk/149071.png"
+            />
           </div>
-        </Link>
-        <Link
-          to="/register"
-          className="hover:scale-110 duration-200 text-white font-light text-xl"
-        >
-          <div className="flex tracking-[2px] items-center gap-2">
-            <SlNote />
-            <span className="text-xl">Register</span>
+        </div>
+      ) : user ? (
+        <div className="navbar-end uppercase gap-7 lg:flex hidden">
+          <button
+            onClick={handleLogOut}
+            className="hover:scale-110 duration-200 text-yellow-400 font-light text-xl"
+          >
+            <div className="flex tracking-[2px] items-center gap-2">
+              <FiLogOut />
+              <span className="text-xl uppercase">Logout</span>
+            </div>
+          </button>
+          <div
+            data-tip={user?.displayName}
+            className="tooltip tooltip-bottom tooltip-warning"
+          >
+            {user.photoURL ? (
+              <img
+                className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
+                src={user?.photoURL}
+              />
+            ) : (
+              <img
+                className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
+                src="https://i.ibb.co/yktKPFk/149071.png"
+              />
+            )}
           </div>
-        </Link>
-      </div>
-      <div className="navbar-end lg:hidden">
-      <div onClick={() => setOpen(!open)}>
+        </div>
+      ) : (
+        <div className="navbar-end uppercase gap-5 lg:flex hidden">
+          <Link
+            to="/login"
+            className="hover:scale-110 duration-200 font-light text-yellow-400 text-xl"
+          >
+            <div className="flex tracking-[2px] items-center gap-2">
+              <FiLogIn />
+              <span className="text-xl">Login</span>
+            </div>
+          </Link>
+          <Link
+            to="/register"
+            className="hover:scale-110 duration-200 text-white font-light text-xl"
+          >
+            <div className="flex tracking-[2px] items-center gap-2">
+              <SlNote />
+              <span className="text-xl">Register</span>
+            </div>
+          </Link>
+        </div>
+      )}
+      <div className="navbar-end flex gap-2 lg:hidden">
+        {loading ? (
+          <div>
+            <img
+              className="h-[35px] w-[35px] rounded-full"
+              src="https://i.ibb.co/yktKPFk/149071.png"
+              alt=""
+            />
+          </div>
+        ) : !loading && user ? (
+          <div
+            data-tip={user?.displayName}
+            className="tooltip tooltip-bottom tooltip-warning"
+          >
+            <img
+              className="h-[35px] w-[35px] rounded-full"
+              src={user.photoURL}
+              alt=""
+            />
+          </div>
+        ) : (
+          ""
+        )}
+        <div onClick={() => setOpen(!open)}>
           {open ? <IoMdClose /> : <CgMenuGridO />}
         </div>
       </div>

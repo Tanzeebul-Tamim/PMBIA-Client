@@ -10,6 +10,9 @@ import Login from "./pages/Authentication/Login/Login";
 import Register from "./pages/Authentication/Register/Register";
 import Instructors from "./pages/Instructors/Instructors";
 import Classes from "./pages/Classes/Classes";
+import AuthProvider from "./providers/AuthProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -19,34 +22,48 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>
+        element: <Home></Home>,
       },
       {
         path: "/about-us",
-        element: <AboutUs></AboutUs>
+        element: <AboutUs></AboutUs>,
       },
       {
         path: "/login",
-        element: <Login></Login>
+        element: <Login></Login>,
       },
       {
         path: "/register",
-        element: <Register></Register>
+        element: <Register></Register>,
       },
       {
         path: "/instructors",
-        element: <Instructors></Instructors>
+        element: <Instructors></Instructors>,
       },
       {
         path: "/classes",
-        element: <Classes></Classes>
-      }
-    ]
+        element: <Classes></Classes>,
+      },
+    ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+    </AuthProvider>
   </React.StrictMode>
 );

@@ -5,7 +5,7 @@ import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 const Main = () => {
     return (
-        <div>
+        <div className="overflow-x-hidden">
             <ScrollToTop></ScrollToTop>
             <Navbar></Navbar>
             <Outlet ></Outlet>

@@ -1,22 +1,175 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEyeSlash, FaEye, FaFacebookF, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import useTitle from "../../../Helmet/useTitle";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
+import { toast } from "react-toastify";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Register = () => {
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const {
+    createUser,
+    updateUser,
+    setLoading,
+    loading,
+    logOut,
+    googleSignIn,
+    facebookSignIn,
+    githubSignIn,
+  } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   useTitle("| Register");
+
+  const handleRegister = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const confirmPassword = form.confirmPassword.value;
+
+    const image = form.image.files[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_IMGBB_KEY
+    }`;
+
+    if (image) {
+      if (password === confirmPassword) {
+        setError("");
+
+        if (password.length < 6) {
+          setError("Password must be at least 6 characters long!");
+          return;
+        } else if (!/(?=.*[A-Z])/.test(password)) {
+          setError("Password must contain at least one uppercase letter");
+          return;
+        } else if (!/(?=.*\d)/.test(password)) {
+          setError("Password must contain at least one digit");
+          return;
+        } else if (
+          !/(?=.*[!@#$%^&*()_\-+={}[\]\\|:;"'<>,.?/~])/.test(password)
+        ) {
+          setError("Password must contain at least one special character");
+          return;
+        }
+
+        fetch(url, {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((imageData) => {
+            const imageUrl = imageData.data.display_url;
+
+            createUser(email, password)
+              .then(() => {
+                updateUser(name, imageUrl)
+                  .then(() => {
+                    toast.success(
+                      "Registration successful! You can now login.",
+                      {
+                        position: "top-center",
+                        autoClose: 1100,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                      }
+                    );
+                    logOut();
+                    setSuccess("Registration Successful!");
+                    setError("");
+                    setTimeout(function () {
+                      window.location.href = "/login";
+                    }, 2000);
+                  })
+                  .catch((err) => {
+                    setLoading(false);
+                    console.error(err);
+                  });
+              })
+              .catch((error) => {
+                console.error(error);
+                if (error.message.includes("email")) {
+                  setError(
+                    "This email is already in use. Please use a different email."
+                  );
+                  setSuccess("");
+                }
+                setLoading(false);
+              });
+          });
+      } else {
+        setError("Passwords do not match!");
+        return;
+      }
+    } else if (!image && (!name || !email || !password || !confirmPassword)) {
+      return;
+    } else {
+      setError("Please select an image");
+      return;
+    }
+  };
+
+  const handleFacebookSignIn = () => {
+    facebookSignIn()
+      .then((result) => {
+        const loggedUser = result.user;
+        navigate(from, { replace: true });
+        console.log(loggedUser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
+  const handleGithubSignIn = () => {
+    githubSignIn()
+      .then((result) => {
+        const loggedUser = result.user;
+        navigate(from, { replace: true });
+        console.log(loggedUser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        const loggedUser = result.user;
+        navigate(from, { replace: true });
+        console.log(loggedUser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
 
   const handleImageButtonText = (image) => {
     const imageName = image.name;
     if (imageName.length > 40) {
-      setImageButtonText(`${image.name.slice(0,40)} . . . .`);
-    }
-    else {
+      setImageButtonText(`${image.name.slice(0, 40)} . . . .`);
+    } else {
       setImageButtonText(imageName);
     }
   };
@@ -28,6 +181,7 @@ const Register = () => {
   const togglePasswordVisibility2 = () => {
     setShowPassword2(!showPassword2);
   };
+
   return (
     <div
       className="min-h-screen pt-32 pb-24 lg:px-10 relative"
@@ -39,7 +193,10 @@ const Register = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="flex items-center justify-center gap-20 flex-col lg:flex-row-reverse">
+      <form
+        onSubmit={handleRegister}
+        className="flex items-center justify-center gap-20 flex-col lg:flex-row-reverse"
+      >
         <div className="z-10 text-center lg:text-left">
           <h1 className="text-5xl text-end font-bold title uppercase text-yellow-500">
             Register now!
@@ -63,6 +220,8 @@ const Register = () => {
               </label>
               <input
                 type="text"
+                required
+                name="name"
                 placeholder="Enter your username"
                 className="input input-bordered"
               />
@@ -75,6 +234,8 @@ const Register = () => {
               </label>
               <input
                 type="email"
+                required
+                name="email"
                 placeholder="Enter your email"
                 className="input input-bordered"
               />
@@ -91,6 +252,7 @@ const Register = () => {
                     handleImageButtonText(event.target.files[0])
                   }
                   type="file"
+                  name="image"
                   className="input input-bordered hidden"
                   hidden
                   accept="image/*"
@@ -108,6 +270,9 @@ const Register = () => {
               </label>
               <input
                 type={showPassword ? "text" : "password"}
+                required
+                autoComplete="off"
+                name="password"
                 placeholder="Enter your password"
                 className="input input-bordered"
               />
@@ -132,13 +297,16 @@ const Register = () => {
               </label>
               <input
                 type={showPassword2 ? "text" : "password"}
-                placeholder="Confirm your password"
+                required
+                autoComplete="off"
+                name="confirmPassword"
+                placeholder="Enter your password again"
                 className="input input-bordered"
               />
               <div
                 style={{
                   position: "absolute",
-                  top: "43%",
+                  top: "36%",
                   right: "10px",
                   cursor: "pointer",
                   fontSize: "20px",
@@ -153,27 +321,50 @@ const Register = () => {
                   <span className="text-yellow-500">Login</span>
                 </Link>
               </label>
+              <p
+                className={`${
+                  error ? "text-red-600" : success ? "text-green-600" : ""
+                } ${error || success ? "visible" : "invisible"}`}
+              >
+                {error ? error : success ? success : "a"}
+              </p>
             </div>
             <div className="divider text-white">Or continue with</div>
             <div className="z-[10] justify-center gap-10 flex">
-              <div className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle">
+              <button
+                formNoValidate
+                onClick={handleGoogleSignIn}
+                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
+              >
                 <FcGoogle className="text-2xl" />
-              </div>
-              <div className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle">
+              </button>
+              <button
+                formNoValidate
+                onClick={handleFacebookSignIn}
+                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
+              >
                 <FaFacebookF className="text-2xl text-[#1877F2]" />
-              </div>
-              <div className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle">
+              </button>
+              <button
+                formNoValidate
+                onClick={handleGithubSignIn}
+                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
+              >
                 <FaGithub className="text-2xl" />
-              </div>
+              </button>
             </div>
             <div className="z-[10] form-control mt-6">
-              <button className="btn bg-yellow-500 hover:bg-yellow-600 text-white text-xl">
-                Register
+              <button
+                disabled={loading && true}
+                type="submit"
+                className="btn bg-yellow-500 disabled:bg-yellow-900 disabled:text-stone-500 hover:bg-yellow-600 text-white text-xl"
+              >
+                {loading ? <TbFidgetSpinner className="text-2xl text-stone-400 animate-spin" /> : 'Register'}
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </form>
       <div className="absolute lg:bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-base-300"></div>
     </div>
   );
