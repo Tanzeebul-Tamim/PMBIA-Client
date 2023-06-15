@@ -1,8 +1,23 @@
+import { useEffect, useState } from "react";
+import { getTotalInstructors } from "../../../api/auth";
 import InstructorsTableHead from "./InstructorsTableHead";
 
 const InstructorsTable = ({ instructors }) => {
+  const [totalInstructors, setTotalInstructors] = useState({});
+
+  useEffect(() => {
+    getTotalInstructors()
+      .then((data) => {
+        setTotalInstructors(data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <div className="overflow-x-auto pt-10">
+      <h1 className="mb-5 text-white description text-xl">
+        <strong>Instructors Count :</strong> {totalInstructors.totalInstructors}
+      </h1>
       <table className="table text-center description text-white">
         {/* head */}
         <InstructorsTableHead />
@@ -36,7 +51,7 @@ const InstructorsTable = ({ instructors }) => {
                 <td>{instructor.classes.length}</td>
                 <td>
                   <div className="btn btn-sm rounded-lg hover:bg-stone-700 bg-stone-800">
-                    See {instructor.name.split(' ')[0]}&apos;s Classes
+                    See {instructor.name.split(" ")[0]}&apos;s Classes
                   </div>
                 </td>
               </tr>

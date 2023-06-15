@@ -17,7 +17,7 @@ const Instructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(6);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const searchRef = useRef(null);
   useTitle("| Instructors");
 
@@ -33,10 +33,10 @@ const Instructors = () => {
 
   const handleSearch = () => {
     setSearch(searchRef.current.value);
-  }
+  };
   
   const handleLoadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 6);
+    setVisibleCount((prevCount) => prevCount + 5);
   };
 
   if (loading) {
@@ -54,7 +54,7 @@ const Instructors = () => {
               onChange={handleSearch}
               ref={searchRef}
               type="text"
-              placeholder="Search by instructors' Name"
+              placeholder="Search by Instructor's Name"
               className="py-3 px-5 outline-none bg-base-200 description placeholder-white rounded-full w-1/3"
             />
             <button>
@@ -103,7 +103,7 @@ const Instructors = () => {
             onChange={handleSearch}
             ref={searchRef}
             type="text"
-            placeholder="Search by instructors' Name"
+            placeholder="Search by Instructor's Name"
             className="py-3 px-5 outline-none bg-base-200 description placeholder-white rounded-full w-1/3"
           />
           <button>
