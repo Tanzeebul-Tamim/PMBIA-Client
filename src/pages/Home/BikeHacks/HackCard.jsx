@@ -14,18 +14,18 @@ const HackCard = ({ videoId, videoTitle }) => {
   };
 
   return (
-    <div className="group h-full">
-      <div className="group-hover:scale-90 duration-100 mr-2 ml-2 rounded-lg p-2 h-full bg-base-100">
-      <YouTube
-        className="w-full duration-200"
-        videoId={videoId}
-        opts={opts}
-        onReady={videoOnReady}
-      />
-      <div className="group-hover:scale-[0.95] group-hover:left-2 mt-3 duration-100 description text-white w-3/4">
-        <p className="text-white text-sm">{videoTitle}</p>
+    <div className="group h-full mr-5 ml-5">
+      <div className="group-hover:scale-90 lg:w-[300px] duration-100 rounded-lg p-2 h-full bg-base-100">
+        <YouTube
+          className="w-full duration-200"
+          videoId={videoId}
+          opts={opts}
+          onReady={videoOnReady}
+        />
+        <div className="group-hover:scale-[0.95] group-hover:left-2 mt-3 duration-100 description text-white w-3/4">
+          <p className="text-white text-sm">{videoTitle}</p>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

@@ -59,15 +59,17 @@ const Navbar = () => {
               CLASSES
             </span>
           </ActiveLink>
-          <ActiveLink
-            to="/dashboard"
-            className="block text-sm text-white hover:text-yellow-400"
-          >
-            <span className="flex items-center gap-1">
-              <LuLayoutDashboard className="text-xs" />
-              DASHBOARD
-            </span>
-          </ActiveLink>
+          {user && (
+            <ActiveLink
+              to="/dashboard"
+              className="block text-sm text-white hover:text-yellow-400"
+            >
+              <span className="flex items-center gap-1">
+                <LuLayoutDashboard className="text-xs" />
+                DASHBOARD
+              </span>
+            </ActiveLink>
+          )}
           <ActiveLink
             to="/about-us"
             className="block text-sm text-white hover:text-yellow-400"
@@ -80,7 +82,7 @@ const Navbar = () => {
         </div>
         <Link to="/">
           <img
-            className="lg:w-[90%] hover:scale-110 duration-200"
+            className="lg:w-[400px] hover:scale-110 duration-200"
             src="https://i.ibb.co/7gCjkHF/pmbia-logo-word-reverse.png"
             alt="Logo"
           />
@@ -98,33 +100,16 @@ const Navbar = () => {
           <ActiveLink className="hover:text-yellow-400" to="/classes">
             <div>classes</div>
           </ActiveLink>
+          {user && 
           <ActiveLink className="hover:text-yellow-400" to="/dashboard">
             <div>Dashboard</div>
-          </ActiveLink>
+          </ActiveLink>}
           <ActiveLink className="hover:text-yellow-400" to="/about-us">
             <div>About Us</div>
           </ActiveLink>
         </div>
       </div>
-      {loading ? (
-        <div className="navbar-end uppercase gap-7 lg:flex hidden">
-          <button
-            onClick={handleLogOut}
-            className="hover:scale-110 duration-200 text-yellow-400 font-light text-xl"
-          >
-            <div className="flex tracking-[2px] items-center gap-2">
-              <FiLogOut />
-              <span className="text-xl uppercase">Logout</span>
-            </div>
-          </button>
-          <div>
-            <img
-              className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
-              src="https://i.ibb.co/yktKPFk/149071.png"
-            />
-          </div>
-        </div>
-      ) : user ? (
+      {user ? (
         <div className="navbar-end uppercase gap-7 lg:flex hidden">
           <button
             onClick={handleLogOut}
@@ -151,6 +136,15 @@ const Navbar = () => {
               />
             )}
           </div>
+        </div>
+      ) : loading ? (
+        <div className="navbar-end uppercase gap-5 lg:flex hidden">
+          <div
+            className="text-transparent w-1/6 rounded-md opacity-25 border-yellow-400 border bg-transparent"
+          >a</div>
+          <div
+            className="text-transparent w-1/6 rounded-md opacity-25 border-white border bg-transparent"
+          >a</div>
         </div>
       ) : (
         <div className="navbar-end uppercase gap-5 lg:flex hidden">

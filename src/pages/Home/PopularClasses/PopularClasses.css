@@ -28,12 +28,13 @@
 
 .BrainhubCarousel__arrowRight {
   position: absolute;
-  right: 20px;
+  right: 5px;
+  z-index: 10;
 }
 
 .BrainhubCarousel__arrowLeft {
   position: absolute;
-  left: 20px;
+  left: 5px;
   z-index: 10;
 }
 

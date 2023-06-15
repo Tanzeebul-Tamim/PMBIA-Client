@@ -3,7 +3,7 @@ import { IoSchoolSharp } from "react-icons/io5";
 
 const ClassCard = () => {
   return (
-    <div className="card description rounded-2xl card-compact w-96 bg-base-200 mr-2 ml-2 shadow-xl">
+    <div className="card description rounded-2xl card-compact w-full lg:ml-3 lg:mr-3 bg-base-200 shadow-xl">
       <div>
         <img
           className="rounded-t-2xl z-0 w-full"

@@ -15,7 +15,7 @@ const popularClassesDes =
 let numberOfSlides = null;
 
 if (window.innerWidth > 576) {
-  numberOfSlides = 4;
+  numberOfSlides = 3;
 } else {
   numberOfSlides = 1;
 }
@@ -34,7 +34,6 @@ const PopularClasses = () => {
       <Carousel
         className="popularClassSection cursor-pointer"
         plugins={[
-          "infinite",
           "arrows",
           {
             resolve: slidesToShowPlugin,
