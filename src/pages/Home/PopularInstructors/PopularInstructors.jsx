@@ -15,6 +15,7 @@ import { useState } from "react";
 const popularInstructorsDes =
   "Get to know some of our highly skilled and experienced instructors who'll lead your way throughout this journey. Each of our instructor brings a unique teaching style and a wealth of practical experience, ensuring that our students receive the best instruction possible.";
 
+// You need to refresh the page once in order to make the carousel cards responsive
 let numberOfSlides = null;
 
 if (window.innerWidth > 576) {
@@ -68,13 +69,14 @@ const PopularInstructors = () => {
             },
           ]}
         >
-          {
-            topInstructors.map(topInstructor => {
-              return (
-                <InstructorCard topInstructor={topInstructor} key={topInstructor.id}></InstructorCard>
-              );
-            })
-          }
+          {topInstructors.map((topInstructor) => {
+            return (
+              <InstructorCard
+                topInstructor={topInstructor}
+                key={topInstructor.id}
+              ></InstructorCard>
+            );
+          })}
         </Carousel>
       </div>
     </div>

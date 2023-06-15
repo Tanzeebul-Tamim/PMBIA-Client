@@ -1,3 +1,4 @@
+// instructors api's------------------------------------
 // get all instructors
 export const getAllInstructors = async (count, search) => {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/instructors?count=${count}&search=${search}`);
@@ -19,9 +20,18 @@ export const getTotalInstructors = async () => {
     return data;
 }
 
+
+// classes api's--------------------------------------
 // get all classes
 export const getAllClasses = async (count, search) => {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/classes?count=${count}&search=${search}`);
+    const data = await response.json();
+    return data;
+}
+
+// / get top 6 classes
+export const getTopClasses = async () => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/classes/top`);
     const data = await response.json();
     return data;
 }

@@ -25,11 +25,10 @@ const BikeHacks = () => {
       }
     };
 
-    handleResize(); // Call once on component mount
+    handleResize();
 
     window.addEventListener('resize', handleResize);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -57,6 +56,7 @@ const BikeHacks = () => {
         <Carousel
           className="popularClassSection cursor-pointer z-[10]"
           plugins={[
+            "infinite",
             'arrows',
             {
               resolve: slidesToShowPlugin,

@@ -27,7 +27,6 @@ const InstructorCard = ({ topInstructor }) => {
           <img
             className="group-hover:scale-110 duration-200 lg:w-[100px] w-[calc(26vw)] lg:h-[100px] h-[calc(26vw)] rounded-full border-zinc-400 border-[2px] lg:border-[4px]"
             src={topInstructor.image}
-            alt=""
           />
         </div>
       </div>
