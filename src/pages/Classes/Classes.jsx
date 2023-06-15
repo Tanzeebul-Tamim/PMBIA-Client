@@ -6,7 +6,6 @@ import { ScaleLoader } from "react-spinners";
 import ClassesTable from "./ClassesTable/ClassesTable";
 import { useState } from "react";
 import { getAllClasses } from "../../api/api";
-import ClassesTableHead from "./ClassesTable/ClassesTableHead";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 
@@ -45,9 +44,10 @@ const Classes = () => {
         <ClassesBanner />
         <div className="lg:px-10 pb-24 pt-16">
           <SectionTitle
-            title1="Meet Our"
-            title2="Expert Instructors"
-            description={titleDescription}
+                 title1="Discover The Perfect"
+                 title2="Class For You"
+                 textAlign={"text-end"}
+                 description={titleDescription}
           />
           <div className="relative flex justify-center mb-2">
             <input
@@ -68,13 +68,7 @@ const Classes = () => {
                 }}
               ></BsSearch>
             </button>
-          </div>
-          <div className="overflow-x-auto pt-10">
-            <table className="table text-center description text-white">
-              {/* head */}
-              <ClassesTableHead />
-            </table>
-          </div>
+          </div>         
           <div className="pt-10 flex justify-center pb-24">
             <ScaleLoader
               height={85}

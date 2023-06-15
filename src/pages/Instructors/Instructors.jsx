@@ -6,7 +6,6 @@ import InstructorsTable from "./InstructorsTable/InstructorsTable";
 import { getAllInstructors } from "../../api/api";
 import { ScaleLoader } from "react-spinners";
 import { BsSearch } from "react-icons/bs";
-import InstructorsTableHead from "./InstructorsTable/InstructorsTableHead";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRef } from "react";
 
@@ -68,12 +67,6 @@ const Instructors = () => {
                 }}
               ></BsSearch>
             </button>
-          </div>
-          <div className="overflow-x-auto pt-10">
-            <table className="table text-center description text-white">
-              {/* head */}
-              <InstructorsTableHead />
-            </table>
           </div>
           <div className="pt-10 flex justify-center pb-24">
             <ScaleLoader

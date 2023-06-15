@@ -1,15 +1,17 @@
 import { useContext, useState } from "react";
-import { FaEyeSlash, FaEye, FaFacebookF, FaGithub } from "react-icons/fa";
+import { FaEyeSlash, FaEye, FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import useTitle from "../../../Helmet/useTitle";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { saveUser } from "../../../api/authApi";
 
 const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
   const {
     createUser,
     updateUser,
@@ -18,7 +20,6 @@ const Register = () => {
     logOut,
     googleSignIn,
     facebookSignIn,
-    githubSignIn,
   } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -28,11 +29,19 @@ const Register = () => {
   const from = location.state?.from?.pathname || "/";
   useTitle("| Register");
 
+  const handleSelectGender = (event) => {
+    const selectGender = event.target.value;
+    setSelectedGender(selectGender);
+  };
+
   const handleRegister = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
+    const contactNo = form.contact.value;
+    const address = form.address.value;
+    const gender = selectedGender;
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
 
@@ -44,75 +53,86 @@ const Register = () => {
     }`;
 
     if (image) {
-      if (password === confirmPassword) {
-        setError("");
-
-        if (password.length < 6) {
-          setError("Password must be at least 6 characters long!");
-          return;
-        } else if (!/(?=.*[A-Z])/.test(password)) {
-          setError("Password must contain at least one uppercase letter");
-          return;
-        } else if (!/(?=.*\d)/.test(password)) {
-          setError("Password must contain at least one digit");
-          return;
-        } else if (
-          !/(?=.*[!@#$%^&*()_\-+={}[\]\\|:;"'<>,.?/~])/.test(password)
-        ) {
-          setError("Password must contain at least one special character");
+      if(selectedGender == ("Male" || "Female")) {
+        if (password === confirmPassword) {
+          setError("");
+  
+          if (password.length < 6) {
+            setError("Password must be at least 6 characters long!");
+            return;
+          } else if (!/(?=.*[A-Z])/.test(password)) {
+            setError("Password must contain at least one uppercase letter");
+            return;
+          } else if (!/(?=.*\d)/.test(password)) {
+            setError("Password must contain at least one digit");
+            return;
+          } else if (
+            !/(?=.*[!@#$%^&*()_\-+={}[\]\\|:;"'<>,.?/~])/.test(password)
+          ) {
+            setError("Password must contain at least one special character");
+            return;
+          }
+  
+          fetch(url, {
+            method: "POST",
+            body: formData,
+          })
+            .then((res) => res.json())
+            .then((imageData) => {
+              const imageUrl = imageData.data.display_url;
+              const user = {name, email, contactNo, address, gender, image};
+  
+              createUser(email, password)
+                .then(() => {
+                  updateUser(name, imageUrl)
+                    .then(() => {
+                      toast.success(
+                        "Registration successful! You can now login.",
+                        {
+                          position: "top-center",
+                          autoClose: 1100,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                        }
+                      );
+                      saveUser(user);
+                      logOut();
+                      setSuccess("Registration Successful!");
+                      setError("");
+                      setTimeout(function () {
+                        window.location.href = "/login";
+                      }, 2000);
+                    })
+                    .catch((err) => {
+                      setLoading(false);
+                      console.error(err);
+                    });
+                })
+                .catch((error) => {
+                  console.error(error);
+                  if (error.message.includes("email")) {
+                    setError(
+                      "This email is already in use. Please use a different email."
+                    );
+                    setSuccess("");
+                  }
+                  setLoading(false);
+                });
+            });
+        } else {
+          setError("Passwords do not match!");
           return;
         }
-
-        fetch(url, {
-          method: "POST",
-          body: formData,
-        })
-          .then((res) => res.json())
-          .then((imageData) => {
-            const imageUrl = imageData.data.display_url;
-
-            createUser(email, password)
-              .then(() => {
-                updateUser(name, imageUrl)
-                  .then(() => {
-                    toast.success(
-                      "Registration successful! You can now login.",
-                      {
-                        position: "top-center",
-                        autoClose: 1100,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "dark",
-                      }
-                    );
-                    logOut();
-                    setSuccess("Registration Successful!");
-                    setError("");
-                    setTimeout(function () {
-                      window.location.href = "/login";
-                    }, 2000);
-                  })
-                  .catch((err) => {
-                    setLoading(false);
-                    console.error(err);
-                  });
-              })
-              .catch((error) => {
-                console.error(error);
-                if (error.message.includes("email")) {
-                  setError(
-                    "This email is already in use. Please use a different email."
-                  );
-                  setSuccess("");
-                }
-                setLoading(false);
-              });
-          });
-      } else {
-        setError("Passwords do not match!");
+      }
+      else if((selectedGender != ("Male" || "Female")) && (!name || !email || !password || !confirmPassword)) {
+        return;
+      }
+      else {
+        setError("Please select a gender");
         return;
       }
     } else if (!image && (!name || !email || !password || !confirmPassword)) {
@@ -126,23 +146,8 @@ const Register = () => {
   const handleFacebookSignIn = () => {
     facebookSignIn()
       .then((result) => {
-        const loggedUser = result.user;
+        saveUser(result.user);
         navigate(from, { replace: true });
-        console.log(loggedUser);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  };
-
-  const handleGithubSignIn = () => {
-    githubSignIn()
-      .then((result) => {
-        const loggedUser = result.user;
-        navigate(from, { replace: true });
-        console.log(loggedUser);
         setLoading(false);
       })
       .catch((error) => {
@@ -154,9 +159,8 @@ const Register = () => {
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
-        const loggedUser = result.user;
+        saveUser(result.user);
         navigate(from, { replace: true });
-        console.log(loggedUser);
         setLoading(false);
       })
       .catch((error) => {
@@ -168,7 +172,7 @@ const Register = () => {
   const handleImageButtonText = (image) => {
     const imageName = image.name;
     if (imageName.length > 40) {
-      setImageButtonText(`${image.name.slice(0, 40)} . . . .`);
+      setImageButtonText(`${image.name.slice(0, 22)} . . . .`);
     } else {
       setImageButtonText(imageName);
     }
@@ -210,125 +214,189 @@ const Register = () => {
             landscapes. Register now and let your MTB journey begin!
           </p>
         </div>
-        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="card flex-shrink-0 w-full max-w-[420px] shadow-2xl bg-base-100">
           <div className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="uppercase label-text font-bold tracking-widest text-white">
-                  Name
-                </span>
-              </label>
-              <input
-                type="text"
-                required
-                name="name"
-                placeholder="Enter your username"
-                className="input input-bordered"
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="uppercase label-text font-bold tracking-widest text-white">
-                  Email
-                </span>
-              </label>
-              <input
-                type="email"
-                required
-                name="email"
-                placeholder="Enter your email"
-                className="input input-bordered"
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="uppercase label-text font-bold tracking-widest text-white">
-                  Select User image
-                </span>
-              </label>
-              <label>
+            <div className="flex justify-center gap-3">
+              <div className="form-control">
+                <label className="label">
+                  <span className="uppercase label-text font-bold tracking-widest text-white">
+                    Name
+                  </span>
+                </label>
                 <input
-                  onChange={(event) =>
-                    handleImageButtonText(event.target.files[0])
-                  }
-                  type="file"
-                  name="image"
-                  className="input input-bordered hidden"
-                  hidden
-                  accept="image/*"
+                  type="text"
+                  required
+                  name="name"
+                  placeholder="Enter your username"
+                  className="input input-bordered"
                 />
-                <div className="btn btn-sm hover:bg-stone-700 bg-stone-800">
-                  {imageButtonText}
+              </div>
+
+              <div className="form-control">
+                <label className="label">
+                  <span className="uppercase label-text font-bold tracking-widest text-white">
+                    Email
+                  </span>
+                </label>
+                <input
+                  type="email"
+                  required
+                  name="email"
+                  placeholder="Enter your email"
+                  className="input input-bordered"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-center gap-3">
+              <div className="form-control">
+                <label className="label">
+                  <span className="uppercase label-text font-bold tracking-widest text-white">
+                    Contact No
+                  </span>
+                </label>
+                <input
+                  type="number"
+                  required
+                  name="contact"
+                  placeholder="Enter your contact no"
+                  className="input input-bordered"
+                />
+              </div>
+
+              <div className="form-control">
+                <label className="label">
+                  <span className="uppercase label-text font-bold tracking-widest text-white">
+                    Address
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  name="address"
+                  placeholder="Enter your address"
+                  className="input input-bordered"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between">
+              <div className="form-control">
+                <label className="label">
+                  <span className="uppercase label-text font-bold tracking-widest text-white">
+                    User image
+                  </span>
+                </label>
+                <label>
+                  <input
+                    onChange={(event) =>
+                      handleImageButtonText(event.target.files[0])
+                    }
+                    type="file"
+                    name="image"
+                    className="input input-bordered hidden"
+                    hidden
+                    accept="image/*"
+                  />
+                  <div className="btn btn-sm hover:bg-stone-700 bg-stone-800">
+                    {imageButtonText}
+                  </div>
+                </label>
+              </div>
+
+              <div className="form-control">
+                <label className="label">
+                  <span className="uppercase label-text font-bold tracking-widest text-white">
+                    Gender
+                  </span>
+                </label>
+                <label>
+                  <select
+                    onChange={handleSelectGender}
+                    name="gender"
+                    className="input input-bordered select font-light text-base text-gray-400 w-full max-w-xs"
+                  >
+                    <option hidden>
+                      Enter your gender
+                    </option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div className="flex relative justify-center gap-3">
+              <div className="z-[10] form-control">
+                <label className="label">
+                  <span className="uppercase label-text font-bold tracking-widest text-white">
+                    Password
+                  </span>
+                </label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  autoComplete="off"
+                  name="password"
+                  placeholder="Enter your password"
+                  className="input input-bordered"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "60%",
+                    left: "140px",
+                    cursor: "pointer",
+                    fontSize: "20px",
+                  }}
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </div>
-              </label>
-            </div>
-            <div className="z-[10] relative form-control">
-              <label className="label">
-                <span className="uppercase label-text font-bold tracking-widest text-white">
-                  Password
-                </span>
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                required
-                autoComplete="off"
-                name="password"
-                placeholder="Enter your password"
-                className="input input-bordered"
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  top: "60%",
-                  right: "10px",
-                  cursor: "pointer",
-                  fontSize: "20px",
-                }}
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </div>
+
+              <div className="z-[10] form-control">
+                <label className="label">
+                  <span className="uppercase label-text font-bold tracking-widest text-white">
+                    Confirm Password
+                  </span>
+                </label>
+                <input
+                  type={showPassword2 ? "text" : "password"}
+                  required
+                  autoComplete="off"
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  className="input input-bordered"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "60%",
+                    right: "0px",
+                    cursor: "pointer",
+                    fontSize: "20px",
+                  }}
+                  onClick={togglePasswordVisibility2}
+                >
+                  {showPassword2 ? <FaEyeSlash /> : <FaEye />}
+                </div>
               </div>
             </div>
-            <div className="z-[10] relative form-control">
-              <label className="label">
-                <span className="uppercase label-text font-bold tracking-widest text-white">
-                  Confirm Password
-                </span>
-              </label>
-              <input
-                type={showPassword2 ? "text" : "password"}
-                required
-                autoComplete="off"
-                name="confirmPassword"
-                placeholder="Enter your password again"
-                className="input input-bordered"
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  top: "36%",
-                  right: "10px",
-                  cursor: "pointer",
-                  fontSize: "20px",
-                }}
-                onClick={togglePasswordVisibility2}
-              >
-                {showPassword2 ? <FaEyeSlash /> : <FaEye />}
-              </div>
-              <label className="label">
-                <Link to="/login" className="label-text-alt link link-hover">
-                  Already have an account? Please{" "}
-                  <span className="text-yellow-500">Login</span>
-                </Link>
-              </label>
-              <p
-                className={`${
-                  error ? "text-red-600" : success ? "text-green-600" : ""
-                } ${error || success ? "visible" : "invisible"}`}
-              >
-                {error ? error : success ? success : "a"}
-              </p>
-            </div>
+
+            <label className="label">
+              <Link to="/login" className="label-text-alt link link-hover">
+                Already have an account? Please{" "}
+                <span className="text-yellow-500">Login</span>
+              </Link>
+            </label>
+            <p
+              className={`${
+                error ? "text-red-600" : success ? "text-green-600" : ""
+              } ${error || success ? "visible" : "invisible"}`}
+            >
+              {error ? error : success ? success : "a"}
+            </p>
             <div className="divider text-white">Or continue with</div>
             <div className="z-[10] justify-center gap-10 flex">
               <button
@@ -345,13 +413,6 @@ const Register = () => {
               >
                 <FaFacebookF className="text-2xl text-[#1877F2]" />
               </button>
-              <button
-                formNoValidate
-                onClick={handleGithubSignIn}
-                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
-              >
-                <FaGithub className="text-2xl" />
-              </button>
             </div>
             <div className="z-[10] form-control mt-6">
               <button
@@ -359,7 +420,11 @@ const Register = () => {
                 type="submit"
                 className="btn bg-yellow-500 disabled:bg-yellow-900 disabled:text-stone-500 hover:bg-yellow-600 text-white text-xl"
               >
-                {loading ? <TbFidgetSpinner className="text-2xl text-stone-400 animate-spin" /> : 'Register'}
+                {loading ? (
+                  <TbFidgetSpinner className="text-2xl text-stone-400 animate-spin" />
+                ) : (
+                  "Register"
+                )}
               </button>
             </div>
           </div>

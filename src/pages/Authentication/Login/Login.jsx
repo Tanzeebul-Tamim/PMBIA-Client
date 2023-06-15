@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaEyeSlash, FaEye, FaFacebookF, FaGithub } from "react-icons/fa";
+import { FaEyeSlash, FaEye, FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import useTitle from "../../../Helmet/useTitle";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -14,9 +14,10 @@ import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { saveUser } from "../../../api/authApi";
 
 const Login = () => {
-  const { signIn, setLoading, loading, googleSignIn, facebookSignIn, githubSignIn } =
+  const { signIn, setLoading, loading, googleSignIn, facebookSignIn } =
     useContext(AuthContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -48,23 +49,8 @@ const Login = () => {
   const handleFacebookSignIn = () => {
     facebookSignIn()
       .then((result) => {
-        const loggedUser = result.user;
+        saveUser(result.user);
         navigate(from, { replace: true });
-        console.log(loggedUser);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  };
-
-  const handleGithubSignIn = () => {
-    githubSignIn()
-      .then((result) => {
-        const loggedUser = result.user;
-        navigate(from, { replace: true });
-        console.log(loggedUser);
         setLoading(false);
       })
       .catch((error) => {
@@ -76,9 +62,8 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
-        const loggedUser = result.user;
+        saveUser(result.user);
         navigate(from, { replace: true });
-        console.log(loggedUser);
         setLoading(false);
       })
       .catch((error) => {
@@ -243,13 +228,6 @@ const Login = () => {
                 className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
               >
                 <FaFacebookF className="text-2xl text-[#1877F2]" />
-              </button>
-              <button
-                formNoValidate
-                onClick={handleGithubSignIn}
-                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
-              >
-                <FaGithub className="text-2xl" />
               </button>
             </div>
             <div className="z-[10] form-control mt-6">

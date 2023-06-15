@@ -15,7 +15,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logOut, loading } = useContext(AuthContext);
-
+  console.log(user)
   const handleLogOut = () => {
     logOut()
       .then()
@@ -59,7 +59,7 @@ const Navbar = () => {
           </ActiveLink>
           {user && (
             <ActiveLink
-              to="/dashboard"
+              to="/dashboard/profile"
               className="block text-sm text-white hover:text-yellow-400"
             >
               <span className="flex items-center gap-1">
@@ -99,7 +99,7 @@ const Navbar = () => {
             <div>classes</div>
           </ActiveLink>
           {user && 
-          <ActiveLink className="hover:text-yellow-400" to="/dashboard">
+          <ActiveLink className="hover:text-yellow-400" to="/dashboard/profile">
             <div>Dashboard</div>
           </ActiveLink>}
           <ActiveLink className="hover:text-yellow-400" to="/about-us">
@@ -118,7 +118,8 @@ const Navbar = () => {
               <span className="text-xl uppercase">Logout</span>
             </div>
           </button>
-          <div
+          <Link
+            to="/dashboard/profile"
             data-tip={user?.displayName}
             className="tooltip tooltip-bottom tooltip-warning"
           >
@@ -133,7 +134,7 @@ const Navbar = () => {
                 src="https://i.ibb.co/yktKPFk/149071.png"
               />
             )}
-          </div>
+          </Link>
         </div>
       ) : loading ? (
         <div className="navbar-end uppercase gap-5 lg:flex hidden">
@@ -176,7 +177,8 @@ const Navbar = () => {
             />
           </div>
         ) : !loading && user ? (
-          <div
+          <Link
+            to="/dashboard/profile"
             data-tip={user?.displayName}
             className="tooltip tooltip-bottom tooltip-warning"
           >
@@ -185,7 +187,7 @@ const Navbar = () => {
               src={user.photoURL}
               alt=""
             />
-          </div>
+          </Link>
         ) : (
           ""
         )}
