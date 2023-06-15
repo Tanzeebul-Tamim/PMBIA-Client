@@ -5,7 +5,7 @@ import ClassesBanner from "./ClassesBanner/ClassesBanner";
 import { ScaleLoader } from "react-spinners";
 import ClassesTable from "./ClassesTable/ClassesTable";
 import { useState } from "react";
-import { getAllClasses } from "../../api/auth";
+import { getAllClasses } from "../../api/api";
 import ClassesTableHead from "./ClassesTable/ClassesTableHead";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTotalInstructors } from "../../../api/auth";
+import { getTotalInstructors } from "../../../api/api";
 import InstructorsTableHead from "./InstructorsTableHead";
 
 const InstructorsTable = ({ instructors }) => {

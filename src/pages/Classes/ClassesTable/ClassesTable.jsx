@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ClassesTableHead from "./ClassesTableHead";
 import { useEffect } from "react";
-import { getTotalClasses } from "../../../api/auth";
+import { getTotalClasses } from "../../../api/api";
 
 const ClassesTable = ({ classes }) => {
   const [totalClasses, setTotalClasses] = useState({});

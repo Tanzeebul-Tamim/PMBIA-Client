@@ -8,6 +8,9 @@ import "@brainhubeu/react-carousel/lib/style.css";
 import "../PopularClasses/PopularClasses.css";
 import InstructorCard from "./InstructorCard";
 import { Slide } from "react-awesome-reveal";
+import { useEffect } from "react";
+import { getTopInstructors } from "../../../api/api";
+import { useState } from "react";
 
 const popularInstructorsDes =
   "Get to know some of our highly skilled and experienced instructors who'll lead your way throughout this journey. Each of our instructor brings a unique teaching style and a wealth of practical experience, ensuring that our students receive the best instruction possible.";
@@ -21,6 +24,16 @@ if (window.innerWidth > 576) {
 }
 
 const PopularInstructors = () => {
+  const [topInstructors, setTopInstructors] = useState([]);
+
+  useEffect(() => {
+    getTopInstructors()
+      .then((data) => {
+        setTopInstructors(data.topInstructors);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <div className="px-5 lg:px-10 lg:mb-32 mb-12 pt-11 relative">
       <Slide>
@@ -34,6 +47,7 @@ const PopularInstructors = () => {
         <Carousel
           className="popularClassSection cursor-pointer"
           plugins={[
+            "infinite",
             "arrows",
             {
               resolve: slidesToShowPlugin,
@@ -54,12 +68,13 @@ const PopularInstructors = () => {
             },
           ]}
         >
-          <InstructorCard></InstructorCard>
-          <InstructorCard></InstructorCard>
-          <InstructorCard></InstructorCard>
-          <InstructorCard></InstructorCard>
-          <InstructorCard></InstructorCard>
-          <InstructorCard></InstructorCard>
+          {
+            topInstructors.map(topInstructor => {
+              return (
+                <InstructorCard topInstructor={topInstructor} key={topInstructor.id}></InstructorCard>
+              );
+            })
+          }
         </Carousel>
       </div>
     </div>

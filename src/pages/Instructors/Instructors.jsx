@@ -3,7 +3,7 @@ import useTitle from "../../Helmet/useTitle";
 import SectionTitle from "../../reusable/sectionTitle";
 import InstructorsBanner from "./InstructorsBanner/InstructorsBanner";
 import InstructorsTable from "./InstructorsTable/InstructorsTable";
-import { getAllInstructors } from "../../api/auth";
+import { getAllInstructors } from "../../api/api";
 import { ScaleLoader } from "react-spinners";
 import { BsSearch } from "react-icons/bs";
 import InstructorsTableHead from "./InstructorsTable/InstructorsTableHead";
