@@ -6,7 +6,7 @@ const ClassCard = ({ topClass }) => {
     <div className="group card relative h-full description rounded-2xl card-compact w-full lg:ml-3 lg:mr-3 bg-base-200 shadow-xl">
       <div>
         <img
-          className="rounded-t-2xl z-0 w-full"
+          className="rounded-t-2xl h-[240px] z-0 w-full"
           src={topClass.image}
         />
       </div>

@@ -1,16 +1,14 @@
 import SectionTitle from "../../../reusable/sectionTitle";
 import ClassCard from "./ClassCard";
-import {
-  IoMdArrowDropleftCircle,
-  IoMdArrowDroprightCircle,
-} from "react-icons/io";
-import Carousel, { slidesToShowPlugin } from "@brainhubeu/react-carousel";
-import "@brainhubeu/react-carousel/lib/style.css";
-import "./PopularClasses.css";
 import { Slide } from "react-awesome-reveal";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getTopClasses } from "../../../api/api";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Navigation } from "swiper";
+import "../PopularInstructors/style.css";
 
 const popularClassesDes =
   "We offer a curated collection of the most sought-after classes which are highly recommended for mountain bike enthusiasts. Discover a range of exciting and educational courses designed to enhance your MTB skills and knowledge.";
@@ -45,32 +43,21 @@ const PopularClasses = () => {
           description={popularClassesDes}
         />
       </Slide>
-      <Carousel
+      <Swiper
+        slidesPerView={numberOfSlides}
+        spaceBetween={30}
+        navigation={true}
+        modules={[Navigation]}
         className="popularClassSection cursor-pointer"
-        plugins={[
-          "infinite",
-          "arrows",
-          {
-            resolve: slidesToShowPlugin,
-            options: {
-              numberOfSlides: numberOfSlides,
-              arrowLeft: <IoMdArrowDropleftCircle></IoMdArrowDropleftCircle>,
-              arrowLeftDisabled: (
-                <IoMdArrowDropleftCircle></IoMdArrowDropleftCircle>
-              ),
-              arrowRight: <IoMdArrowDroprightCircle></IoMdArrowDroprightCircle>,
-              arrowRightDisabled: (
-                <IoMdArrowDroprightCircle></IoMdArrowDroprightCircle>
-              ),
-              addArrowClickHandler: true,
-            },
-          },
-        ]}
       >
         {topClasses.map((topClass) => {
-          return <ClassCard topClass={topClass} key={topClass.id}></ClassCard>;
+          return (
+            <SwiperSlide key={topClass.id}>
+              <ClassCard topClass={topClass}></ClassCard>
+            </SwiperSlide>
+          );
         })}
-      </Carousel>
+      </Swiper>
     </div>
   );
 };

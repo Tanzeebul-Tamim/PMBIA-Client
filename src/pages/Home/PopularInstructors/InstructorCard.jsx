@@ -4,8 +4,8 @@ import { FaQuoteLeft } from "react-icons/fa";
 
 const InstructorCard = ({ topInstructor }) => {
   return (
-    <div className="card h-full group description rounded-2xl card-compact w-full lg:ml-3  lg:mr-3 bg-base-200 shadow-xl">
-      <div className="flex justify-center items-center gap-5">
+    <div className="card h-full group description rounded-2xl card-compact lg:ml-3  lg:mr-3 bg-base-200 shadow-xl">
+      <div className="flex justify-center items-center">
         <div className="card-body z-50">
           <h2 className="card-title text-yellow-500">{topInstructor.name}</h2>
           {topInstructor.quote && (
@@ -25,7 +25,7 @@ const InstructorCard = ({ topInstructor }) => {
         </div>
         <div className="mr-5">
           <img
-            className="group-hover:scale-110 duration-200 lg:w-[100px] w-[calc(26vw)] lg:h-[100px] h-[calc(26vw)] rounded-full border-zinc-400 border-[2px] lg:border-[4px]"
+            className="group-hover:scale-110 duration-200 lg:w-[6vw] w-[calc(26vw)] lg:h-[6vw] h-[calc(26vw)] rounded-full border-zinc-400 border-[2px] lg:border-[4px]"
             src={topInstructor.image}
           />
         </div>
