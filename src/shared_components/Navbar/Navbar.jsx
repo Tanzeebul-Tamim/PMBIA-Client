@@ -15,7 +15,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logOut, loading } = useContext(AuthContext);
-  console.log(user)
+  console.log(user);
   const handleLogOut = () => {
     logOut()
       .then()
@@ -98,10 +98,14 @@ const Navbar = () => {
           <ActiveLink className="hover:text-yellow-400" to="/classes">
             <div>classes</div>
           </ActiveLink>
-          {user && 
-          <ActiveLink className="hover:text-yellow-400" to="/dashboard/profile">
-            <div>Dashboard</div>
-          </ActiveLink>}
+          {user && (
+            <ActiveLink
+              className="hover:text-yellow-400"
+              to="/dashboard/profile"
+            >
+              <div>Dashboard</div>
+            </ActiveLink>
+          )}
           <ActiveLink className="hover:text-yellow-400" to="/about-us">
             <div>About Us</div>
           </ActiveLink>
@@ -121,29 +125,35 @@ const Navbar = () => {
           <Link
             to="/dashboard/profile"
             data-tip={user?.displayName}
-            className="tooltip tooltip-bottom tooltip-warning"
+            className="tooltip tooltip-top tooltip-warning"
           >
             {user.photoURL ? (
-              <img
-                className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
-                src={user?.photoURL}
-              />
+              <div className="flex flex-col items-center">
+                <img
+                  className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
+                  src={user?.photoURL}
+                />
+                <h1 className="text-yellow-400 text-sm">My Profile</h1>
+              </div>
             ) : (
-              <img
-                className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
-                src="https://i.ibb.co/yktKPFk/149071.png"
-              />
+              <div className="flex flex-col items-center">
+                <img
+                  className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
+                  src="https://i.ibb.co/yktKPFk/149071.png"
+                />
+                <h1 className="text-yellow-400 text-sm">My Profile</h1>
+              </div>
             )}
           </Link>
         </div>
       ) : loading ? (
         <div className="navbar-end uppercase gap-5 lg:flex hidden">
-          <div
-            className="text-transparent w-1/6 rounded-md opacity-25 border-yellow-400 border bg-transparent"
-          >a</div>
-          <div
-            className="text-transparent w-1/6 rounded-md opacity-25 border-white border bg-transparent"
-          >a</div>
+          <div className="text-transparent w-1/6 rounded-md opacity-25 border-yellow-400 border bg-transparent">
+            a
+          </div>
+          <div className="text-transparent w-1/6 rounded-md opacity-25 border-white border bg-transparent">
+            a
+          </div>
         </div>
       ) : (
         <div className="navbar-end uppercase gap-5 lg:flex hidden">

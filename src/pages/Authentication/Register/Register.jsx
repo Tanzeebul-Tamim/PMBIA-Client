@@ -191,7 +191,7 @@ const Register = () => {
       className="min-h-screen pt-32 pb-24 lg:px-10 relative"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.600), rgba(0, 0, 0, 0.450)), url('https://img.redbull.com/images/c_crop,x_0,y_0,h_4128,w_8256/c_fill,w_1490,h_710/q_auto,f_auto/redbullcom/2022/6/21/fc9itii98dyr4imm5z1a/crankworx-stop-1-innsbruck-full-recap-program-szymon-godziek')",
+          "linear-gradient(rgba(0, 0, 0, 0.600), rgba(0, 0, 0, 0.450)), url('https://img.redbull.com/images/c_crop,x_0,y_449,h_1728,w_3840/c_fill,w_1680,h_780/q_auto,f_auto/redbullcom/2023/2/21/zw1f2ijxn6i0zvov6mkp/robin-goomes-and-georgia-astle-speed-and-style-crankworx-innsbruck-austria-2022')",
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -392,7 +392,7 @@ const Register = () => {
             </label>
             <p
               className={`${
-                error ? "text-red-600" : success ? "text-green-600" : ""
+                error ? "text-red-600" : success ? "text-green-500" : ""
               } ${error || success ? "visible" : "invisible"}`}
             >
               {error ? error : success ? success : "a"}

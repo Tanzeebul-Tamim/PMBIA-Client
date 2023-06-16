@@ -2,7 +2,7 @@
 export const saveUser = user => {
     const currentUser = {
         ...user,
-        role: 'student'
+        role: 'Student'
     }
 
     fetch(`${import.meta.env.VITE_API_URL}/users/${user?.email}`, {
@@ -22,7 +22,7 @@ export const saveUserViaSocial = user => {
         name: user.displayName,
         image: user.photoURL,
         email: user.email,
-        role: 'student'
+        role: 'Student'
     }
 
     fetch(`${import.meta.env.VITE_API_URL}/users/${user?.email}`, {

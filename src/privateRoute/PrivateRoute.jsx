@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from "../providers/AuthProvider";
-import { RotateLoader } from "react-spinners";
+import { PropagateLoader  } from "react-spinners";
 
 const PrivateRoute = ({children}) => {
     const { loading, user } = useContext(AuthContext);
@@ -11,7 +11,7 @@ const PrivateRoute = ({children}) => {
     if(loading) {
         return (
             <div style={{height: "700px"}} className="flex justify-center items-center">
-                <RotateLoader color="rgb(234 179 8)" />
+                <PropagateLoader  color="rgb(234 179 8)" />
             </div>
         );
     }
