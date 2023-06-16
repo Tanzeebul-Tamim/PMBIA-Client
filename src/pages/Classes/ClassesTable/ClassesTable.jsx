@@ -3,10 +3,10 @@ import ClassesTableHead from "./ClassesTableHead";
 import { useEffect } from "react";
 import { getTotalClasses } from "../../../api/api";
 import { GiTeacher } from "react-icons/gi";
+import { MdLibraryAdd } from "react-icons/md";
 
 const ClassesTable = ({ classes }) => {
   const [totalClasses, setTotalClasses] = useState({});
-
   useEffect(() => {
     getTotalClasses()
       .then((data) => {
@@ -35,8 +35,11 @@ const ClassesTable = ({ classes }) => {
             <ClassesTableHead />
             <tbody className="text-xl">
               {classes.map((classItem) => {
+                const availableSeat =
+                  classItem.studentSlot - classItem.totalStudent;
+
                 return (
-                  <tr key={classItem._id}>
+                  <tr className={availableSeat == 0 && 'bg-red-950'} key={classItem._id}>
                     <td className="flex justify-center">
                       <img
                         className="w-32 rounded-xl h-16"
@@ -56,12 +59,19 @@ const ClassesTable = ({ classes }) => {
                         </div>
                       </div>
                     </td>
-                    <td>{classItem.studentSlot - classItem.totalStudent}</td>
+                    <td>
+                      {availableSeat == 0
+                        ? "Fully Booked"
+                        : availableSeat}
+                    </td>
                     <td>$ {classItem.price}</td>
                     <td>
-                      <div className="btn btn-sm rounded-full hover:bg-stone-700 bg-stone-800">
-                        Add Class
-                      </div>
+                      <button
+                        disabled={availableSeat == 0 && true}
+                        className={`btn ${availableSeat == 0 ? 'disabled:bg-red-900' : 'disabled:bg-stone-900'} text-white btn-sm rounded-full hover:bg-stone-700 bg-stone-800`}
+                      >
+                        <MdLibraryAdd /> <span>Book Class</span>
+                      </button>
                     </td>
                   </tr>
                 );

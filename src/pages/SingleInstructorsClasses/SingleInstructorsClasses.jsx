@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation } from "swiper";
 import "../Home/PopularInstructors/style.css";
-import { FaChalkboardTeacher } from "react-icons/fa";
+import { FaChalkboardTeacher, FaQuoteLeft } from "react-icons/fa";
 
 const SingleInstructorsClasses = () => {
   const instructor = useLoaderData();
@@ -19,19 +19,29 @@ const SingleInstructorsClasses = () => {
     <div
       className="lg:pb-20 pb-8 relative pt-24 lg:pt-36 px-5 lg:px-10"
       style={{
-        backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.400), rgba(0, 0, 0, 0.400)), url('https://img.redbull.com/images/c_crop,x_0,y_0,h_2560,w_3840/c_fill,w_1680,h_1100/q_auto,f_auto/redbullcom/2023/5/15/sbajrt66mlbxrjm9tcfi/tom-pidcock-xco-world-cup-nove-mesto-2023')",
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.400), rgba(0, 0, 0, 0.400)),
+          url('${
+            instructor.cover
+              ? instructor.cover
+              : "https://img.redbull.com/images/c_crop,x_0,y_0,h_2949,w_5242/c_fill,w_1750,h_1000/q_auto,f_webp/redbullcom/2022/5/11/k3hfsyxcl8wsaaie8mre/fabio-wibmer-trials-berlin"
+          }')`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="mb-10">
+      <div className="mb-10 flex items-center justify-between">
         <img
           className="mask mask-squircle h-[180px] w-[180px] "
           src={instructor.image}
           alt=""
         />
+        {instructor.quote && (
+          <div className="w-2/5 text-7xl bg-base-200 p-5 rounded-2xl bg-opacity-5 glass shadow-2xl text-white">
+            <FaQuoteLeft className="text-5xl mb-5" />
+            <span className="ml-10">{instructor?.quote}</span>
+          </div>
+        )}
       </div>
       <SectionTitle
         title1={title1}
@@ -43,7 +53,7 @@ const SingleInstructorsClasses = () => {
         spaceBetween={30}
         navigation={true}
         modules={[Navigation]}
-        className="popularClassSection cursor-pointer"
+        className="popularClassSection"
       >
         {classes.map((classItem, index) => {
           return (
@@ -54,7 +64,10 @@ const SingleInstructorsClasses = () => {
         })}
       </Swiper>
       <div className="flex justify-center">
-        <Link to="/instructors" className="z-[10] mt-10 btn btn-md text-lg rounded-full hover:bg-stone-700 bg-stone-800">
+        <Link
+          to="/instructors"
+          className="z-[10] mt-10 btn btn-md text-lg rounded-full hover:bg-stone-700 bg-stone-800"
+        >
           <FaChalkboardTeacher />
           Back To Instructors Page
         </Link>

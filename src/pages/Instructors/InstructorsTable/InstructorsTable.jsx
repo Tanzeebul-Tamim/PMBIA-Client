@@ -64,7 +64,7 @@ const InstructorsTable = ({ instructors }) => {
                     <td>
                       <Link
                       to={`/instructor/${instructor._id}`}
-                      className="btn btn-sm rounded-lg hover:bg-stone-700 bg-stone-800">
+                      className="btn text-white btn-sm rounded-lg hover:bg-stone-700 bg-stone-800">
                         See {instructor.name.split(" ")[0]}&apos;s Classes
                       </Link>
                     </td>
