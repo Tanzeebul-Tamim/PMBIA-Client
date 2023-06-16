@@ -14,7 +14,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { saveUser } from "../../../api/authApi";
+import { saveUserViaSocial } from "../../../api/authApi";
 
 const Login = () => {
   const { signIn, setLoading, loading, googleSignIn, facebookSignIn } =
@@ -49,7 +49,7 @@ const Login = () => {
   const handleFacebookSignIn = () => {
     facebookSignIn()
       .then((result) => {
-        saveUser(result.user);
+        saveUserViaSocial(result.user);
         navigate(from, { replace: true });
         setLoading(false);
       })
@@ -62,7 +62,7 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
-        saveUser(result.user);
+        saveUserViaSocial(result.user);
         navigate(from, { replace: true });
         setLoading(false);
       })

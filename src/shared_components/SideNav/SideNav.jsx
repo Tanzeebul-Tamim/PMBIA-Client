@@ -16,7 +16,7 @@ const SideNav = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
-      className="fixed h-screen p-7 bg-base-200"
+      className="h-screen p-7 bg-base-200"
     >
       <div className="flex justify-center items-center">
         <img

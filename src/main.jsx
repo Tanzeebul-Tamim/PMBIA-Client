@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./layout/Dashboard";
 import PrivateRoute from "./privateRoute/PrivateRoute";
+import MyProfile from "./pages/MyProfile/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -50,11 +51,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard/profile",
-    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+    element: <Dashboard></Dashboard>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: ""
+        path: "/dashboard/profile",
+        element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
       }
     ]
   }

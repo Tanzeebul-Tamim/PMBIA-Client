@@ -11,7 +11,7 @@ const PrivateRoute = ({children}) => {
     if(loading) {
         return (
             <div style={{height: "700px"}} className="flex justify-center items-center">
-                <RotateLoader color="#36d7b7" />
+                <RotateLoader color="rgb(234 179 8)" />
             </div>
         );
     }

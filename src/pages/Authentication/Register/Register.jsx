@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { saveUser } from "../../../api/authApi";
+import { saveUser, saveUserViaSocial } from "../../../api/authApi";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -80,7 +80,7 @@ const Register = () => {
             .then((res) => res.json())
             .then((imageData) => {
               const imageUrl = imageData.data.display_url;
-              const user = {name, email, contactNo, address, gender, image};
+              const user = {name, email, contactNo, address, gender, image: imageUrl};
   
               createUser(email, password)
                 .then(() => {
@@ -146,7 +146,7 @@ const Register = () => {
   const handleFacebookSignIn = () => {
     facebookSignIn()
       .then((result) => {
-        saveUser(result.user);
+        saveUserViaSocial(result.user);
         navigate(from, { replace: true });
         setLoading(false);
       })
@@ -159,7 +159,7 @@ const Register = () => {
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
-        saveUser(result.user);
+        saveUserViaSocial(result.user);
         navigate(from, { replace: true });
         setLoading(false);
       })
@@ -384,7 +384,7 @@ const Register = () => {
               </div>
             </div>
 
-            <label className="label">
+            <label className="label z-[10]">
               <Link to="/login" className="label-text-alt link link-hover">
                 Already have an account? Please{" "}
                 <span className="text-yellow-500">Login</span>
