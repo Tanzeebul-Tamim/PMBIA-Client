@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getTotalInstructors } from "../../../api/api";
 import InstructorsTableHead from "./InstructorsTableHead";
+import { Link } from "react-router-dom";
+import { FaChalkboardTeacher } from "react-icons/fa";
 
 const InstructorsTable = ({ instructors }) => {
   const [totalInstructors, setTotalInstructors] = useState({});
@@ -21,10 +23,13 @@ const InstructorsTable = ({ instructors }) => {
         </div>
       ) : (
         <div className="overflow-x-auto pt-10">
-          <h1 className="mb-5 text-white description text-xl">
-            <strong>Instructors Count :</strong>{" "}
+          <div className="mb-5 flex gap-2 text-white description text-xl">
+            <strong className="flex items-center gap-2">
+              <FaChalkboardTeacher className="text-2xl" />
+              <span>Instructors Count :</span>
+            </strong>{" "}
             {totalInstructors.totalInstructors}
-          </h1>
+          </div>
           <table className="table text-center description text-white">
             {/* head */}
             <InstructorsTableHead />
@@ -57,9 +62,11 @@ const InstructorsTable = ({ instructors }) => {
                     </td>
                     <td>{instructor.classes.length}</td>
                     <td>
-                      <div className="btn btn-sm rounded-lg hover:bg-stone-700 bg-stone-800">
+                      <Link
+                      to={`/instructor/${instructor._id}`}
+                      className="btn btn-sm rounded-lg hover:bg-stone-700 bg-stone-800">
                         See {instructor.name.split(" ")[0]}&apos;s Classes
-                      </div>
+                      </Link>
                     </td>
                   </tr>
                 );

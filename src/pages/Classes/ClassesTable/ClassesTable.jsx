@@ -2,6 +2,7 @@ import { useState } from "react";
 import ClassesTableHead from "./ClassesTableHead";
 import { useEffect } from "react";
 import { getTotalClasses } from "../../../api/api";
+import { GiTeacher } from "react-icons/gi";
 
 const ClassesTable = ({ classes }) => {
   const [totalClasses, setTotalClasses] = useState({});
@@ -22,9 +23,13 @@ const ClassesTable = ({ classes }) => {
         </div>
       ) : (
         <div className="overflow-x-auto pt-10">
-          <h1 className="mb-5 text-white description text-xl">
-            <strong>Classes Count :</strong> {totalClasses.totalClasses}
-          </h1>
+          <div className="mb-5 flex gap-2 text-white description text-xl">
+            <strong className="flex items-center gap-2">
+              <GiTeacher className="text-2xl" />
+              <span>Classes Count :</span>
+            </strong>{" "}
+            {totalClasses.totalClasses}
+          </div>
           <table className="table text-center description text-white">
             {/* head */}
             <ClassesTableHead />
@@ -55,7 +60,7 @@ const ClassesTable = ({ classes }) => {
                     <td>$ {classItem.price}</td>
                     <td>
                       <div className="btn btn-sm rounded-full hover:bg-stone-700 bg-stone-800">
-                        Add To Wishlist
+                        Add Class
                       </div>
                     </td>
                   </tr>

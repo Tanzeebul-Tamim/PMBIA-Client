@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./layout/Dashboard";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import MyProfile from "./pages/MyProfile/MyProfile";
+import SingleInstructorsClasses from "./pages/SingleInstructorsClasses/SingleInstructorsClasses";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,11 @@ const router = createBrowserRouter([
         path: "/classes",
         element: <Classes></Classes>,
       },
+      {
+        path: "/instructor/:id",
+        element: <PrivateRoute><SingleInstructorsClasses></SingleInstructorsClasses></PrivateRoute>,
+        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/instructor/${params.id}`)
+      }
     ],
   },
   {
