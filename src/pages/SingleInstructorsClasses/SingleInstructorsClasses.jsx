@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import { Navigation } from "swiper";
 import "../Home/PopularInstructors/style.css";
 import { FaChalkboardTeacher, FaQuoteLeft } from "react-icons/fa";
+import useTitle from "../../Helmet/useTitle";
 
 const SingleInstructorsClasses = () => {
   const instructor = useLoaderData();
@@ -14,6 +15,7 @@ const SingleInstructorsClasses = () => {
   const nameWords = instructor.name.split(" ");
   const title1 = nameWords[0];
   const title2 = nameWords.slice(1).join(" ");
+  useTitle(`| ${instructor.name}`)
 
   return (
     <div

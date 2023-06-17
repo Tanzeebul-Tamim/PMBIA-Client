@@ -51,6 +51,11 @@ const Login = () => {
       .then((result) => {
         saveUserViaSocial(result.user);
         navigate(from, { replace: true });
+        const redirectUrl = localStorage.getItem("redirectUrl");
+        localStorage.removeItem("redirectUrl");
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -64,6 +69,11 @@ const Login = () => {
       .then((result) => {
         saveUserViaSocial(result.user);
         navigate(from, { replace: true });
+        const redirectUrl = localStorage.getItem("redirectUrl");
+        localStorage.removeItem("redirectUrl");
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -81,6 +91,11 @@ const Login = () => {
       .then((result) => {
         const createdUser = result.user;
         navigate(from, { replace: true });
+        const redirectUrl = localStorage.getItem("redirectUrl");
+        localStorage.removeItem("redirectUrl");
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
         console.log(createdUser);
       })
       .catch((error) => {

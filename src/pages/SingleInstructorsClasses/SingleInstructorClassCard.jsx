@@ -6,7 +6,7 @@ const SingleInstructorClassCard = ({ classItem }) => {
   const availableSeat = classItem.studentSlot - classItem.totalStudent;
 
   return (
-    <div className="group card relative h-full description rounded-2xl card-compact w-full lg:ml-3 lg:mr-3 bg-base-200 shadow-xl">
+    <div className="group card relative h-full description rounded-2xl card-compact w-full bg-base-200 shadow-xl">
       <div>
         <img
           className="rounded-t-2xl h-[240px] z-0 w-full"

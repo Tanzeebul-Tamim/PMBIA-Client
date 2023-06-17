@@ -6,12 +6,13 @@ import { useEffect } from "react";
 import { PropagateLoader } from "react-spinners";
 import useTitle from "../../Helmet/useTitle";
 import UpdateProfileForm from "./UpdateProfileForm";
+import DashboardPageTitle from "../../shared_components/DashboardPageTitle/DashboardPageTitle";
 
 const MyProfile = () => {
   const { user } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(false);
-  useTitle("| Dashboard - My Profile")
+  useTitle("| My Profile")
 
   useEffect(() => {
     setLoading(true);
@@ -45,9 +46,7 @@ const MyProfile = () => {
       }}
       className="bg-base-200 relative m-10 p-5 rounded-2xl"
     >
-      <h1 className="z-[10] text-yellow-600 text-5xl mb-16 tracking-[9px] text-center uppercase font-extrabold">
-        My Profile
-      </h1>
+      <DashboardPageTitle title={'My Profile'} />
       <div className="flex mb-10 px-5 gap-10 items-center justify-start ">
         <img
           className="z-[10] w-[200px] h-[200px] border-zinc-400 lg:border-[4px] shadow-2xl rounded-full"

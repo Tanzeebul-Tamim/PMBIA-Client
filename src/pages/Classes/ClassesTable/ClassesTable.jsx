@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import ClassesTableHead from "./ClassesTableHead";
-import { useEffect } from "react";
 import { getTotalClasses } from "../../../api/api";
 import { GiTeacher } from "react-icons/gi";
 import { MdLibraryAdd } from "react-icons/md";
+import { bookClass, getBookedClasses } from "../../../api/bookApi";
+import { AuthContext } from "../../../providers/AuthProvider";
+import { getUserData } from "../../../api/authApi";
+import { toast } from "react-toastify";
 
 const ClassesTable = ({ classes }) => {
   const [totalClasses, setTotalClasses] = useState({});
+  const { user } = useContext(AuthContext);
+  const [userDetails, setUserDetails] = useState({});
+  const [userBookings, setUserBookings] = useState([]);
+  const [bookedClasses, setBookedClasses] = useState([]);
+
   useEffect(() => {
     getTotalClasses()
       .then((data) => {
@@ -14,6 +22,38 @@ const ClassesTable = ({ classes }) => {
       })
       .catch((error) => console.error(error));
   }, []);
+
+  useEffect(() => {
+    if (user && user.email) {
+      getUserData(user.email)
+        .then((data) => {
+          setUserDetails(data);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user && user.email && userDetails._id) {
+      getBookedClasses(userDetails._id)
+        .then((data) => {
+          setUserBookings(data);
+        })
+        .catch((error) => console.error(error));
+    } else if (!user) {
+      setUserBookings(null);
+      setBookedClasses(null);
+    }
+  }, [userDetails, userBookings]);
+
+  useEffect(() => {
+    if (userBookings?.length > 0) {
+      const bookedClassNames = userBookings.map(
+        (booking) => booking["class-name"]
+      );
+      setBookedClasses(bookedClassNames);
+    }
+  }, [userBookings, user]);
 
   return (
     <>
@@ -37,9 +77,50 @@ const ClassesTable = ({ classes }) => {
               {classes.map((classItem) => {
                 const availableSeat =
                   classItem.studentSlot - classItem.totalStudent;
+                const isBooked =
+                  bookedClasses && bookedClasses.includes(classItem.name);
+
+                const handleBook = () => {
+                  if (!user) {
+                    toast.warning("To book classes, you have to login first", {
+                      position: "top-center",
+                      autoClose: 1100,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
+                    setTimeout(function () {
+                      const currentUrl = window.location.href;
+                      localStorage.setItem("redirectUrl", currentUrl);
+                      window.location.replace("/login");
+                    }, 2000);
+                  } else if (user && !isBooked) {
+                    bookClass(
+                      userDetails._id,
+                      classItem.instructorId,
+                      classItem.classIndex
+                    );
+                    toast.success(`"${classItem.name}" has been booked`, {
+                      position: "top-center",
+                      autoClose: 1100,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
+                  }
+                };
 
                 return (
-                  <tr className={availableSeat == 0 && 'bg-red-950'} key={classItem._id}>
+                  <tr
+                    className={availableSeat == 0 && "bg-red-950"}
+                    key={classItem._id}
+                  >
                     <td className="flex justify-center">
                       <img
                         className="w-32 rounded-xl h-16"
@@ -60,18 +141,25 @@ const ClassesTable = ({ classes }) => {
                       </div>
                     </td>
                     <td>
-                      {availableSeat == 0
-                        ? "Fully Booked"
-                        : availableSeat}
+                      {availableSeat == 0 ? "Fully Booked" : availableSeat}
                     </td>
                     <td>$ {classItem.price}</td>
                     <td>
-                      <button
-                        disabled={availableSeat == 0 && true}
-                        className={`btn ${availableSeat == 0 ? 'disabled:bg-red-900' : 'disabled:bg-stone-900'} text-white btn-sm rounded-full hover:bg-stone-700 bg-stone-800`}
-                      >
-                        <MdLibraryAdd /> <span>Book Class</span>
-                      </button>
+                      {isBooked ? (
+                        "Booked"
+                      ) : (
+                        <button
+                          onClick={handleBook}
+                          disabled={availableSeat == 0 && true}
+                          className={`${
+                            availableSeat == 0
+                              ? "disabled:bg-red-900"
+                              : "disabled:bg-stone-900"
+                          } btn text-white btn-sm rounded-lg hover:bg-stone-700 bg-stone-800`}
+                        >
+                          <MdLibraryAdd /> <span>Book Class</span>
+                        </button>
+                      )}
                     </td>
                   </tr>
                 );
