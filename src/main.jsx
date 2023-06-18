@@ -17,6 +17,8 @@ import Dashboard from "./layout/Dashboard";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import MyProfile from "./pages/MyProfile/MyProfile";
 import SingleInstructorsClasses from "./pages/SingleInstructorsClasses/SingleInstructorsClasses";
+import SelectedClasses from "./pages/SelectedClasses/SelectedClasses";
+import PaymentConfirmation from "./pages/SelectedClasses/PaymentConfirmation";
 
 const router = createBrowserRouter([
   {
@@ -29,43 +31,74 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "/about-us",
+        path: "about-us",
         element: <AboutUs></AboutUs>,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login></Login>,
       },
       {
-        path: "/register",
+        path: "register",
         element: <Register></Register>,
       },
       {
-        path: "/instructors",
+        path: "instructors",
         element: <Instructors></Instructors>,
       },
       {
-        path: "/classes",
+        path: "classes",
         element: <Classes></Classes>,
       },
       {
-        path: "/instructor/:id",
-        element: <PrivateRoute><SingleInstructorsClasses></SingleInstructorsClasses></PrivateRoute>,
-        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/instructor/${params.id}`)
-      }
+        path: "instructor/:id",
+        element: (
+          <PrivateRoute>
+            <SingleInstructorsClasses></SingleInstructorsClasses>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/instructor/${params.id}`),
+      },
     ],
   },
   {
-    path: "/dashboard/profile",
+    path: "dashboard",
     element: <Dashboard></Dashboard>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: "/dashboard/profile",
-        element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
-      }
-    ]
-  }
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <MyProfile></MyProfile>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "selected-classes",
+        element: (
+          <PrivateRoute>
+            <SelectedClasses></SelectedClasses>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "payment/:studentId/:itemId",
+        element: (
+          <PrivateRoute>
+            <PaymentConfirmation></PaymentConfirmation>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `${import.meta.env.VITE_API_URL}/book-class/${params.studentId}/${
+              params.itemId
+            }`
+          ),
+      },
+    ],
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

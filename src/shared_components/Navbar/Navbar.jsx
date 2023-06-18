@@ -99,9 +99,7 @@ const Navbar = () => {
             <div>classes</div>
           </ActiveLink>
           {user && (
-            <ActiveLink
-              className="hover:text-yellow-400"
-              to="/dashboard/profile"
+            <ActiveLink className="hover:text-yellow-400" to="/dashboard/profile"
             >
               <div>Dashboard</div>
             </ActiveLink>

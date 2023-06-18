@@ -14,6 +14,13 @@ const ClassesTable = ({ classes }) => {
   const [userDetails, setUserDetails] = useState({});
   const [userBookings, setUserBookings] = useState([]);
   const [bookedClasses, setBookedClasses] = useState([]);
+  const [enrolledClasses, setEnrolledClasses] = useState([]);
+  const unpaid = userBookings.filter(
+    (booking) => booking.paymentStatus === "unpaid"
+  );
+  const paid = userBookings.filter(
+    (booking) => booking.paymentStatus === "paid"
+  );
 
   useEffect(() => {
     getTotalClasses()
@@ -47,11 +54,13 @@ const ClassesTable = ({ classes }) => {
   }, [userDetails, userBookings]);
 
   useEffect(() => {
-    if (userBookings?.length > 0) {
-      const bookedClassNames = userBookings.map(
-        (booking) => booking["class-name"]
-      );
+    if (unpaid?.length > 0) {
+      const bookedClassNames = unpaid.map((booking) => booking["class-name"]);
       setBookedClasses(bookedClassNames);
+    }
+    if (paid?.length > 0) {
+      const enrolledClassNames = paid.map((booking) => booking["class-name"]);
+      setEnrolledClasses(enrolledClassNames);
     }
   }, [userBookings, user]);
 
@@ -79,6 +88,8 @@ const ClassesTable = ({ classes }) => {
                   classItem.studentSlot - classItem.totalStudent;
                 const isBooked =
                   bookedClasses && bookedClasses.includes(classItem.name);
+                const isEnrolled =
+                  enrolledClasses && enrolledClasses.includes(classItem.name);
 
                 const handleBook = () => {
                   if (!user) {
@@ -147,6 +158,8 @@ const ClassesTable = ({ classes }) => {
                     <td>
                       {isBooked ? (
                         "Booked"
+                      ) : isEnrolled ? (
+                        "Enrolled"
                       ) : (
                         <button
                           onClick={handleBook}
