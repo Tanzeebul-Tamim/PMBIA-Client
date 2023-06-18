@@ -5,7 +5,7 @@ import { BsFillCreditCardFill } from "react-icons/bs";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { purchaseClass } from "../../api/bookApi";
+import { purchaseClass, updateStudentCount } from "../../api/bookApi";
 import { toast } from "react-toastify";
 
 const CheckoutForm = ({ classItem }) => {
@@ -88,6 +88,7 @@ const CheckoutForm = ({ classItem }) => {
             date: new Date()
           }
           purchaseClass(classItem.studentId, classItem.instructorId, classItem.classIndex, paymentInfo);
+          updateStudentCount(classItem.instructorId, classItem.classIndex);
           toast.success(`Enrolled in "${classItem["class-name"]}"`, {
             position: "top-left",
             autoClose: 2000,
@@ -98,7 +99,7 @@ const CheckoutForm = ({ classItem }) => {
             progress: undefined,
             theme: "dark",
           });
-          navigate('/dashboard/selected-classes');
+          navigate('/dashboard/enrolled-classes');
         }
       }
   };

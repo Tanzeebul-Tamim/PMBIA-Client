@@ -19,6 +19,8 @@ import MyProfile from "./pages/MyProfile/MyProfile";
 import SingleInstructorsClasses from "./pages/SingleInstructorsClasses/SingleInstructorsClasses";
 import SelectedClasses from "./pages/SelectedClasses/SelectedClasses";
 import PaymentConfirmation from "./pages/SelectedClasses/PaymentConfirmation";
+import EnrolledClass from "./pages/EnrolledClass/EnrolledClass";
+import PaymentHistory from "./pages/PaymentHistory/PaymentHistory";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +98,22 @@ const router = createBrowserRouter([
               params.itemId
             }`
           ),
+      },
+      {
+        path: "enrolled-classes",
+        element: (
+          <PrivateRoute>
+            <EnrolledClass></EnrolledClass>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "payment",
+        element: (
+          <PrivateRoute>
+            <PaymentHistory></PaymentHistory>
+          </PrivateRoute>
+        ),
       },
     ],
   },

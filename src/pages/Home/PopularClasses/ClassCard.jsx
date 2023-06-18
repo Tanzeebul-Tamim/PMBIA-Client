@@ -1,9 +1,10 @@
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoSchoolSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const ClassCard = ({ topClass }) => {
   return (
-    <div className="group card relative h-full description rounded-2xl card-compact w-full lg:ml-3 lg:mr-3 bg-base-200 shadow-xl">
+    <Link to={`/instructor/${topClass.instructorId}`} className="group card relative h-full description rounded-2xl card-compact w-full lg:ml-3 lg:mr-3 bg-base-200 shadow-xl">
       <div>
         <img
           className="rounded-t-2xl h-[240px] z-0 w-full"
@@ -25,7 +26,7 @@ const ClassCard = ({ topClass }) => {
         src={topClass.instructorImg} />
       </div>
       <div className="absolute lg:bottom-0 right-0 w-1/2 h-full bg-gradient-to-r from-transparent to-base-100"></div>
-    </div>
+    </Link>
   );
 };
 

@@ -1,10 +1,11 @@
 import { IoSchoolSharp } from "react-icons/io5";
 import { GiTeacher } from "react-icons/gi";
 import { FaQuoteLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const InstructorCard = ({ topInstructor }) => {
   return (
-    <div className="card h-full group description rounded-2xl card-compact lg:ml-3  lg:mr-3 bg-base-200 shadow-xl">
+    <Link to={`/instructor/${topInstructor._id}`} className="card h-full group description rounded-2xl card-compact lg:ml-3  lg:mr-3 bg-base-200 shadow-xl">
       <div className="flex justify-center items-center">
         <div className="card-body z-50">
           <h2 className="card-title text-yellow-500">{topInstructor.name}</h2>
@@ -31,7 +32,7 @@ const InstructorCard = ({ topInstructor }) => {
         </div>
       </div>
       <div className="absolute lg:bottom-0 left-0 w-1/2 h-full bg-gradient-to-l from-transparent to-base-100"></div>
-    </div>
+    </Link>
   );
 };
 

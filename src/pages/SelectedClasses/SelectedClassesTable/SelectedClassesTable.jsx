@@ -9,11 +9,11 @@ const SelectedClassesTable = ({ userBookings, userDetails }) => {
     deleteAllClass(userDetails._id);
   };
 
-  if (userBookings.length === 0) {
+  if (userBookings?.length === 0) {
     return (
       <div className="flex h-screen items-center justify-center">
         <h1 className="z-[10] description text-5xl">
-          You Haven&apos;t Booked Anything Yet
+          You Haven&apos;t Booked Any Classes Yet
         </h1>
       </div>
     );

@@ -5,7 +5,6 @@ import { IoSchoolSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import ActiveLink2 from "../../activeLink2/activeLink2";
 
-
 const SideNav = () => {
   return (
     <div
@@ -25,47 +24,45 @@ const SideNav = () => {
         />
       </div>
       <div className="divider"></div>
-      <h1 className="title mb-10 uppercase text-center text-2xl">Student Dashboard</h1>
+      <h1 className="title mb-10 uppercase text-center text-2xl">
+        Student Dashboard
+      </h1>
       <div className="flex flex-col gap-5">
         <Link
-        to="/"
-        className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg">
-            <AiFillHome className="text-xl" /> Home
+          to="/"
+          className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg"
+        >
+          <AiFillHome className="text-xl" /> Home
         </Link>
         <Link
-        to="/instructors"
-        className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg">
-            <FaChalkboardTeacher className="text-xl" /> Instructors
+          to="/instructors"
+          className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg"
+        >
+          <FaChalkboardTeacher className="text-xl" /> Instructors
         </Link>
         <Link
-        to="/classes"
-        className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg">
-            <IoSchoolSharp className="text-xl" /> Classes
+          to="/classes"
+          className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg"
+        >
+          <IoSchoolSharp className="text-xl" /> Classes
         </Link>
         <Link
-        to="/about-us"
-        className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg">
-            <BsFillInfoCircleFill className="text-xl" /> About Us
+          to="/about-us"
+          className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg"
+        >
+          <BsFillInfoCircleFill className="text-xl" /> About Us
         </Link>
 
         <div className="divider"></div>
 
-        <ActiveLink2
-        to="/dashboard/profile">
-            My Profile
+        <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
+        <ActiveLink2 to="/dashboard/selected-classes">
+          My Selected Classes
         </ActiveLink2>
-        <ActiveLink2
-        to="/dashboard/selected-classes">
-            My Selected Classes
+        <ActiveLink2 to="/dashboard/enrolled-classes">
+          My Enrolled Classes
         </ActiveLink2>
-        <ActiveLink2
-        to="/dashboard/enrolled-classes">
-           My Enrolled Classes
-        </ActiveLink2>
-        <ActiveLink2
-        to="/dashboard/payment-history">
-            Payment History
-        </ActiveLink2>
+        <ActiveLink2 to="/dashboard/payment">My Payment History</ActiveLink2>
       </div>
     </div>
   );

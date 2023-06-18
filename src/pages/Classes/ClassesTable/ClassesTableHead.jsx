@@ -7,7 +7,7 @@ const ClassesTableHead = () => {
             <th className="">Instructor</th>
             <th className="">Available Slots</th>
             <th className="">Price</th>
-            <th className="">Add to wishlist</th>
+            <th className="">Book Classes</th>
           </tr>
         </thead>
     );

@@ -17,7 +17,7 @@ const PaymentConfirmation = () => {
         <div className="z-[100] flex-col-reverse gap-4 justify-between items-center flex text-xl">
           <div>
             <div className="z-50 flex items-center">
-              <img src={classItem.classImage} className="w-full rounded-lg" />
+              <img src={classItem.classImage} className="w-[438px] rounded-lg" />
             </div>
             <div className="my-3">
               <div className="z-50 flex items-center">

@@ -43,6 +43,23 @@ export const purchaseClass = (
     .catch((err) => console.error(err));
 };
 
+// update instructor student count
+export const updateStudentCount = (instructorId, classIndex) => {
+  fetch(`${import.meta.env.VITE_API_URL}/instructor/updateStudentCount`, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      instructorId,
+      classIndex,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+    .catch((err) => console.error(err));
+};
+
 // get user's booked classes
 export const getBookedClasses = async (studentId) => {
   const response = await fetch(

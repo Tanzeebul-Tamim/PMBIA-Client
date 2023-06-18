@@ -7,6 +7,7 @@ import { bookClass, getBookedClasses } from "../../../api/bookApi";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { getUserData } from "../../../api/authApi";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const ClassesTable = ({ classes }) => {
   const [totalClasses, setTotalClasses] = useState({});
@@ -15,10 +16,10 @@ const ClassesTable = ({ classes }) => {
   const [userBookings, setUserBookings] = useState([]);
   const [bookedClasses, setBookedClasses] = useState([]);
   const [enrolledClasses, setEnrolledClasses] = useState([]);
-  const unpaid = userBookings.filter(
+  const unpaid = userBookings?.filter(
     (booking) => booking.paymentStatus === "unpaid"
   );
-  const paid = userBookings.filter(
+  const paid = userBookings?.filter(
     (booking) => booking.paymentStatus === "paid"
   );
 
@@ -50,6 +51,7 @@ const ClassesTable = ({ classes }) => {
     } else if (!user) {
       setUserBookings(null);
       setBookedClasses(null);
+      setEnrolledClasses(null);
     }
   }, [userDetails, userBookings]);
 
@@ -66,7 +68,7 @@ const ClassesTable = ({ classes }) => {
 
   return (
     <>
-      {classes.length == 0 ? (
+      {classes?.length == 0 ? (
         <div className="text-5xl flex justify-center py-28">
           <h1>No results found for your search</h1>
         </div>
@@ -146,9 +148,9 @@ const ClassesTable = ({ classes }) => {
                     </td>
                     <td>
                       <div>
-                        <div className="font-bold">
+                        <Link to={`/instructor/${classItem.instructorId}`} className="font-bold">
                           {classItem.instructorName}
-                        </div>
+                        </Link>
                       </div>
                     </td>
                     <td>
@@ -159,7 +161,7 @@ const ClassesTable = ({ classes }) => {
                       {isBooked ? (
                         "Booked"
                       ) : isEnrolled ? (
-                        "Enrolled"
+                        (availableSeat == 0 ? <div className="text-red-500">Enrolled</div> : "Enrolled")
                       ) : (
                         <button
                           onClick={handleBook}
