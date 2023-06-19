@@ -15,7 +15,7 @@ const EnrolledClass = () => {
   const paidBookings = userBookings.filter(
     (booking) => booking.paymentStatus === "paid"
   );
-  useTitle("| Enrolled Classes");
+  useTitle("| Enrolled Courses");
 
   useEffect(() => {
     if (user && user.email) {
@@ -44,7 +44,7 @@ const EnrolledClass = () => {
   if (loading) {
     return (
       <>
-        <DashboardPageTitle title={"My Enrolled Classes"} />
+        <DashboardPageTitle title={"My Enrolled Courses"} />
         <div
           style={{ height: "400px" }}
           className="flex justify-center items-center"
@@ -57,7 +57,7 @@ const EnrolledClass = () => {
 
   return (
     <>
-      <DashboardPageTitle title={"My Enrolled Classes"} />
+      <DashboardPageTitle title={"My Enrolled Courses"} />
       <EnrolledClassesTable
         userBookings={paidBookings}
       ></EnrolledClassesTable>

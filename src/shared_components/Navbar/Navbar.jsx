@@ -54,7 +54,7 @@ const Navbar = () => {
           >
             <span className="flex items-center gap-1">
               <MdOutlineSchool className="text-xs" />
-              CLASSES
+              Courses
             </span>
           </ActiveLink>
           {user && (
@@ -96,7 +96,7 @@ const Navbar = () => {
             <div>Instructors</div>
           </ActiveLink>
           <ActiveLink className="hover:text-yellow-400" to="/classes">
-            <div>classes</div>
+            <div>Courses</div>
           </ActiveLink>
           {user && (
             <ActiveLink className="hover:text-yellow-400" to="/dashboard/profile"

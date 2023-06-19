@@ -13,7 +13,7 @@ const SelectedClassesTable = ({ userBookings, userDetails }) => {
     return (
       <div className="flex h-screen items-center justify-center">
         <h1 className="z-[10] description text-5xl">
-          You Haven&apos;t Booked Any Classes Yet
+          You Haven&apos;t Booked Any Courses Yet
         </h1>
       </div>
     );
@@ -24,7 +24,7 @@ const SelectedClassesTable = ({ userBookings, userDetails }) => {
       <div className="mb-5 flex justify-between gap-2 text-white description text-xl">
         <strong className="z-[100] flex items-center gap-2">
           <GiTeacher className="text-2xl" />
-          <span>Booked Classes Count :</span>
+          <span>Booked Courses Count :</span>
           <span>{userBookings?.length}</span>
         </strong>{" "}
         <button
@@ -38,13 +38,16 @@ const SelectedClassesTable = ({ userBookings, userDetails }) => {
         {/* head */}
         <SelectedClassesTableHead />
         <tbody className="text-sm">
-          {userBookings.map((classItem) => {
+          {userBookings.map((classItem, index) => {
             const handleDelete = (studentId, instructorId, classIndex) => {
               deleteClass(studentId, instructorId, classIndex);
             };
 
             return (
               <tr className="" key={classItem._id}>
+                <td>
+                  {index + 1}
+                </td>
                 <td className="flex justify-center">
                   <img
                     className="w-16 rounded-xl h-8"

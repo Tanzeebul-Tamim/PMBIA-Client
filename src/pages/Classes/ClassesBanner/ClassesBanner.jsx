@@ -7,7 +7,7 @@ const ClassesBanner = () => {
           Exciting
         </h1>
         <h1 className="text-white lg:text-4xl uppercase tracking-[7px] mt-1">
-          MTB Classes
+          MTB Courses
         </h1>
         <h1 className="text-yellow-500 title lg:text-6xl font-bold uppercase">
           And

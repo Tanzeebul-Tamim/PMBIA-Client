@@ -115,6 +115,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "add-class",
+        element: <PrivateRoute></PrivateRoute>,
+      },
     ],
   },
 ]);

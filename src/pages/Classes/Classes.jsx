@@ -10,15 +10,16 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 
 const titleDescription =
-  "Discover a wide range of mountain biking classes designed to help you level up your riding game. From mastering aerial skills to conquering challenging terrains, our classes offer expert instruction tailored to riders of all levels. Join us for an unforgettable learning experience!";
+  "Discover a wide range of mountain biking courses designed to help you level up your riding game. From mastering aerial skills to conquering challenging terrains, our courses offer expert instruction tailored to riders of all levels. Join us for an unforgettable learning experience!";
 
 const Classes = () => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(5);
   const [search, setSearch] = useState("");
   const searchRef = useRef(null);
-  useTitle("| Classes");
+  const tableRef = useRef(null);
+  useTitle("| Courses");
 
   useEffect(() => {
     setLoading(true);
@@ -30,12 +31,29 @@ const Classes = () => {
       .catch((error) => console.error(error));
   }, [visibleCount, search]);
   
+  useEffect(() => {
+    if (classes.length > 5) {
+      scrollToBottom();
+    }
+  }, [classes]);
+
   const handleSearch = () => {
     setSearch(searchRef.current.value);
   };
 
   const handleLoadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 5);
+    if (visibleCount % 5 == 0) {
+      setVisibleCount((prevCount) => prevCount + 5);
+    }
+    else {
+      setVisibleCount((prevCount) => prevCount + (visibleCount % 5));
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (tableRef.current) {
+      tableRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
   };
 
   if (loading) {
@@ -45,7 +63,7 @@ const Classes = () => {
         <div className="lg:px-10 pb-24 pt-16">
           <SectionTitle
                  title1="Discover The Perfect"
-                 title2="Class For You"
+                 title2="Course For You"
                  textAlign={"text-end"}
                  description={titleDescription}
           />
@@ -54,7 +72,7 @@ const Classes = () => {
               onChange={handleSearch}
               ref={searchRef}
               type="text"
-              placeholder="Search by Topic Name"
+              placeholder="Search by Course Name"
               className="py-3 px-5 outline-none bg-base-200 description placeholder-white rounded-full w-1/3"
             />
             <button>
@@ -89,7 +107,7 @@ const Classes = () => {
       <div className="lg:px-10 pt-16">
         <SectionTitle
           title1="Discover The Perfect"
-          title2="Class For You"
+          title2="Course For You"
           textAlign={"text-end"}
           description={titleDescription}
         />
@@ -98,7 +116,7 @@ const Classes = () => {
             onChange={handleSearch}
             ref={searchRef}
             type="text"
-            placeholder="Search by Topic Name"
+            placeholder="Search by Course Name"
             className="py-3 px-5 outline-none bg-base-200 description placeholder-white rounded-full w-1/3"
           />
           <button>
@@ -113,7 +131,7 @@ const Classes = () => {
             ></BsSearch>
           </button>
         </div>
-        <ClassesTable classes={classes} />
+          <ClassesTable tableRef={tableRef} classes={classes} />
         {classes.length >= visibleCount && (
           <div className="flex justify-center">
             <button

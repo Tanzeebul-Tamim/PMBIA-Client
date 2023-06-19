@@ -4,7 +4,7 @@ import InstructorsTableHead from "./InstructorsTableHead";
 import { Link } from "react-router-dom";
 import { FaChalkboardTeacher } from "react-icons/fa";
 
-const InstructorsTable = ({ instructors }) => {
+const InstructorsTable = ({ instructors, tableRef }) => {
   const [totalInstructors, setTotalInstructors] = useState({});
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const InstructorsTable = ({ instructors }) => {
           <h1>No results found for your search</h1>
         </div>
       ) : (
-        <div className="overflow-x-auto pt-10">
+        <div ref={tableRef} className="overflow-x-auto pt-10">
           <div className="mb-5 flex gap-2 text-white description text-xl">
             <strong className="flex items-center gap-2">
               <FaChalkboardTeacher className="text-2xl" />
@@ -34,9 +34,12 @@ const InstructorsTable = ({ instructors }) => {
             {/* head */}
             <InstructorsTableHead />
             <tbody className="text-xl">
-              {instructors.map((instructor) => {
+              {instructors.map((instructor, index) => {
                 return (
                   <tr key={instructor._id}>
+                    <td>
+                     {index + 1}
+                    </td>
                     <td>
                       <div className="avatar">
                         <div className="mask mask-squircle w-24 h-24">
@@ -60,12 +63,12 @@ const InstructorsTable = ({ instructors }) => {
                         <div className="quote">{instructor?.quote}</div>
                       </div>
                     </td>
-                    <td>{instructor.classes.length}</td>
+                    <td>{instructor?.classes?.length}</td>
                     <td>
                       <Link
                       to={`/instructor/${instructor._id}`}
                       className="btn text-white btn-sm rounded-lg hover:bg-stone-700 bg-stone-800">
-                        See {instructor.name.split(" ")[0]}&apos;s Classes
+                        See {instructor.name.split(" ")[0]}&apos;s Courses
                       </Link>
                     </td>
                   </tr>

@@ -1,32 +1,21 @@
 import { useContext, useState } from "react";
-import { FaEyeSlash, FaEye, FaFacebookF } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 import useTitle from "../../../Helmet/useTitle";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { saveUser, saveUserViaSocial } from "../../../api/authApi";
+import { saveUser } from "../../../api/authApi";
 
 const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
-  const {
-    createUser,
-    updateUser,
-    setLoading,
-    loading,
-    logOut,
-    googleSignIn,
-    facebookSignIn,
-  } = useContext(AuthContext);
+  const { createUser, updateUser, setLoading, loading, logOut } =
+    useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
   useTitle("| Register");
 
   const handleSelectGender = (event) => {
@@ -53,10 +42,10 @@ const Register = () => {
     }`;
 
     if (image) {
-      if(selectedGender == ("Male" || "Female")) {
+      if (selectedGender == ("Male" || "Female")) {
         if (password === confirmPassword) {
           setError("");
-  
+
           if (password.length < 6) {
             setError("Password must be at least 6 characters long!");
             return;
@@ -72,7 +61,7 @@ const Register = () => {
             setError("Password must contain at least one special character");
             return;
           }
-  
+
           fetch(url, {
             method: "POST",
             body: formData,
@@ -80,8 +69,15 @@ const Register = () => {
             .then((res) => res.json())
             .then((imageData) => {
               const imageUrl = imageData.data.display_url;
-              const user = {name, email, contactNo, address, gender, image: imageUrl};
-  
+              const user = {
+                name,
+                email,
+                contactNo,
+                address,
+                gender,
+                image: imageUrl,
+              };
+
               createUser(email, password)
                 .then(() => {
                   updateUser(name, imageUrl)
@@ -127,11 +123,12 @@ const Register = () => {
           setError("Passwords do not match!");
           return;
         }
-      }
-      else if((selectedGender != ("Male" || "Female")) && (!name || !email || !password || !confirmPassword)) {
+      } else if (
+        selectedGender != ("Male" || "Female") &&
+        (!name || !email || !password || !confirmPassword)
+      ) {
         return;
-      }
-      else {
+      } else {
         setError("Please select a gender");
         return;
       }
@@ -141,32 +138,6 @@ const Register = () => {
       setError("Please select an image");
       return;
     }
-  };
-
-  const handleFacebookSignIn = () => {
-    facebookSignIn()
-      .then((result) => {
-        saveUserViaSocial(result.user);
-        navigate(from, { replace: true });
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  };
-
-  const handleGoogleSignIn = () => {
-    googleSignIn()
-      .then((result) => {
-        saveUserViaSocial(result.user);
-        navigate(from, { replace: true });
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
   };
 
   const handleImageButtonText = (image) => {
@@ -213,6 +184,12 @@ const Register = () => {
             challenge yourself, and embrace the thrill of riding in breathtaking
             landscapes. Register now and let your MTB journey begin!
           </p>
+          <div className="text-end">
+            <Link to="/login" className="description text-sm link link-hover">
+              Not a student?{" "}
+              <span className="text-yellow-500">Register as an instructor</span>
+            </Link>
+          </div>
         </div>
         <div className="card flex-shrink-0 w-full max-w-[420px] shadow-2xl bg-base-100">
           <div className="card-body">
@@ -316,9 +293,7 @@ const Register = () => {
                     name="gender"
                     className="input input-bordered select font-light text-base text-gray-400 w-full max-w-xs"
                   >
-                    <option hidden>
-                      Enter your gender
-                    </option>
+                    <option hidden>Enter your gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
@@ -397,24 +372,7 @@ const Register = () => {
             >
               {error ? error : success ? success : "a"}
             </p>
-            <div className="divider text-white">Or continue with</div>
-            <div className="z-[10] justify-center gap-10 flex">
-              <button
-                formNoValidate
-                onClick={handleGoogleSignIn}
-                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
-              >
-                <FcGoogle className="text-2xl" />
-              </button>
-              <button
-                formNoValidate
-                onClick={handleFacebookSignIn}
-                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
-              >
-                <FaFacebookF className="text-2xl text-[#1877F2]" />
-              </button>
-            </div>
-            <div className="z-[10] form-control mt-6">
+            <div className="z-[10] form-control">
               <button
                 disabled={loading && true}
                 type="submit"

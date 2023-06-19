@@ -21,7 +21,7 @@ const InstructorCard = ({ topInstructor }) => {
           </div>
           <div className="text-white flex gap-2 items-center">
             <GiTeacher className="text-lg" />
-            <strong>Classes Taken:</strong> {topInstructor.classes.length}
+            <strong>Courses Taken:</strong> {topInstructor.classes.length}
           </div>
         </div>
         <div className="mr-5">

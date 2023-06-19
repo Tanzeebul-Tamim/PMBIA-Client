@@ -9,7 +9,7 @@ import { getUserData } from "../../../api/authApi";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-const ClassesTable = ({ classes }) => {
+const ClassesTable = ({ classes, tableRef }) => {
   const [totalClasses, setTotalClasses] = useState({});
   const { user } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
@@ -73,11 +73,11 @@ const ClassesTable = ({ classes }) => {
           <h1>No results found for your search</h1>
         </div>
       ) : (
-        <div className="overflow-x-auto pt-10">
+        <div ref={tableRef} className="overflow-x-auto pt-10">
           <div className="mb-5 flex gap-2 text-white description text-xl">
             <strong className="flex items-center gap-2">
               <GiTeacher className="text-2xl" />
-              <span>Classes Count :</span>
+              <span>Courses Count :</span>
             </strong>{" "}
             {totalClasses.totalClasses}
           </div>
@@ -85,17 +85,17 @@ const ClassesTable = ({ classes }) => {
             {/* head */}
             <ClassesTableHead />
             <tbody className="text-xl">
-              {classes.map((classItem) => {
+              {classes.map((classItem, index) => {
                 const availableSeat =
-                  classItem.studentSlot - classItem.totalStudent;
+                  classItem?.studentSlot - classItem?.totalStudent;
                 const isBooked =
-                  bookedClasses && bookedClasses.includes(classItem.name);
+                  bookedClasses && bookedClasses.includes(classItem?.name);
                 const isEnrolled =
-                  enrolledClasses && enrolledClasses.includes(classItem.name);
+                  enrolledClasses && enrolledClasses.includes(classItem?.name);
 
                 const handleBook = () => {
                   if (!user) {
-                    toast.warning("To book classes, you have to login first", {
+                    toast.warning("To book courses, you have to login first", {
                       position: "top-center",
                       autoClose: 1100,
                       hideProgressBar: false,
@@ -132,31 +132,34 @@ const ClassesTable = ({ classes }) => {
                 return (
                   <tr
                     className={availableSeat == 0 && "bg-red-950"}
-                    key={classItem._id}
+                    key={classItem?._id}
                   >
+                    <td>
+                      {index + 1}
+                    </td>
                     <td className="flex justify-center">
                       <img
                         className="w-32 rounded-xl h-16"
-                        src={classItem.image}
+                        src={classItem?.image}
                         alt="Avatar Tailwind CSS Component"
                       />
                     </td>
                     <td>
                       <div>
-                        <div className="font-bold">{classItem.name}</div>
+                        <div className="font-bold">{classItem?.name}</div>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <Link to={`/instructor/${classItem.instructorId}`} className="font-bold">
-                          {classItem.instructorName}
+                        <Link to={`/instructor/${classItem?.instructorId}`} className="font-bold">
+                          {classItem?.instructorName}
                         </Link>
                       </div>
                     </td>
                     <td>
                       {availableSeat == 0 ? "Fully Booked" : availableSeat}
                     </td>
-                    <td>$ {classItem.price}</td>
+                    <td>$ {classItem?.price}</td>
                     <td>
                       {isBooked ? (
                         "Booked"
@@ -165,14 +168,14 @@ const ClassesTable = ({ classes }) => {
                       ) : (
                         <button
                           onClick={handleBook}
-                          disabled={availableSeat == 0 && true}
+                          disabled={availableSeat == 0 || userDetails.role == "Instructor"}
                           className={`${
                             availableSeat == 0
                               ? "disabled:bg-red-900"
                               : "disabled:bg-stone-900"
                           } btn text-white btn-sm rounded-lg hover:bg-stone-700 bg-stone-800`}
                         >
-                          <MdLibraryAdd /> <span>Book Class</span>
+                          <MdLibraryAdd /> <span>Book Course</span>
                         </button>
                       )}
                     </td>

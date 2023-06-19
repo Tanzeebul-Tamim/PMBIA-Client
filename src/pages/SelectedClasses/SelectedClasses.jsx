@@ -15,7 +15,7 @@ const SelectedClasses = () => {
   const [userBookings, setUserBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const unpaidBookings = userBookings.filter(booking => booking.paymentStatus === 'unpaid');
-  useTitle('| Selected Classes')
+  useTitle('| Booked Courses')
 
   useEffect(() => {
     if (user && user.email) {
@@ -44,7 +44,7 @@ const SelectedClasses = () => {
   if (loading) {
     return (
       <>
-        <DashboardPageTitle title={"My Selected Classes"} />
+        <DashboardPageTitle title={"My Booked Courses"} />
         <div
           style={{ height: "400px" }}
           className="flex justify-center items-center"
@@ -57,7 +57,7 @@ const SelectedClasses = () => {
 
   return (
     <>
-      <DashboardPageTitle title={"My Selected Classes"} />
+      <DashboardPageTitle title={"My Booked Courses"} />
       <SelectedClassesTable userDetails={userDetails} userBookings={unpaidBookings}></SelectedClassesTable>
     </>
   );

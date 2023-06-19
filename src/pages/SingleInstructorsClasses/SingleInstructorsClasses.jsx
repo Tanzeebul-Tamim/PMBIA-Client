@@ -15,68 +15,121 @@ const SingleInstructorsClasses = () => {
   const nameWords = instructor.name.split(" ");
   const title1 = nameWords[0];
   const title2 = nameWords.slice(1).join(" ");
-  useTitle(`| ${instructor.name}`)
+  useTitle(`| ${instructor.name}`);
 
-  return (
-    <div
-      className="lg:pb-20 pb-8 relative pt-24 lg:pt-36 px-5 lg:px-10"
-      style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.400), rgba(0, 0, 0, 0.400)),
-          url('${
-            instructor.cover
-              ? instructor.cover
-              : "https://img.redbull.com/images/c_crop,x_0,y_0,h_2949,w_5242/c_fill,w_1750,h_1000/q_auto,f_webp/redbullcom/2022/5/11/k3hfsyxcl8wsaaie8mre/fabio-wibmer-trials-berlin"
-          }')`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="mb-10 flex items-center justify-between">
-        <img
-          className="mask mask-squircle h-[180px] w-[180px] "
-          src={instructor.image}
-          alt=""
-        />
-        {instructor.quote && (
-          <div className="w-2/5 text-7xl bg-base-200 p-5 rounded-2xl bg-opacity-5 glass shadow-2xl text-white">
-            <FaQuoteLeft className="text-5xl mb-5" />
-            <span className="ml-10">{instructor?.quote}</span>
-          </div>
-        )}
-      </div>
-      <SectionTitle
-        title1={title1}
-        title2={title2}
-        description={instructor?.quote}
-      />
-      <Swiper
-        slidesPerView={4}
-        spaceBetween={30}
-        navigation={true}
-        modules={[Navigation]}
-        className="popularClassSection"
+  if (classes) {
+    return (
+      <div
+        className="lg:pb-20 pb-8 relative pt-24 lg:pt-36 px-5 lg:px-10"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.400), rgba(0, 0, 0, 0.400)),
+            url('${
+              instructor.cover
+                ? instructor.cover
+                : "https://img.redbull.com/images/c_crop,x_0,y_0,h_2949,w_5242/c_fill,w_1750,h_1000/q_auto,f_webp/redbullcom/2022/5/11/k3hfsyxcl8wsaaie8mre/fabio-wibmer-trials-berlin"
+            }')`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
       >
-        {classes.map((classItem, index) => {
-          return (
-            <SwiperSlide key={index}>
-              <SingleInstructorClassCard classItem={classItem} />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-      <div className="flex justify-center">
-        <Link
-          to="/instructors"
-          className="z-[10] mt-10 btn btn-md text-lg rounded-full hover:bg-stone-700 bg-stone-800"
+        <div className="mb-10 flex items-center justify-between">
+          <img
+            className="mask mask-squircle h-[180px] w-[180px] "
+            src={instructor.image}
+            alt=""
+          />
+          {instructor.quote && (
+            <div className="w-2/5 text-7xl bg-base-200 p-5 rounded-2xl bg-opacity-5 glass shadow-2xl text-white">
+              <FaQuoteLeft className="text-5xl mb-5" />
+              <span className="ml-10">{instructor?.quote}</span>
+            </div>
+          )}
+        </div>
+        <SectionTitle
+          title1={title1}
+          title2={title2}
+          description={instructor?.quote}
+        />
+        <Swiper
+          slidesPerView={4}
+          spaceBetween={30}
+          navigation={true}
+          modules={[Navigation]}
+          className="popularClassSection"
         >
-          <FaChalkboardTeacher />
-          Back To Instructors Page
-        </Link>
+          {classes.map((classItem, index) => {
+            return (
+              <SwiperSlide key={index}>
+                <SingleInstructorClassCard classItem={classItem} />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+        <div className="flex justify-center">
+          <Link
+            to="/instructors"
+            className="z-[10] mt-10 btn btn-md text-lg rounded-full hover:bg-stone-700 bg-stone-800"
+          >
+            <FaChalkboardTeacher />
+            Back To Instructors Page
+          </Link>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full h-2/3 bg-gradient-to-b from-transparent to-base-300"></div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-2/3 bg-gradient-to-b from-transparent to-base-300"></div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div
+        className="lg:pb-20 pb-8 relative pt-24 lg:pt-36 px-5 lg:px-10"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.400), rgba(0, 0, 0, 0.400)),
+            url('${
+              instructor.cover
+                ? instructor.cover
+                : "https://img.redbull.com/images/c_crop,x_0,y_0,h_2949,w_5242/c_fill,w_1750,h_1000/q_auto,f_webp/redbullcom/2022/5/11/k3hfsyxcl8wsaaie8mre/fabio-wibmer-trials-berlin"
+            }')`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="mb-10 flex items-center justify-between">
+          <img
+            className="mask mask-squircle h-[180px] w-[180px] "
+            src={instructor.image}
+            alt=""
+          />
+          {instructor.quote && (
+            <div className="w-2/5 text-7xl bg-base-200 p-5 rounded-2xl bg-opacity-5 glass shadow-2xl text-white">
+              <FaQuoteLeft className="text-5xl mb-5" />
+              <span className="ml-10">{instructor?.quote}</span>
+            </div>
+          )}
+        </div>
+        <SectionTitle
+          title1={title1}
+          title2={title2}
+          description={instructor?.quote}
+        />
+        <div className="flex justify-center text-white">
+          <div className="text-5xl my-5 z-[1]">
+            {instructor.name} hasn&apos;t added any courses yet
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <Link
+            to="/instructors"
+            className="z-[10] mt-10 btn btn-md text-lg rounded-full hover:bg-stone-700 bg-stone-800"
+          >
+            <FaChalkboardTeacher />
+            Back To Instructors Page
+          </Link>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full h-2/3 bg-gradient-to-b from-transparent to-base-300"></div>
+      </div>
+    );
+  }
 };
 
 export default SingleInstructorsClasses;

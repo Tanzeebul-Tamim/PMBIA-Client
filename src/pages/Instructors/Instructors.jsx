@@ -15,9 +15,10 @@ const titleDescription =
 const Instructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(5);
   const [search, setSearch] = useState("");
   const searchRef = useRef(null);
+  const tableRef = useRef(null);
   useTitle("| Instructors");
 
   useEffect(() => {
@@ -30,12 +31,29 @@ const Instructors = () => {
       .catch((error) => console.error(error));
   }, [visibleCount, search]);
 
+  useEffect(() => {
+    if (instructors.length > 5) {
+      scrollToBottom();
+    }
+  }, [instructors]);
+
   const handleSearch = () => {
     setSearch(searchRef.current.value);
   };
   
   const handleLoadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 5);
+    if (visibleCount % 5 == 0) {
+      setVisibleCount((prevCount) => prevCount + 5);
+    }
+    else {
+      setVisibleCount((prevCount) => prevCount + (visibleCount % 5));
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (tableRef.current) {
+      tableRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
   };
 
   if (loading) {
@@ -111,7 +129,7 @@ const Instructors = () => {
             ></BsSearch>
           </button>
         </div>
-        <InstructorsTable instructors={instructors} />
+        <InstructorsTable tableRef={tableRef} instructors={instructors} />
         {instructors.length >= visibleCount && (
           <div className="flex justify-center">
             <button

@@ -1,8 +1,13 @@
 import { BsFillCreditCardFill } from "react-icons/bs";
 import PaymentHistoryTableHead from "./PaymentHistoryTableHead";
+import moment from "moment/moment";
 
 const PaymentHistoryTable = ({ userBookings }) => {
-  if (userBookings?.length === 0) {
+  const sortedBookings = [...userBookings].sort((a, b) => {
+    return moment(b.date).unix() - moment(a.date).unix();
+  });
+
+  if (sortedBookings?.length === 0) {
     return (
       <div className="flex h-screen items-center justify-center">
         <h1 className="z-[10] description text-5xl">
@@ -25,12 +30,15 @@ const PaymentHistoryTable = ({ userBookings }) => {
         {/* head */}
         <PaymentHistoryTableHead />
         <tbody className="text-sm">
-          {userBookings.map((classItem) => {
+          {sortedBookings.map((classItem, index) => {
             return (
               <tr className="" key={classItem._id}>
-                <td >
+                <td>
+                  {index + 1}
+                </td>
+                <td>
                   <div>
-                    <div className="font-bold">{classItem['class-name']}</div>
+                    <div className="font-bold">{classItem["class-name"]}</div>
                   </div>
                 </td>
                 <td>
@@ -40,7 +48,16 @@ const PaymentHistoryTable = ({ userBookings }) => {
                 </td>
                 <td>
                   <div>
-                    <div className="font-bold">{classItem.date.split("T")[0]}</div>
+                    <div className="font-bold">
+                      {moment(classItem.date).format("Do MMMM YYYY")}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <div className="font-bold">
+                      {moment(classItem.date).format("hh : mm a")}
+                    </div>
                   </div>
                 </td>
                 <td>

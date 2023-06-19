@@ -4,8 +4,18 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoSchoolSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import ActiveLink2 from "../../activeLink2/activeLink2";
+import { getUserData } from "../../api/authApi";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const SideNav = () => {
+  const { user } = useContext(AuthContext);
+  const [userDetails, setUserDetails] = useState({});
+
+  getUserData(user?.email).then((data) => {
+    setUserDetails(data);
+  });
+
   return (
     <div
       style={{
@@ -25,7 +35,9 @@ const SideNav = () => {
       </div>
       <div className="divider"></div>
       <h1 className="title mb-10 uppercase text-center text-2xl">
-        Student Dashboard
+        {userDetails.role == "Student"
+          ? "Student Dashboard"
+          : "Instructor Dashboard"}
       </h1>
       <div className="flex flex-col gap-5">
         <Link
@@ -44,7 +56,7 @@ const SideNav = () => {
           to="/classes"
           className="font-bold flex gap-3 items-center tracking-widest text-white description text-lg"
         >
-          <IoSchoolSharp className="text-xl" /> Classes
+          <IoSchoolSharp className="text-xl" /> Courses
         </Link>
         <Link
           to="/about-us"
@@ -56,13 +68,31 @@ const SideNav = () => {
         <div className="divider"></div>
 
         <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
-        <ActiveLink2 to="/dashboard/selected-classes">
-          My Selected Classes
-        </ActiveLink2>
-        <ActiveLink2 to="/dashboard/enrolled-classes">
-          My Enrolled Classes
-        </ActiveLink2>
-        <ActiveLink2 to="/dashboard/payment">My Payment History</ActiveLink2>
+        {userDetails.role == "Student" ? (
+          <>
+            <ActiveLink2 to="/dashboard/selected-classes">
+              My Booked Courses
+            </ActiveLink2>
+            <ActiveLink2 to="/dashboard/enrolled-classes">
+              My Enrolled Courses
+            </ActiveLink2>
+            <ActiveLink2 to="/dashboard/payment">
+              My Payment History
+            </ActiveLink2>
+          </>
+        ) : (
+          <>
+            <ActiveLink2 to="/dashboard/add-class">
+              Add a Course
+            </ActiveLink2>
+            <ActiveLink2 to="/dashboard/my-classes">
+              My Courses
+            </ActiveLink2>
+            <ActiveLink2 to="/dashboard/pending-classes">
+              My Pending Courses
+            </ActiveLink2>
+          </>
+        )}
       </div>
     </div>
   );

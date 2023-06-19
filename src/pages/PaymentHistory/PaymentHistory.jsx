@@ -57,7 +57,7 @@ const PaymentHistory = () => {
 
   return (
     <>
-      <DashboardPageTitle title={"My Enrolled Classes"} />
+      <DashboardPageTitle title={"My Payment History"} />
       <PaymentHistoryTable userBookings={paidBookings}></PaymentHistoryTable>
     </>
   );

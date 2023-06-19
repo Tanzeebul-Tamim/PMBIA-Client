@@ -11,7 +11,7 @@ import { Navigation } from "swiper";
 import "../PopularInstructors/style.css";
 
 const popularClassesDes =
-  "We offer a curated collection of the most sought-after classes which are highly recommended for mountain bike enthusiasts. Discover a range of exciting and educational courses designed to enhance your MTB skills and knowledge.";
+  "We offer a curated collection of the most sought-after courses which are highly recommended for mountain bike enthusiasts. Discover a range of exciting and educational courses designed to enhance your MTB skills and knowledge.";
 
 // You need to refresh the page once in order to make the carousel cards responsive
 let numberOfSlides = null;
@@ -38,7 +38,7 @@ const PopularClasses = () => {
       <Slide direction="right">
         <SectionTitle
           title1={"popular"}
-          title2={"classes"}
+          title2={"Courses"}
           textAlign={"text-end"}
           description={popularClassesDes}
         />
