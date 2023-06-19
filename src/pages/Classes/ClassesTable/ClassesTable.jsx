@@ -39,6 +39,9 @@ const ClassesTable = ({ classes, tableRef }) => {
         })
         .catch((error) => console.error(error));
     }
+    else if (!user) {
+      setUserDetails({});
+    }
   }, [user]);
 
   useEffect(() => {

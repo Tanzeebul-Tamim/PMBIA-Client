@@ -1,7 +1,7 @@
 import useTitle from "../../Helmet/useTitle";
 
 const AboutUs = () => {
-  useTitle("| About Us")
+  useTitle("| About Us");
 
   return (
     <div
@@ -15,7 +15,7 @@ const AboutUs = () => {
       }}
     >
       <h1 className="z-[10] title text-3xl mb-5 text-center uppercase">About Us</h1>
-      <div className="text-xl flex flex-col gap-10 text-center ">
+      <div className="text-xl flex flex-col gap-4 text-center description">
         <p className="z-[10]">
           Welcome to PMBIA (Professioanl Mountain Biking Instructors
           Association)! We are a passionate group of riders dedicated to

@@ -5,21 +5,53 @@ import { SlNote } from "react-icons/sl";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineHome, AiOutlineInfoCircle } from "react-icons/ai";
 import { FaChalkboardTeacher } from "react-icons/fa";
-import { MdOutlineSchool } from "react-icons/md";
+import { MdOutlineSchool, MdShoppingCart } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { AuthContext } from "../../providers/AuthProvider";
+import { getUserData } from "../../api/authApi";
+import { getBookedClasses } from "../../api/bookApi";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logOut, loading } = useContext(AuthContext);
+  const [userDetails, setUserDetails] = useState({});
+  const [userBookings, setUserBookings] = useState([]);
+  const unpaid = userBookings.filter(booking => booking.paymentStatus == 'unpaid');
+  const location = useLocation();
+
+  useEffect(() => {
+    if (user && user.email) {
+      getUserData(user.email)
+        .then((data) => {
+          setUserDetails(data);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user && user.email && userDetails._id) {
+      getBookedClasses(userDetails._id)
+        .then((data) => {
+          setUserBookings(data);
+        })
+        .catch((error) => console.error(error));
+    } else if (!user) {
+      setUserBookings([]);
+    }
+  }, [userDetails, userBookings]);
 
   const handleLogOut = () => {
     logOut()
       .then()
       .catch((error) => console.error(error));
+  };
+
+  const handleSetLocation = () => {
+    localStorage.setItem("location", location.pathname);
   };
 
   return (
@@ -99,7 +131,9 @@ const Navbar = () => {
             <div>Courses</div>
           </ActiveLink>
           {user && (
-            <ActiveLink className="hover:text-yellow-400" to="/dashboard/profile"
+            <ActiveLink
+              className="hover:text-yellow-400"
+              to="/dashboard/profile"
             >
               <div>Dashboard</div>
             </ActiveLink>
@@ -123,14 +157,22 @@ const Navbar = () => {
           <Link
             to="/dashboard/profile"
             data-tip={user?.displayName}
-            className="tooltip tooltip-top tooltip-warning"
+            className="tooltip tooltip-bottom tooltip-warning"
           >
             {user.photoURL ? (
               <div className="flex flex-col items-center">
-                <img
-                  className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
-                  src={user?.photoURL}
-                />
+                <div className="indicator">
+                  <img
+                    className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
+                    src={user?.photoURL}
+                  />
+                  {unpaid.length != 0 && (
+                    <span className="badge flex gap-1 badge-md badge-warning title indicator-item">
+                      <MdShoppingCart className="text-lg" />
+                      <span>{unpaid.length}</span>
+                    </span>
+                  )}
+                </div>
                 <h1 className="text-yellow-400 text-sm">My Profile</h1>
               </div>
             ) : (
@@ -159,7 +201,10 @@ const Navbar = () => {
             to="/login"
             className="hover:scale-110 duration-200 font-light text-yellow-400 text-xl"
           >
-            <div className="flex tracking-[2px] items-center gap-2">
+            <div
+              onClick={handleSetLocation}
+              className="flex tracking-[2px] items-center gap-2"
+            >
               <FiLogIn />
               <span className="text-xl">Login</span>
             </div>

@@ -8,7 +8,7 @@ const Main = () => {
         <div className="overflow-x-hidden">
             <ScrollToTop></ScrollToTop>
             <Navbar></Navbar>
-            <Outlet ></Outlet>
+            <Outlet location2={location.pathname} ></Outlet>
             <Footer></Footer>
         </div>
     );

@@ -118,8 +118,9 @@ const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
               </button>
             ) : (
               <button
+                disabled={availableSeat == 0}
                 onClick={handleBook}
-                className="btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100"
+                className="btn text-white btn-sm rounded-full disabled:bg-stone-800 hover:bg-stone-700 border-0 bg-base-100"
               >
                 <MdLibraryAdd /> <span>Book Course</span>
               </button>

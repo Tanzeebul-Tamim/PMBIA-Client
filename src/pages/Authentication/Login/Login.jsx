@@ -22,7 +22,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || localStorage.getItem('location');
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   useTitle("| Login");
@@ -57,6 +57,7 @@ const Login = () => {
           window.location.replace(redirectUrl);
         }
         setLoading(false);
+        localStorage.removeItem('location');
       })
       .catch((error) => {
         console.error(error);
@@ -75,6 +76,7 @@ const Login = () => {
           window.location.replace(redirectUrl);
         }
         setLoading(false);
+        localStorage.removeItem('location');
       })
       .catch((error) => {
         console.error(error);
@@ -91,6 +93,7 @@ const Login = () => {
       .then((result) => {
         const createdUser = result.user;
         navigate(from, { replace: true });
+        localStorage.removeItem('location');
         const redirectUrl = localStorage.getItem("redirectUrl");
         localStorage.removeItem("redirectUrl");
         if (redirectUrl) {
