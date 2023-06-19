@@ -61,7 +61,10 @@ const SingleInstructorsClasses = () => {
           {classes.map((classItem, index) => {
             return (
               <SwiperSlide key={index}>
-                <SingleInstructorClassCard classItem={classItem} />
+                <SingleInstructorClassCard
+                index={index}
+                classItem={classItem}
+                instructorId={instructor._id}/>
               </SwiperSlide>
             );
           })}

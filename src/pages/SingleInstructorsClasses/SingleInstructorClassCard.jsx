@@ -7,7 +7,7 @@ import { getUserData } from "../../api/authApi";
 import { bookClass, getBookedClasses } from "../../api/bookApi";
 import { toast } from "react-toastify";
 
-const SingleInstructorClassCard = ({ classItem }) => {
+const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
   const availableSeat = classItem.studentSlot - classItem.totalStudent;
   const { user } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
@@ -62,7 +62,7 @@ const SingleInstructorClassCard = ({ classItem }) => {
 
   const handleBook = () => {
     if (user && !isBooked) {
-      bookClass(userDetails._id, classItem.instructorId, classItem.classIndex);
+      bookClass(userDetails._id, instructorId, index);
       toast.success(`"${classItem.name}" has been booked`, {
         position: "top-center",
         autoClose: 1100,
@@ -91,7 +91,7 @@ const SingleInstructorClassCard = ({ classItem }) => {
           <strong>Price:</strong> $ {classItem.price}
         </div>
         {availableSeat == 0 ? (
-          <div className="text-white flex gap-2 items-center">
+          <div className="flex gap-2 items-center">
             <p className="text-red-600 font-bold">Fully Booked</p>
           </div>
         ) : (
@@ -105,30 +105,21 @@ const SingleInstructorClassCard = ({ classItem }) => {
             {isBooked ? (
               <button
                 disabled
-                className='disabled:bg-stone-800 btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100'
+                className="disabled:bg-stone-800 btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100"
               >
                 <span>Booked</span>
               </button>
             ) : isEnrolled ? (
-              availableSeat == 0 ? (
-                <button
-                  disabled
-                  className='btn disabled:bg-red-900 text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100'
-                >
-                  <span>Enrolled</span>
-                </button>
-              ) : (
-                <button
-                  disabled
-                  className='disabled:bg-stone-800 btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100'
-                >
-                  <span>Enrolled</span>
-                </button>
-              )
+              <button
+                disabled
+                className="disabled:bg-stone-800 btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100"
+              >
+                <span>Enrolled</span>
+              </button>
             ) : (
               <button
                 onClick={handleBook}
-                className='btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100'
+                className="btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100"
               >
                 <MdLibraryAdd /> <span>Book Course</span>
               </button>
@@ -136,7 +127,6 @@ const SingleInstructorClassCard = ({ classItem }) => {
           </>
         )}
       </div>
-      <div className="absolute lg:bottom-0 right-0 w-1/2 h-full bg-gradient-to-r from-transparent to-base-100"></div>
     </div>
   );
 };
