@@ -22,7 +22,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || localStorage.getItem('location');
+  const from = location.state?.from?.pathname || localStorage.getItem('location') || '/';
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   useTitle("| Login");
@@ -83,6 +83,7 @@ const Login = () => {
         setLoading(false);
       });
   };
+  
 
   const handleLogin = (event) => {
     event.preventDefault();

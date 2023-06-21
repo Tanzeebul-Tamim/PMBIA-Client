@@ -27,13 +27,15 @@ export const saveUserViaSocial = (user) => {
         image: user.photoURL,
         email: user.email,
       };
-    } else {
+      console.log('ami baler instructor')
+    } else if (userDetails.role == "Student" || !userDetails) {
       currentUser = {
         name: user.displayName,
         image: user.photoURL,
         email: user.email,
         role: "Student",
       };
+      console.log('ami baler student')
     }
   });
 

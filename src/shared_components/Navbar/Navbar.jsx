@@ -16,12 +16,11 @@ import { getBookedClasses } from "../../api/bookApi";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const { user, logOut, loading } = useContext(AuthContext);
+  const { user, logOut, loading, booking } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
   const [userBookings, setUserBookings] = useState([]);
-  const unpaid = userBookings.filter(booking => booking.paymentStatus == 'unpaid');
   const location = useLocation();
-
+  
   useEffect(() => {
     if (user && user.email) {
       getUserData(user.email)
@@ -36,13 +35,18 @@ const Navbar = () => {
     if (user && user.email && userDetails._id) {
       getBookedClasses(userDetails._id)
         .then((data) => {
-          setUserBookings(data);
+          const filteredBookings = data.filter(
+            (booking) => booking.paymentStatus === "unpaid"
+          );
+          setUserBookings(filteredBookings);
         })
         .catch((error) => console.error(error));
     } else if (!user) {
+      setUserDetails({});
       setUserBookings([]);
     }
-  }, [userDetails, userBookings]);
+  }, [user, userDetails._id, booking]);
+  
 
   const handleLogOut = () => {
     logOut()
@@ -166,10 +170,10 @@ const Navbar = () => {
                     className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
                     src={user?.photoURL}
                   />
-                  {unpaid.length != 0 && (
+                  {userBookings.length >= 1 && (
                     <span className="badge flex gap-1 badge-md badge-warning title indicator-item">
                       <MdShoppingCart className="text-lg" />
-                      <span>{unpaid.length}</span>
+                      <span>{userBookings?.length}</span>
                     </span>
                   )}
                 </div>

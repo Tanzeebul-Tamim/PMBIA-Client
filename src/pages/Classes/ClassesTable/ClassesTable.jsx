@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const ClassesTable = ({ classes, tableRef }) => {
   const [totalClasses, setTotalClasses] = useState({});
-  const { user } = useContext(AuthContext);
+  const { user, booking, setBooking } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
   const [userBookings, setUserBookings] = useState([]);
   const [bookedClasses, setBookedClasses] = useState([]);
@@ -117,8 +117,11 @@ const ClassesTable = ({ classes, tableRef }) => {
                     bookClass(
                       userDetails._id,
                       classItem.instructorId,
+                      user.email,
+                      user.displayName,
                       classItem.classIndex
                     );
+                    setBooking(!booking);
                     toast.success(`"${classItem.name}" has been booked`, {
                       position: "top-center",
                       autoClose: 1100,
@@ -171,7 +174,7 @@ const ClassesTable = ({ classes, tableRef }) => {
                       ) : (
                         <button
                           onClick={handleBook}
-                          disabled={availableSeat == 0 || userDetails.role == "Instructor"}
+                          disabled={availableSeat == 0 || userDetails.role == "Instructor" || isBooked || isEnrolled}
                           className={`${
                             availableSeat == 0
                               ? "disabled:bg-red-900"

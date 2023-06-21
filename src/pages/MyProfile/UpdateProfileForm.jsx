@@ -2,16 +2,17 @@ import { useContext } from "react";
 import { useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { saveUser } from "../../api/authApi";
+import { toast } from "react-toastify";
 
 const UpdateProfileForm = ({ userDetails }) => {
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
-  const [selectedGender, setSelectedGender] = useState("");
+  const [selectedGender, setSelectedGender] = useState(userDetails.gender || '');
   const { updateUser, user, setLoading } = useContext(AuthContext);
 
   const handleImageButtonText = (image) => {
     const imageName = image.name;
     if (imageName.length > 40) {
-      setImageButtonText(`${image.name.slice(0, 15)} . . . .`);
+      setImageButtonText(`${image.name.slice(0, 10)} . . . .`);
     } else {
       setImageButtonText(imageName);
     }
@@ -54,9 +55,22 @@ const UpdateProfileForm = ({ userDetails }) => {
             gender,
             image: imageUrl,
           };
-          updateUser(name, imageUrl)
+          updateUser(name, imageUrl, contactNo)
             .then(() => {
               saveUser(user);
+                    toast.success(
+                        "Profile Updated",
+                        {
+                          position: "top-center",
+                          autoClose: 1100,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                        }
+                      );
               setLoading(false);
             })
             .catch((err) => {
@@ -75,6 +89,19 @@ const UpdateProfileForm = ({ userDetails }) => {
       updateUser(name)
         .then(() => {
           saveUser(user);
+                toast.success(
+                        "Profile Updated",
+                        {
+                          position: "top-center",
+                          autoClose: 1100,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                        }
+                      );
           setLoading(false);
         })
         .catch((err) => {

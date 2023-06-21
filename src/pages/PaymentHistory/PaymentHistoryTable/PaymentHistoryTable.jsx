@@ -49,7 +49,7 @@ const PaymentHistoryTable = ({ userBookings }) => {
                 <td>
                   <div>
                     <div className="font-bold">
-                      {moment(classItem.date).format("Do MMMM YYYY")}
+                      {moment(classItem.date).format("dddd, Do MMMM YYYY")}
                     </div>
                   </div>
                 </td>

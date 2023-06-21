@@ -8,6 +8,7 @@ import { ScaleLoader } from "react-spinners";
 import { BsSearch } from "react-icons/bs";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRef } from "react";
+import { getUserData } from "../../api/authApi";
 
 const titleDescription =
   "Get to know our team of experienced and passionate mountain bike instructors. Our instructors are dedicated to sharing their expertise and guiding riders of all levels on exhilarating mountain biking adventures. Join us and learn from the best in the field as we navigate the thrilling world of mountain biking together.";
@@ -40,6 +41,8 @@ const Instructors = () => {
   const handleSearch = () => {
     setSearch(searchRef.current.value);
   };
+
+  getUserData()
   
   const handleLoadMore = () => {
     if (visibleCount % 5 == 0) {

@@ -34,14 +34,14 @@ const MyProfile = () => {
       </div>
     );
   }
-
+  
   return (
     <>
       <DashboardPageTitle title={"My Profile"} />
       <div className="flex mb-10 px-5 gap-10 items-center justify-start ">
         <img
           className="z-[10] w-[200px] h-[200px] border-zinc-400 lg:border-[4px] shadow-2xl rounded-full"
-          src={userDetails.image || user.photoURL}
+          src={user.photoURL}
           alt=""
         />
         <div className="bg-base-100 bg-opacity-70 w-full p-4 rounded-2xl">

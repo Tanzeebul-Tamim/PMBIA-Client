@@ -20,6 +20,7 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [booking, setBooking] = useState(false);
 
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
@@ -44,11 +45,12 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const updateUser = (name, image) => {
+  const updateUser = (name, image, contactNo) => {
     setLoading(true);
     return updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: image,
+      phoneNumber: contactNo
     });
   };
 
@@ -77,6 +79,8 @@ const AuthProvider = ({ children }) => {
     googleSignIn,
     facebookSignIn,
     updateUser,
+    booking,
+    setBooking
   };
 
   return (

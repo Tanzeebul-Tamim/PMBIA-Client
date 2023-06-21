@@ -1,21 +1,25 @@
 import { useContext, useState } from "react";
-import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { FaEyeSlash, FaEye, FaFacebookF } from "react-icons/fa";
 import useTitle from "../../../Helmet/useTitle";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { saveUser } from "../../../api/authApi";
+import { saveUser, saveUserViaSocial } from "../../../api/authApi";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
-  const { createUser, updateUser, setLoading, loading, logOut } =
+  const { createUser, updateUser, setLoading, loading, logOut, googleSignIn, facebookSignIn } =
     useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || localStorage.getItem('location') || '/';
   useTitle("| Register");
 
   const handleSelectGender = (event) => {
@@ -42,7 +46,7 @@ const Register = () => {
     }`;
 
     if (image) {
-      if (selectedGender == ("Male" || "Female")) {
+      if (selectedGender === "Male" || selectedGender === "Female") {
         if (password === confirmPassword) {
           setError("");
 
@@ -80,7 +84,7 @@ const Register = () => {
 
               createUser(email, password)
                 .then(() => {
-                  updateUser(name, imageUrl)
+                  updateUser(name, imageUrl, contactNo)
                     .then(() => {
                       toast.success(
                         "Registration successful! You can now login.",
@@ -119,22 +123,24 @@ const Register = () => {
                   setLoading(false);
                 });
             });
-        } else {
+        }
+        else {
           setError("Passwords do not match!");
           return;
         }
-      } else if (
-        selectedGender != ("Male" || "Female") &&
-        (!name || !email || !password || !confirmPassword)
-      ) {
+      }
+      else if (!selectedGender && (!name || !email || !password || !confirmPassword)) {
         return;
-      } else {
+      }
+      else {
         setError("Please select a gender");
         return;
       }
-    } else if (!image && (!name || !email || !password || !confirmPassword)) {
+    }
+    else if (!image && (!name || !email || !password || !confirmPassword)) {
       return;
-    } else {
+    }
+    else {
       setError("Please select an image");
       return;
     }
@@ -156,6 +162,45 @@ const Register = () => {
   const togglePasswordVisibility2 = () => {
     setShowPassword2(!showPassword2);
   };
+
+  const handleFacebookSignIn = () => {
+    facebookSignIn()
+      .then((result) => {
+        saveUserViaSocial(result.user);
+        navigate(from, { replace: true });
+        const redirectUrl = localStorage.getItem("redirectUrl");
+        localStorage.removeItem("redirectUrl");
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
+        setLoading(false);
+        localStorage.removeItem('location');
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        saveUserViaSocial(result.user);
+        navigate(from, { replace: true });
+        const redirectUrl = localStorage.getItem("redirectUrl");
+        localStorage.removeItem("redirectUrl");
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
+        setLoading(false);
+        localStorage.removeItem('location');
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
+
 
   return (
     <div
@@ -372,7 +417,24 @@ const Register = () => {
             >
               {error ? error : success ? success : "a"}
             </p>
-            <div className="z-[10] form-control">
+            <div className="divider text-white">Or continue with</div>
+            <div className="z-[10] justify-center gap-10 flex">
+              <button
+                formNoValidate
+                onClick={handleGoogleSignIn}
+                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
+              >
+                <FcGoogle className="text-2xl" />
+              </button>
+              <button
+                formNoValidate
+                onClick={handleFacebookSignIn}
+                className="hover:scale-110 btn hover:bg-stone-700 bg-stone-800 btn-circle"
+              >
+                <FaFacebookF className="text-2xl text-[#1877F2]" />
+              </button>
+            </div>
+            <div className="z-[10] mt-6 form-control">
               <button
                 disabled={loading && true}
                 type="submit"

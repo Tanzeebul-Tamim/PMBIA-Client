@@ -1,5 +1,5 @@
 // book class
-export const bookClass = (studentId, instructorId, classIndex) => {
+export const bookClass = (studentId, instructorId, studentEmail, studentName, classIndex) => {
   fetch(`${import.meta.env.VITE_API_URL}/book-class`, {
     method: "PUT",
     headers: {
@@ -8,6 +8,8 @@ export const bookClass = (studentId, instructorId, classIndex) => {
     body: JSON.stringify({
       studentId,
       instructorId,
+      studentEmail,
+      studentName,
       classIndex,
       paymentStatus: "unpaid",
     }),
@@ -21,6 +23,8 @@ export const bookClass = (studentId, instructorId, classIndex) => {
 export const purchaseClass = (
   studentId,
   instructorId,
+  studentEmail,
+  studentName,
   classIndex,
   paymentInfo
 ) => {
@@ -32,6 +36,8 @@ export const purchaseClass = (
     body: JSON.stringify({
       studentId,
       instructorId,
+      studentEmail,
+      studentName,
       classIndex,
       paymentStatus: "paid",
       transactionId: paymentInfo.transactionId,

@@ -62,7 +62,13 @@ const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
 
   const handleBook = () => {
     if (user && !isBooked) {
-      bookClass(userDetails._id, instructorId, index);
+      bookClass(
+        userDetails._id,
+        instructorId,
+        user.email,
+        user.displayName,
+        index
+      );
       toast.success(`"${classItem.name}" has been booked`, {
         position: "top-center",
         autoClose: 1100,
@@ -100,33 +106,25 @@ const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
             <strong>Available Slots:</strong> {availableSeat}
           </div>
         )}
-        {userDetails.role == "Student" && (
-          <>
+        <button
+          onClick={handleBook}
+          disabled={isBooked || isEnrolled || availableSeat == 0}
+          className={`${
+            availableSeat == 0 ? "disabled:bg-red-950" : "disabled:bg-stone-800"
+          } btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100`}
+        >
+          <span>
             {isBooked ? (
-              <button
-                disabled
-                className="disabled:bg-stone-800 btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100"
-              >
-                <span>Booked</span>
-              </button>
+              "Booked"
             ) : isEnrolled ? (
-              <button
-                disabled
-                className="disabled:bg-stone-800 btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100"
-              >
-                <span>Enrolled</span>
-              </button>
+              "Enrolled"
             ) : (
-              <button
-                disabled={availableSeat == 0}
-                onClick={handleBook}
-                className="btn text-white btn-sm rounded-full disabled:bg-stone-800 hover:bg-stone-700 border-0 bg-base-100"
-              >
+              <div className="flex gap-2">
                 <MdLibraryAdd /> <span>Book Course</span>
-              </button>
+              </div>
             )}
-          </>
-        )}
+          </span>
+        </button>
       </div>
     </div>
   );

@@ -21,7 +21,6 @@ import SelectedClasses from "./pages/SelectedClasses/SelectedClasses";
 import PaymentConfirmation from "./pages/SelectedClasses/PaymentConfirmation";
 import EnrolledClass from "./pages/EnrolledClass/EnrolledClass";
 import PaymentHistory from "./pages/PaymentHistory/PaymentHistory";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -61,7 +60,7 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/instructor/${params.id}`),
-      },
+      }
     ],
   },
   {

@@ -6,14 +6,21 @@ import { Link } from "react-router-dom";
 import ActiveLink2 from "../../activeLink2/activeLink2";
 import { getUserData } from "../../api/authApi";
 import { useContext, useState } from "react";
+import { ScaleLoader } from "react-spinners";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const SideNav = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
+  const [title, setTitle] = useState(null);
 
   getUserData(user?.email).then((data) => {
     setUserDetails(data);
+    if (userDetails.role == "Student") {
+      setTitle("Student");
+    } else if (userDetails.role == "Instructor") {
+      setTitle("Instructor");
+    }
   });
 
   return (
@@ -35,9 +42,7 @@ const SideNav = () => {
       </div>
       <div className="divider"></div>
       <h1 className="title mb-10 uppercase text-center text-2xl">
-        {userDetails.role == "Student"
-          ? "Student Dashboard"
-          : "Instructor Dashboard"}
+        {title} Dashboard
       </h1>
       <div className="flex flex-col gap-5">
         <Link
@@ -66,10 +71,9 @@ const SideNav = () => {
         </Link>
 
         <div className="divider"></div>
-
-        <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
         {userDetails.role == "Student" ? (
           <>
+            <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
             <ActiveLink2 to="/dashboard/selected-classes">
               My Booked Courses
             </ActiveLink2>
@@ -80,18 +84,21 @@ const SideNav = () => {
               My Payment History
             </ActiveLink2>
           </>
-        ) : (
+        ) : userDetails.role == "Instructor" ? (
           <>
-            <ActiveLink2 to="/dashboard/add-class">
-              Add a Course
-            </ActiveLink2>
-            <ActiveLink2 to="/dashboard/my-classes">
-              My Courses
-            </ActiveLink2>
+            <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
+            <ActiveLink2 to="/dashboard/add-class">Add a Course</ActiveLink2>
+            <ActiveLink2 to="/dashboard/my-classes">My Courses</ActiveLink2>
             <ActiveLink2 to="/dashboard/pending-classes">
               My Pending Courses
             </ActiveLink2>
           </>
+        ) : !userDetails.role || !userDetails || loading ? (
+          <div className="flex mt-20 gap-11 justify-center">
+              <ScaleLoader color="white" height={50} width={10}/>
+          </div>
+        ) : (
+          ""
         )}
       </div>
     </div>
