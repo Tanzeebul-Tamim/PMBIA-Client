@@ -1,4 +1,4 @@
-const ClassesTableHead = () => {
+const ClassesTableHead = ({ userDetails }) => {
     return (
         <thead className="bg-base-200">
           <tr className="text-white text-lg">
@@ -8,7 +8,7 @@ const ClassesTableHead = () => {
             <th className="">Instructor</th>
             <th className="">Available Slots</th>
             <th className="">Price</th>
-            <th className="">Book Courses</th>
+            {userDetails.role !== 'Instructor' && <th className="">Book Courses</th>}
           </tr>
         </thead>
     );

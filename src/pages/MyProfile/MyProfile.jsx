@@ -34,7 +34,7 @@ const MyProfile = () => {
       </div>
     );
   }
-  
+
   return (
     <>
       <DashboardPageTitle title={"My Profile"} />
@@ -68,8 +68,13 @@ const MyProfile = () => {
               </p>
             )}
             <p className="z-[10]">
-              <strong>Account Type :</strong> {userDetails?.role}
+              <strong>Account Type :</strong> {userDetails?.role || "Student"}
             </p>
+            {userDetails.role == "Instructor" && userDetails.quote && (
+              <p className="z-[10]">
+                <strong>Quote :</strong> {userDetails?.quote}
+              </p>
+            )}
             <div className="z-[10] mt-3">
               <button
                 onClick={() => window.my_modal_3.showModal()}

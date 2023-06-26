@@ -22,7 +22,8 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || localStorage.getItem('location') || '/';
+  const from =
+    location.state?.from?.pathname || localStorage.getItem("location") || "/";
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   useTitle("| Login");
@@ -30,7 +31,7 @@ const Login = () => {
   useEffect(() => {
     if (location.state && location.state.showToast) {
       toast.warning("To view detailed information, you have to login first", {
-        position: "top-left",
+        position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -48,27 +49,31 @@ const Login = () => {
 
   const handleFacebookSignIn = () => {
     facebookSignIn()
-      .then((result) => {
-        saveUserViaSocial(result.user);
-        navigate(from, { replace: true });
-        const redirectUrl = localStorage.getItem("redirectUrl");
-        localStorage.removeItem("redirectUrl");
-        if (redirectUrl) {
-          window.location.replace(redirectUrl);
-        }
-        setLoading(false);
-        localStorage.removeItem('location');
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
+    .then((result) => {
+      saveUserViaSocial(result.user);
+    })
+    .then(() => {
+      navigate(from, { replace: true });
+      const redirectUrl = localStorage.getItem("redirectUrl");
+      localStorage.removeItem("redirectUrl");
+      if (redirectUrl) {
+        window.location.replace(redirectUrl);
+      }
+      setLoading(false);
+      localStorage.removeItem("location");
+    })
+    .catch((error) => {
+      console.error(error);
+      setLoading(false);
+    });
   };
 
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
         saveUserViaSocial(result.user);
+      })
+      .then(() => {
         navigate(from, { replace: true });
         const redirectUrl = localStorage.getItem("redirectUrl");
         localStorage.removeItem("redirectUrl");
@@ -76,14 +81,13 @@ const Login = () => {
           window.location.replace(redirectUrl);
         }
         setLoading(false);
-        localStorage.removeItem('location');
+        localStorage.removeItem("location");
       })
       .catch((error) => {
         console.error(error);
         setLoading(false);
       });
   };
-  
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -94,7 +98,7 @@ const Login = () => {
       .then((result) => {
         const createdUser = result.user;
         navigate(from, { replace: true });
-        localStorage.removeItem('location');
+        localStorage.removeItem("location");
         const redirectUrl = localStorage.getItem("redirectUrl");
         localStorage.removeItem("redirectUrl");
         if (redirectUrl) {
@@ -228,8 +232,8 @@ const Login = () => {
                   <span className="text-yellow-500">Register</span>
                 </Link>
               </label>
-              <p className={`text-red-600 ${error ? 'visible' : 'invisible'}`}>
-                {error ? error : 'a'}
+              <p className={`text-red-600 ${error ? "visible" : "invisible"}`}>
+                {error ? error : "a"}
               </p>
             </div>
             <div className="divider text-white">Or continue with</div>
@@ -255,7 +259,11 @@ const Login = () => {
                 type="submit"
                 className="btn bg-yellow-500 disabled:bg-yellow-900 disabled:text-stone-500 hover:bg-yellow-600 text-white text-xl"
               >
-                 {loading ? <TbFidgetSpinner className="text-2xl text-stone-400 animate-spin" /> : 'Login'}
+                {loading ? (
+                  <TbFidgetSpinner className="text-2xl text-stone-400 animate-spin" />
+                ) : (
+                  "Login"
+                )}
               </button>
             </div>
           </div>

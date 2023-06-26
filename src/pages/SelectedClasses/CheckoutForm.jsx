@@ -90,7 +90,7 @@ const CheckoutForm = ({ classItem }) => {
           purchaseClass(classItem.studentId, classItem.instructorId, user.email, user.displayName, classItem.classIndex, paymentInfo);
           updateStudentCount(classItem.instructorId, classItem.classIndex);
           toast.success(`Enrolled in "${classItem["class-name"]}"`, {
-            position: "top-left",
+            position: "top-center",
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,

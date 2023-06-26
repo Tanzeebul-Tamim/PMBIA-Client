@@ -38,8 +38,7 @@ const ClassesTable = ({ classes, tableRef }) => {
           setUserDetails(data);
         })
         .catch((error) => console.error(error));
-    }
-    else if (!user) {
+    } else if (!user) {
       setUserDetails({});
     }
   }, [user]);
@@ -86,7 +85,7 @@ const ClassesTable = ({ classes, tableRef }) => {
           </div>
           <table className="table text-center description text-white">
             {/* head */}
-            <ClassesTableHead />
+            <ClassesTableHead userDetails={userDetails} />
             <tbody className="text-xl">
               {classes.map((classItem, index) => {
                 const availableSeat =
@@ -140,9 +139,7 @@ const ClassesTable = ({ classes, tableRef }) => {
                     className={availableSeat == 0 && "bg-red-950"}
                     key={classItem?._id}
                   >
-                    <td>
-                      {index + 1}
-                    </td>
+                    <td>{index + 1}</td>
                     <td className="flex justify-center">
                       <img
                         className="w-32 rounded-xl h-16"
@@ -157,7 +154,10 @@ const ClassesTable = ({ classes, tableRef }) => {
                     </td>
                     <td>
                       <div>
-                        <Link to={`/instructor/${classItem?.instructorId}`} className="font-bold">
+                        <Link
+                          to={`/instructor/${classItem?.instructorId}`}
+                          className="font-bold"
+                        >
                           {classItem?.instructorName}
                         </Link>
                       </div>
@@ -166,25 +166,36 @@ const ClassesTable = ({ classes, tableRef }) => {
                       {availableSeat == 0 ? "Fully Booked" : availableSeat}
                     </td>
                     <td>$ {classItem?.price}</td>
-                    <td>
-                      {isBooked ? (
-                        "Booked"
-                      ) : isEnrolled ? (
-                        (availableSeat == 0 ? <div className="text-red-500">Enrolled</div> : "Enrolled")
-                      ) : (
-                        <button
-                          onClick={handleBook}
-                          disabled={availableSeat == 0 || userDetails.role == "Instructor" || isBooked || isEnrolled}
-                          className={`${
-                            availableSeat == 0
-                              ? "disabled:bg-red-900"
-                              : "disabled:bg-stone-900"
-                          } btn text-white btn-sm rounded-lg hover:bg-stone-700 bg-stone-800`}
-                        >
-                          <MdLibraryAdd /> <span>Book Course</span>
-                        </button>
-                      )}
-                    </td>
+                    {userDetails.role !== "Instructor" && (
+                      <td>
+                        {isBooked ? (
+                          "Booked"
+                        ) : isEnrolled ? (
+                          availableSeat == 0 ? (
+                            <div className="text-red-500">Enrolled</div>
+                          ) : (
+                            "Enrolled"
+                          )
+                        ) : (
+                          <button
+                            onClick={handleBook}
+                            disabled={
+                              availableSeat == 0 ||
+                              userDetails.role == "Instructor" ||
+                              isBooked ||
+                              isEnrolled
+                            }
+                            className={`${
+                              availableSeat == 0
+                                ? "disabled:bg-red-900"
+                                : "disabled:bg-stone-900"
+                            } btn text-white btn-sm rounded-lg hover:bg-stone-700 bg-stone-800`}
+                          >
+                            <MdLibraryAdd /> <span>Book Course</span>
+                          </button>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 );
               })}

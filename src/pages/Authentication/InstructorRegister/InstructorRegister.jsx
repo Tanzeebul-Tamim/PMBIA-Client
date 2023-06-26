@@ -5,22 +5,30 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { saveStudent, saveStudentViaSocial } from "../../../api/authApi";
+import { saveInstructor, saveInstructorViaSocial } from "../../../api/authApi";
 import { FcGoogle } from "react-icons/fc";
 
-const Register = () => {
+const InstructorRegister = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
-  const { createUser, updateUser, setLoading, loading, logOut, googleSignIn, facebookSignIn } =
-    useContext(AuthContext);
+  const {
+    createUser,
+    updateUser,
+    setLoading,
+    loading,
+    logOut,
+    googleSignIn,
+    facebookSignIn,
+  } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || localStorage.getItem('location') || '/';
-  useTitle("| Student-Registration");
+  const from =
+    location.state?.from?.pathname || localStorage.getItem("location") || "/";
+  useTitle("| Instructor-Registration");
 
   const handleSelectGender = (event) => {
     const selectGender = event.target.value;
@@ -99,7 +107,7 @@ const Register = () => {
                           theme: "dark",
                         }
                       );
-                      saveStudent(user);
+                      saveInstructor(user);
                       logOut();
                       setSuccess("Registration Successful!");
                       setError("");
@@ -123,24 +131,22 @@ const Register = () => {
                   setLoading(false);
                 });
             });
-        }
-        else {
+        } else {
           setError("Passwords do not match!");
           return;
         }
-      }
-      else if (!selectedGender && (!name || !email || !password || !confirmPassword)) {
+      } else if (
+        !selectedGender &&
+        (!name || !email || !password || !confirmPassword)
+      ) {
         return;
-      }
-      else {
+      } else {
         setError("Please select a gender");
         return;
       }
-    }
-    else if (!image && (!name || !email || !password || !confirmPassword)) {
+    } else if (!image && (!name || !email || !password || !confirmPassword)) {
       return;
-    }
-    else {
+    } else {
       setError("Please select an image");
       return;
     }
@@ -165,31 +171,8 @@ const Register = () => {
 
   const handleFacebookSignIn = () => {
     facebookSignIn()
-    .then((result) => {
-      saveStudentViaSocial(result.user);
-    })
-    .then(() => {
-      navigate(from, { replace: true });
-      const redirectUrl = localStorage.getItem("redirectUrl");
-      localStorage.removeItem("redirectUrl");
-      if (redirectUrl) {
-        window.location.replace(redirectUrl);
-      }
-      setLoading(false);
-      localStorage.removeItem("location");
-    })
-    .catch((error) => {
-      console.error(error);
-      setLoading(false);
-    });
-  };
-
-  const handleGoogleSignIn = () => {
-    googleSignIn()
       .then((result) => {
-        saveStudentViaSocial(result.user);
-      })
-      .then(() => {
+        saveInstructorViaSocial(result.user);
         navigate(from, { replace: true });
         const redirectUrl = localStorage.getItem("redirectUrl");
         localStorage.removeItem("redirectUrl");
@@ -205,13 +188,31 @@ const Register = () => {
       });
   };
 
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        saveInstructorViaSocial(result.user);
+        navigate(from, { replace: true });
+        const redirectUrl = localStorage.getItem("redirectUrl");
+        localStorage.removeItem("redirectUrl");
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
+        setLoading(false);
+        localStorage.removeItem("location");
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  };
 
   return (
     <div
       className="min-h-screen pt-32 pb-24 lg:px-10 relative"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.600), rgba(0, 0, 0, 0.450)), url('https://img.redbull.com/images/c_crop,x_0,y_449,h_1728,w_3840/c_fill,w_1680,h_780/q_auto,f_auto/redbullcom/2023/2/21/zw1f2ijxn6i0zvov6mkp/robin-goomes-and-georgia-astle-speed-and-style-crankworx-innsbruck-austria-2022')",
+          "linear-gradient(rgba(0, 0, 0, 0.600), rgba(0, 0, 0, 0.450)), url('https://i.ibb.co/Qp5fr7r/register-cover.jpg')",
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -219,24 +220,25 @@ const Register = () => {
     >
       <form
         onSubmit={handleRegister}
-        className="flex items-center justify-center gap-20 flex-col lg:flex-row-reverse"
+        className="flex items-center justify-center gap-20 flex-col lg:flex-row"
       >
-        <div className="z-10 text-center lg:text-left">
-          <h1 className="text-5xl text-end font-bold title uppercase text-yellow-500">
-            Register now!
+        <div className="z-10">
+          <h1 className="text-5xl font-bold title uppercase text-yellow-500">
+            Become an instructor!
           </h1>
-          <p className="py-6 text-end description text-xl text-white">
-            Create your account and become part of our vibrant mountain biking
-            community. Whether you&apos;re a seasoned rider or just getting
-            started, our registration page is your gateway to unlocking a world
-            of exciting opportunities. Get ready to explore new trails,
-            challenge yourself, and embrace the thrill of riding in breathtaking
-            landscapes. Register now and let your MTB journey begin!
+          <p className="py-6 description text-xl text-white">
+            Join our team of skilled instructors and share your passion for
+            mountain biking with others. Our instructor registration page offers
+            you the opportunity to inspire and guide riders of all levels.
+            Whether you&apos;re an experienced professional or a talented rider
+            looking to take on a new role, this is your chance to make a
+            difference in the mountain biking community. Sign up now and embark
+            on a rewarding journey as a mountain biking instructor!
           </p>
-          <div className="text-end">
-            <Link to="/instructor-register" className="description text-sm link link-hover">
-              Not a student?{" "}
-              <span className="text-yellow-500">Register as an instructor</span>
+          <div>
+            <Link to="/register" className="description text-sm link link-hover">
+              Not an instructor?{" "}
+              <span className="text-yellow-500">Register as an student</span>
             </Link>
           </div>
         </div>
@@ -459,4 +461,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default InstructorRegister;

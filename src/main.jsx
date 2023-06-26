@@ -21,6 +21,7 @@ import SelectedClasses from "./pages/SelectedClasses/SelectedClasses";
 import PaymentConfirmation from "./pages/SelectedClasses/PaymentConfirmation";
 import EnrolledClass from "./pages/EnrolledClass/EnrolledClass";
 import PaymentHistory from "./pages/PaymentHistory/PaymentHistory";
+import InstructorRegister from "./pages/Authentication/InstructorRegister/InstructorRegister";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register></Register>,
+      },
+      {
+        path: "instructor-register",
+        element: <InstructorRegister></InstructorRegister>
       },
       {
         path: "instructors",

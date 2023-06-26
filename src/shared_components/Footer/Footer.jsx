@@ -1,8 +1,19 @@
+import { useLocation } from "react-router-dom";
 import LeafletMap from "./LeafletMap/LeafletMap";
 
 const Footer = () => {
+  const location = useLocation();
+
   return (
-    <div className="relative bg-gradient-to-t from-base-200 to-base-300">
+    <div
+    style={{
+      backgroundImage:
+      location.pathname == "/instructors" || location.pathname == "/classes" ? "linear-gradient(rgba(0, 0, 0, 0.600), rgba(0, 0, 0, 0.400)), url('https://img.redbull.com/images/c_crop,x_1,y_0,h_2133,w_3199/c_fill,w_1680,h_1100/q_auto,f_auto/redbullcom/2022/5/10/ds88j1dow4whfozuki1u/carson-storch-red-bull-rampage-2021-drop')" : "none",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+    }}
+    className="relative bg-gradient-to-t from-base-200 to-base-300">
       <footer className="footer p-10 bg-transparent text-base-content">
         <div>
           <span className="uppercase text-lg lg:text-xl text-yellow-500 lg:text-yellow-500">

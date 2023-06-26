@@ -6,7 +6,9 @@ import { toast } from "react-toastify";
 
 const UpdateProfileForm = ({ userDetails }) => {
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
-  const [selectedGender, setSelectedGender] = useState(userDetails.gender || '');
+  const [selectedGender, setSelectedGender] = useState(
+    userDetails.gender || ""
+  );
   const { updateUser, user, setLoading } = useContext(AuthContext);
 
   const handleImageButtonText = (image) => {
@@ -31,6 +33,7 @@ const UpdateProfileForm = ({ userDetails }) => {
     const address = form?.address?.value;
     const contactNo = form?.contact?.value;
     const gender = selectedGender;
+    const quote = form?.quote?.value;
 
     const image = form?.image?.files[0];
     const formData = new FormData();
@@ -53,24 +56,22 @@ const UpdateProfileForm = ({ userDetails }) => {
             contactNo,
             address,
             gender,
+            quote,
             image: imageUrl,
           };
           updateUser(name, imageUrl, contactNo)
             .then(() => {
               saveUser(user);
-                    toast.success(
-                        "Profile Updated",
-                        {
-                          position: "top-center",
-                          autoClose: 1100,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: true,
-                          draggable: true,
-                          progress: undefined,
-                          theme: "dark",
-                        }
-                      );
+              toast.success("Profile Updated", {
+                position: "top-center",
+                autoClose: 1100,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
               setLoading(false);
             })
             .catch((err) => {
@@ -85,23 +86,21 @@ const UpdateProfileForm = ({ userDetails }) => {
         contactNo,
         address,
         gender,
+        quote,
       };
       updateUser(name)
         .then(() => {
           saveUser(user);
-                toast.success(
-                        "Profile Updated",
-                        {
-                          position: "top-center",
-                          autoClose: 1100,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: true,
-                          draggable: true,
-                          progress: undefined,
-                          theme: "dark",
-                        }
-                      );
+          toast.success("Profile Updated", {
+            position: "top-center",
+            autoClose: 1100,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
           setLoading(false);
         })
         .catch((err) => {
@@ -135,30 +134,32 @@ const UpdateProfileForm = ({ userDetails }) => {
             />
           </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Address</span>
-            </label>
-            <input
-              type="text"
-              name="address"
-              defaultValue={userDetails?.address}
-              placeholder="Enter your address"
-              className="input input-bordered"
-            />
-          </div>
+          <div className="flex justify-between gap-2">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Address</span>
+              </label>
+              <input
+                type="text"
+                name="address"
+                defaultValue={userDetails?.address}
+                placeholder="Enter your address"
+                className="input input-bordered w-[195px]"
+              />
+            </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Contact no</span>
-            </label>
-            <input
-              type="text"
-              name="contact"
-              defaultValue={userDetails?.contactNo}
-              placeholder="Enter your contact no"
-              className="input input-bordered"
-            />
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Contact no</span>
+              </label>
+              <input
+                type="text"
+                name="contact"
+                defaultValue={userDetails?.contactNo}
+                placeholder="Enter your contact no"
+                className="input input-bordered w-[195px]"
+              />
+            </div>
           </div>
 
           <div className="flex justify-between">
@@ -201,6 +202,21 @@ const UpdateProfileForm = ({ userDetails }) => {
               </label>
             </div>
           </div>
+
+          {userDetails.role === "Instructor" && (
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Quote</span>
+              </label>
+              <input
+                type="text"
+                name="quote"
+                defaultValue={userDetails?.quote}
+                placeholder="Enter your quote"
+                className="input input-bordered"
+              />
+            </div>
+          )}
 
           <div className="form-control mt-6">
             <button

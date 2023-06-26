@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
   const availableSeat = classItem.studentSlot - classItem.totalStudent;
-  const { user } = useContext(AuthContext);
+  const { user, booking, setBooking } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
   const [userBookings, setUserBookings] = useState([]);
   const [bookedClasses, setBookedClasses] = useState([]);
@@ -69,6 +69,7 @@ const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
         user.displayName,
         index
       );
+      setBooking(!booking);
       toast.success(`"${classItem.name}" has been booked`, {
         position: "top-center",
         autoClose: 1100,
@@ -106,25 +107,34 @@ const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
             <strong>Available Slots:</strong> {availableSeat}
           </div>
         )}
-        <button
-          onClick={handleBook}
-          disabled={isBooked || isEnrolled || availableSeat == 0}
-          className={`${
-            availableSeat == 0 ? "disabled:bg-red-950" : "disabled:bg-stone-800"
-          } btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100`}
-        >
-          <span>
-            {isBooked ? (
-              "Booked"
-            ) : isEnrolled ? (
-              "Enrolled"
-            ) : (
-              <div className="flex gap-2">
-                <MdLibraryAdd /> <span>Book Course</span>
-              </div>
-            )}
-          </span>
-        </button>
+        {userDetails.role !== "Instructor" && (
+          <button
+            onClick={handleBook}
+            disabled={
+              isBooked ||
+              isEnrolled ||
+              availableSeat == 0 ||
+              userDetails?.role === "Instructor"
+            }
+            className={`${
+              availableSeat == 0
+                ? "disabled:bg-red-950"
+                : "disabled:bg-stone-800"
+            } btn text-white btn-sm rounded-full hover:bg-stone-700 border-0 bg-base-100`}
+          >
+            <span>
+              {isBooked ? (
+                "Booked"
+              ) : isEnrolled ? (
+                "Enrolled"
+              ) : (
+                <div className="flex gap-2">
+                  <MdLibraryAdd /> <span>Book Course</span>
+                </div>
+              )}
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );

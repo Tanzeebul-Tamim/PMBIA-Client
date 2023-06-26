@@ -16,10 +16,11 @@ const SideNav = () => {
 
   getUserData(user?.email).then((data) => {
     setUserDetails(data);
-    if (userDetails.role == "Student") {
-      setTitle("Student");
-    } else if (userDetails.role == "Instructor") {
+    if (userDetails.role == "Instructor") {
       setTitle("Instructor");
+    }
+    else {
+      setTitle("Student");
     }
   });
 
@@ -71,7 +72,7 @@ const SideNav = () => {
         </Link>
 
         <div className="divider"></div>
-        {userDetails.role == "Student" ? (
+        {userDetails.role == "Student" || !userDetails.role ? (
           <>
             <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
             <ActiveLink2 to="/dashboard/selected-classes">
