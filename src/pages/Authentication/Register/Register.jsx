@@ -12,14 +12,23 @@ const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
-  const { createUser, updateUser, setLoading, loading, logOut, googleSignIn, facebookSignIn } =
-    useContext(AuthContext);
+  const {
+    createUser,
+    updateUser,
+    setLoading,
+    loading,
+    logOut,
+    googleSignIn,
+    facebookSignIn,
+    emailVerification,
+  } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || localStorage.getItem('location') || '/';
+  const from =
+    location.state?.from?.pathname || localStorage.getItem("location") || "/";
   useTitle("| Student-Registration");
 
   const handleSelectGender = (event) => {
@@ -66,81 +75,131 @@ const Register = () => {
             return;
           }
 
-          fetch(url, {
-            method: "POST",
-            body: formData,
-          })
-            .then((res) => res.json())
-            .then((imageData) => {
-              const imageUrl = imageData.data.display_url;
-              const user = {
-                name,
-                email,
-                contactNo,
-                address,
-                gender,
-                image: imageUrl,
-              };
+          // Create an HTMLImageElement to load the image
+          const imgElement = document.createElement("img");
+          imgElement.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
 
-              createUser(email, password)
-                .then(() => {
-                  updateUser(name, imageUrl, contactNo)
-                    .then(() => {
-                      toast.success(
-                        "Registration successful! You can now login.",
-                        {
-                          position: "top-center",
-                          autoClose: 1100,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: true,
-                          draggable: true,
-                          progress: undefined,
-                          theme: "dark",
-                        }
-                      );
-                      saveStudent(user);
-                      logOut();
-                      setSuccess("Registration Successful!");
-                      setError("");
-                      setTimeout(function () {
-                        window.location.href = "/login";
-                      }, 2000);
-                    })
-                    .catch((err) => {
-                      setLoading(false);
-                      console.error(err);
-                    });
+            // Set the desired width and height for the cropped image (1:1 ratio)
+            const width = imgElement.width;
+            const height = imgElement.width;
+
+            // Calculate the offset for cropping the image from the top
+            const xOffset = 0;
+            const yOffset = 0;
+
+            // Set the canvas width and height to match the desired cropped size
+            canvas.width = width;
+            canvas.height = height;
+
+            // Draw the cropped image onto the canvas
+            ctx.drawImage(
+              imgElement,
+              xOffset,
+              yOffset,
+              width,
+              height,
+              0,
+              0,
+              width,
+              height
+            );
+
+            // Convert the canvas image to a Blob object
+            canvas.toBlob(
+              (blob) => {
+                // Append the Blob to the form data
+                formData.append("image", blob);
+
+                // Upload the cropped image
+                fetch(url, {
+                  method: "POST",
+                  body: formData,
                 })
-                .catch((error) => {
-                  console.error(error);
-                  if (error.message.includes("email")) {
-                    setError(
-                      "This email is already in use. Please use a different email."
-                    );
-                    setSuccess("");
-                  }
-                  setLoading(false);
-                });
-            });
-        }
-        else {
+                  .then((res) => res.json())
+                  .then((imageData) => {
+                    const imageUrl = imageData.data.display_url;
+                    const user = {
+                      name,
+                      email,
+                      contactNo,
+                      address,
+                      gender,
+                      image: imageUrl,
+                    };
+
+                    createUser(email, password)
+                      .then((result) => {
+                        const createdUser = result.user;
+                        updateUser(name, imageUrl, contactNo)
+                          .then(() => {
+                            toast.success(
+                              `A verification email has been sent to ${email} After verifying your email you can log in.`,
+                              {
+                                position: "top-center",
+                                autoClose: 3500,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "dark",
+                              }
+                            );
+                            emailVerification(createdUser);
+                            saveStudent(user);
+                            logOut();
+                            setSuccess("Registration Successful!");
+                            setError("");
+                            setTimeout(function () {
+                              window.location.href = "/login";
+                            }, 4400);
+                          })
+                          .catch((err) => {
+                            setLoading(false);
+                            console.error(err);
+                          });
+                      })
+                      .catch((error) => {
+                        console.error(error);
+                        if (error.message.includes("email")) {
+                          setError(
+                            "This email is already in use. Please use a different email."
+                          );
+                          setSuccess("");
+                        }
+                        setLoading(false);
+                      });
+                  });
+              },
+              "image/jpeg",
+              0.9
+            ); // Set the desired image type and quality (here it is JPEG with 90% quality)
+          };
+
+          // Load the image file
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            imgElement.src = e.target.result;
+          };
+          reader.readAsDataURL(image);
+        } else {
           setError("Passwords do not match!");
           return;
         }
-      }
-      else if (!selectedGender && (!name || !email || !password || !confirmPassword)) {
+      } else if (
+        !selectedGender &&
+        (!name || !email || !password || !confirmPassword)
+      ) {
         return;
-      }
-      else {
+      } else {
         setError("Please select a gender");
         return;
       }
-    }
-    else if (!image && (!name || !email || !password || !confirmPassword)) {
+    } else if (!image && (!name || !email || !password || !confirmPassword)) {
       return;
-    }
-    else {
+    } else {
       setError("Please select an image");
       return;
     }
@@ -165,23 +224,22 @@ const Register = () => {
 
   const handleFacebookSignIn = () => {
     facebookSignIn()
-    .then((result) => {
-      saveStudentViaSocial(result.user);
-    })
-    .then(() => {
-      navigate(from, { replace: true });
-      const redirectUrl = localStorage.getItem("redirectUrl");
-      localStorage.removeItem("redirectUrl");
-      if (redirectUrl) {
-        window.location.replace(redirectUrl);
-      }
-      setLoading(false);
-      localStorage.removeItem("location");
-    })
-    .catch((error) => {
-      console.error(error);
-      setLoading(false);
-    });
+      .then((result) => {
+        saveStudentViaSocial(result.user);
+      })
+      .then(() => {
+        navigate(from, { replace: true });
+        const redirectUrl = localStorage.getItem("redirectUrl");
+        localStorage.removeItem("redirectUrl");
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
 
   const handleGoogleSignIn = () => {
@@ -197,14 +255,12 @@ const Register = () => {
           window.location.replace(redirectUrl);
         }
         setLoading(false);
-        localStorage.removeItem("location");
       })
       .catch((error) => {
         console.error(error);
         setLoading(false);
       });
   };
-
 
   return (
     <div
@@ -234,7 +290,10 @@ const Register = () => {
             landscapes. Register now and let your MTB journey begin!
           </p>
           <div className="text-end">
-            <Link to="/instructor-register" className="description text-sm link link-hover">
+            <Link
+              to="/instructor-register"
+              className="description text-sm link link-hover"
+            >
               Not a student?{" "}
               <span className="text-yellow-500">Register as an instructor</span>
             </Link>

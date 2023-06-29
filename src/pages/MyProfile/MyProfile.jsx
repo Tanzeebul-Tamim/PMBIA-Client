@@ -67,14 +67,14 @@ const MyProfile = () => {
                 <strong>Contact no :</strong> {userDetails?.contactNo}
               </p>
             )}
-            <p className="z-[10]">
-              <strong>Account Type :</strong> {userDetails?.role || "Student"}
-            </p>
             {userDetails.role == "Instructor" && userDetails.quote && (
               <p className="z-[10]">
                 <strong>Quote :</strong> {userDetails?.quote}
               </p>
             )}
+            <p className="z-[10]">
+              <strong>Account Type :</strong> {userDetails?.role || "Student"}
+            </p>
             <div className="z-[10] mt-3">
               <button
                 onClick={() => window.my_modal_3.showModal()}

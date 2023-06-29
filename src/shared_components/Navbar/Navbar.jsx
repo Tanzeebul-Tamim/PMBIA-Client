@@ -8,7 +8,7 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineSchool, MdShoppingCart } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { AuthContext } from "../../providers/AuthProvider";
 import { getUserData } from "../../api/authApi";
@@ -19,7 +19,6 @@ const Navbar = () => {
   const { user, logOut, loading, booking } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
   const [userBookings, setUserBookings] = useState([]);
-  const location = useLocation();
   
   useEffect(() => {
     if (user && user.email) {
@@ -52,10 +51,6 @@ const Navbar = () => {
     logOut()
       .then()
       .catch((error) => console.error(error));
-  };
-
-  const handleSetLocation = () => {
-    localStorage.setItem("location", location.pathname);
   };
 
   return (
@@ -203,10 +198,9 @@ const Navbar = () => {
         <div className="navbar-end uppercase gap-5 lg:flex hidden">
           <Link
             to="/login"
-            className="hover:scale-110 duration-200 font-light text-yellow-400 text-xl"
-          >
+            className="hover:scale-110 duration-200 font-light text-yellow-400 text-xl">
             <div
-              onClick={handleSetLocation}
+
               className="flex tracking-[2px] items-center gap-2"
             >
               <FiLogIn />
@@ -215,9 +209,10 @@ const Navbar = () => {
           </Link>
           <Link
             to="/register"
-            className="hover:scale-110 duration-200 text-white font-light text-xl"
-          >
-            <div className="flex tracking-[2px] items-center gap-2">
+            className="hover:scale-110 duration-200 text-white font-light text-xl">
+            <div
+
+              className="flex tracking-[2px] items-center gap-2">
               <SlNote />
               <span className="text-xl">Register</span>
             </div>

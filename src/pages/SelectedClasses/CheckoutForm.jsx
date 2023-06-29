@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { purchaseClass, updateStudentCount } from "../../api/bookApi";
 import { toast } from "react-toastify";
 
-const CheckoutForm = ({ classItem }) => {
+const CheckoutForm = ({ classItem, setFlipped, cardDetails, setFocus }) => {
   const { user } = useContext(AuthContext);
   const stripe = useStripe();
   const elements = useElements();
@@ -25,12 +25,11 @@ const CheckoutForm = ({ classItem }) => {
         },
         body: JSON.stringify({ price: classItem?.classFee }),
       })
-      .then(res => res.json())
-      .then((data) => {
-        console.log(data.clientSecret);
-        setClientSecret(data.clientSecret);
-      })
-      .catch(err => console.error(err))
+        .then((res) => res.json())
+        .then((data) => {
+          setClientSecret(data.clientSecret);
+        })
+        .catch((err) => console.error(err));
     }
   }, [classItem]);
 
@@ -77,47 +76,59 @@ const CheckoutForm = ({ classItem }) => {
         },
       });
 
-      if (confirmError) {
-        console.log("[error]", confirmError);
-        setCardError(confirmError.message);
-      } else {
-        console.log("[paymentIntent]", paymentIntent);
-        if (paymentIntent.status === 'succeeded') {
-          const paymentInfo = {
-            transactionId: paymentIntent.id,
-            date: new Date()
-          }
-          purchaseClass(classItem.studentId, classItem.instructorId, user.email, user.displayName, classItem.classIndex, paymentInfo);
-          updateStudentCount(classItem.instructorId, classItem.classIndex);
-          toast.success(`Enrolled in "${classItem["class-name"]}"`, {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-          navigate('/dashboard/enrolled-classes');
-        }
+    if (confirmError) {
+      console.log("[error]", confirmError);
+      setCardError(confirmError.message);
+    } else {
+      console.log("[paymentIntent]", paymentIntent);
+      if (paymentIntent.status === "succeeded") {
+        const paymentInfo = {
+          transactionId: paymentIntent.id,
+          date: new Date(),
+        };
+        purchaseClass(
+          classItem.studentId,
+          classItem.instructorId,
+          user.email,
+          user.displayName,
+          classItem.classIndex,
+          paymentInfo
+        );
+        updateStudentCount(classItem.instructorId, classItem.classIndex);
+        toast.success(`Enrolled in "${classItem["class-name"]}"`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        navigate("/dashboard/enrolled-classes");
       }
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <CardElement
+        onFocus={() => {
+          setFlipped(true);
+          setFocus("number");
+        }}
+        onBlur={() => setFlipped(false)}
         options={{
           style: {
             base: {
               fontSize: "16px",
-              color: "#424770",
+              color: "#aab7c4",
               "::placeholder": {
                 color: "#aab7c4",
               },
             },
             invalid: {
-              color: "#9e2146",
+              color: "rgb(220 38 38)",
             },
           },
         }}
@@ -125,24 +136,22 @@ const CheckoutForm = ({ classItem }) => {
       <p
         className={`${cardError && "text-red-600"} ${
           cardError ? "visible" : "invisible"
-        } mb-1`}
+        } mb-1 text-sm`}
       >
         {cardError ? cardError : "a"}
       </p>
       <div className="flex justify-center mt-4 gap-5">
         <button
-          className="btn text-md btn-sm text-white border-0 rounded-lg hover:bg-stone-700 bg-stone-800"
+          className="btn text-md btn-sm text-white border-0 rounded-lg hover:bg-stone-800 bg-stone-700 disabled:bg-stone-950"
           type="submit"
-          disabled={!stripe}
+          disabled={!stripe || cardDetails.number.length !== 16 || cardDetails.expiry.length !== 4 || cardDetails.cvc.length !== 3}
         >
           <BsFillCreditCardFill /> Pay $ {classItem.classFee}
         </button>
-        <Link
-          to="/dashboard/selected-classes"
-        >
-         <button className="btn text-md btn-sm text-white border-0 rounded-lg hover:bg-stone-700 bg-stone-800">
-          Go Back
-         </button>
+        <Link to="/dashboard/selected-classes">
+          <button className="btn text-md btn-sm text-white border-0 rounded-lg hover:bg-stone-800 bg-stone-700">
+            Go Back
+          </button>
         </Link>
       </div>
     </form>

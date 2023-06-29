@@ -43,42 +43,78 @@ const UpdateProfileForm = ({ userDetails }) => {
     }`;
 
     if (image) {
-      fetch(url, {
-        method: "POST",
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((imageData) => {
-          const imageUrl = imageData.data.display_url;
-          const user = {
-            name,
-            email,
-            contactNo,
-            address,
-            gender,
-            quote,
-            image: imageUrl,
-          };
-          updateUser(name, imageUrl, contactNo)
-            .then(() => {
-              saveUser(user);
-              toast.success("Profile Updated", {
-                position: "top-center",
-                autoClose: 1100,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-              });
-              setLoading(false);
-            })
-            .catch((err) => {
-              console.error(err);
-              setLoading(false);
+      const imgElement = document.createElement("img");
+      imgElement.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const width = imgElement.width;
+        const height = imgElement.width;
+
+        const xOffset = 0;
+        const yOffset = 0;
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx.drawImage(
+          imgElement,
+          xOffset,
+          yOffset,
+          width,
+          height,
+          0,
+          0,
+          width,
+          height
+        );
+
+        canvas.toBlob((blob) => {
+          formData.append("image", blob);
+
+          fetch(url, {
+            method: "POST",
+            body: formData,
+          })
+            .then((res) => res.json())
+            .then((imageData) => {
+              const imageUrl = imageData.data.display_url;
+              const user = {
+                name,
+                email,
+                contactNo,
+                address,
+                gender,
+                quote,
+                image: imageUrl,
+              };
+              updateUser(name, imageUrl, contactNo)
+                .then(() => {
+                  saveUser(user);
+                  toast.success("Profile Updated", {
+                    position: "top-center",
+                    autoClose: 1100,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                  });
+                  setLoading(false);
+                })
+                .catch((err) => {
+                  console.error(err);
+                  setLoading(false);
+                });
             });
-        });
+        }, "image/jpeg", 0.9);
+      };
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imgElement.src = e.target.result;
+      };
+      reader.readAsDataURL(image);
     } else {
       const user = {
         name,

@@ -17,15 +17,15 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { saveUserViaSocial } from "../../../api/authApi";
 
 const Login = () => {
-  const { signIn, setLoading, loading, googleSignIn, facebookSignIn } =
+  const { signIn, setLoading, loading, googleSignIn, facebookSignIn, logOut, passwordReset } =
     useContext(AuthContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const from =
-    location.state?.from?.pathname || localStorage.getItem("location") || "/";
+  const from = location.state?.from?.pathname || "/";
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
+  const emailRef = useRef();
   useTitle("| Login");
 
   useEffect(() => {
@@ -49,23 +49,22 @@ const Login = () => {
 
   const handleFacebookSignIn = () => {
     facebookSignIn()
-    .then((result) => {
-      saveUserViaSocial(result.user);
-    })
-    .then(() => {
-      navigate(from, { replace: true });
-      const redirectUrl = localStorage.getItem("redirectUrl");
-      localStorage.removeItem("redirectUrl");
-      if (redirectUrl) {
-        window.location.replace(redirectUrl);
-      }
-      setLoading(false);
-      localStorage.removeItem("location");
-    })
-    .catch((error) => {
-      console.error(error);
-      setLoading(false);
-    });
+      .then((result) => {
+        saveUserViaSocial(result.user);
+      })
+      .then(() => {
+        navigate(from, { replace: true });
+        const redirectUrl = localStorage.getItem("redirectUrl");
+        localStorage.removeItem("redirectUrl");
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
 
   const handleGoogleSignIn = () => {
@@ -81,7 +80,6 @@ const Login = () => {
           window.location.replace(redirectUrl);
         }
         setLoading(false);
-        localStorage.removeItem("location");
       })
       .catch((error) => {
         console.error(error);
@@ -97,14 +95,19 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const createdUser = result.user;
+        if (!createdUser.emailVerified) {
+          logOut();
+          setError(
+            `Please verify your email from the verification email sent to ${createdUser.email}`
+          );
+          return;
+        }
         navigate(from, { replace: true });
-        localStorage.removeItem("location");
         const redirectUrl = localStorage.getItem("redirectUrl");
         localStorage.removeItem("redirectUrl");
         if (redirectUrl) {
           window.location.replace(redirectUrl);
         }
-        console.log(createdUser);
       })
       .catch((error) => {
         console.error(error);
@@ -135,6 +138,40 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  const handlePasswordReset = (event) => {
+    event.preventDefault();
+    const email = emailRef.current.value;
+
+    passwordReset(email)
+      .then(() => {
+        toast.success(`A password reset email has been sent to ${email}`, {
+          position: "top-left",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        event.target.newPassword.value = "";
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.code === "auth/missing-email") {
+          setError("Please enter your verified email first");
+          setLoading(false);
+        } else if (error.code === "auth/user-not-found") {
+          setError("User not found! Enter a verified email.");
+          setLoading(false);
+        } else if (error.code === "auth/too-many-requests") {
+          setError("Too many unsuccessful attempts! Try again later.");
+          setLoading(false);
+        }
+      });
+  };
+
   return (
     <div
       className="min-h-screen pt-32 pb-24 lg:px-10 relative"
@@ -174,6 +211,7 @@ const Login = () => {
                 </span>
               </label>
               <input
+                ref={emailRef}
                 type="email"
                 name="email"
                 required
@@ -198,7 +236,7 @@ const Login = () => {
               <div
                 style={{
                   position: "absolute",
-                  top: "60%",
+                  top: "43%",
                   right: "10px",
                   cursor: "pointer",
                   fontSize: "20px",
@@ -207,6 +245,15 @@ const Login = () => {
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </div>
+              <label className="label">
+                <button
+                  onClick={handlePasswordReset}
+                  className="label-text-alt link link-hover"
+                >
+                  Forgot password? Please enter your email and{" "}
+                  <span className="text-yellow-500">Click here</span>
+                </button>
+              </label>
             </div>
             <div className="z-[10] form-control">
               <label className="label">

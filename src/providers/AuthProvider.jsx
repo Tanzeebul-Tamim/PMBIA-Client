@@ -5,6 +5,8 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -59,6 +61,14 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  const emailVerification = (user) => {
+    return sendEmailVerification(user);
+  }
+
+  const passwordReset = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -80,7 +90,9 @@ const AuthProvider = ({ children }) => {
     facebookSignIn,
     updateUser,
     booking,
-    setBooking
+    setBooking,
+    emailVerification,
+    passwordReset
   };
 
   return (

@@ -57,7 +57,7 @@ export const saveStudent = (user) => {
 // save a user to database via social login
 export const saveUserViaSocial = async (user) => {
   let currentUser = {
-    name: user.name,
+    name: user.displayName,
     image: user.photoURL,
     email: user.email,
   };
@@ -94,7 +94,7 @@ export const saveUserViaSocial = async (user) => {
 // save an instructor to database via social login
 export const saveInstructorViaSocial = async (user) => {
   let currentUser = {
-    name: user.name,
+    name: user.displayName,
     image: user.photoURL,
     email: user.email,
     role: 'Instructor'
@@ -132,7 +132,7 @@ export const saveInstructorViaSocial = async (user) => {
 // save an student to database via social login
 export const saveStudentViaSocial = async (user) => {
   let currentUser = {
-    name: user.name,
+    name: user.displayName,
     image: user.photoURL,
     email: user.email,
     role: 'Student'
