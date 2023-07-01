@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { purchaseClass, updateStudentCount } from "../../api/bookApi";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const CheckoutForm = ({ classItem, setFlipped, cardDetails, setFocus }) => {
   const { user } = useContext(AuthContext);
@@ -80,33 +81,49 @@ const CheckoutForm = ({ classItem, setFlipped, cardDetails, setFocus }) => {
       console.log("[error]", confirmError);
       setCardError(confirmError.message);
     } else {
-      console.log("[paymentIntent]", paymentIntent);
-      if (paymentIntent.status === "succeeded") {
-        const paymentInfo = {
-          transactionId: paymentIntent.id,
-          date: new Date(),
-        };
-        purchaseClass(
-          classItem.studentId,
-          classItem.instructorId,
-          user.email,
-          user.displayName,
-          classItem.classIndex,
-          paymentInfo
-        );
-        updateStudentCount(classItem.instructorId, classItem.classIndex);
-        toast.success(`Enrolled in "${classItem["class-name"]}"`, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        navigate("/dashboard/enrolled-classes");
-      }
+      Swal.fire({
+        title: `Are you sure you want to proceed with the payment and enroll in "${classItem["class-name"]}" course?`,
+        text: "You won't be able to revert this!",
+        icon: "question",
+        color: "white",
+        iconColor: "rgb(234 179 8)",
+        showCancelButton: true,
+        confirmButtonColor: "rgb(234 179 8)",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Proceed!",
+        background: "#201e1e",
+        backdrop: "#00000",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log("[paymentIntent]", paymentIntent);
+          if (paymentIntent.status === "succeeded") {
+            const paymentInfo = {
+              transactionId: paymentIntent.id,
+              date: new Date(),
+            };
+            purchaseClass(
+              classItem.studentId,
+              classItem.instructorId,
+              user.email,
+              user.displayName,
+              classItem.classIndex,
+              paymentInfo
+            );
+            updateStudentCount(classItem.instructorId, classItem.classIndex);
+            toast.success(`Enrolled in "${classItem["class-name"]}"`, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+            navigate("/dashboard/enrolled-classes");
+          }
+        }
+      });
     }
   };
 
@@ -144,7 +161,12 @@ const CheckoutForm = ({ classItem, setFlipped, cardDetails, setFocus }) => {
         <button
           className="btn text-md btn-sm text-white border-0 rounded-lg hover:bg-stone-800 bg-stone-700 disabled:bg-stone-950"
           type="submit"
-          disabled={!stripe || cardDetails.number.length !== 16 || cardDetails.expiry.length !== 4 || cardDetails.cvc.length !== 3}
+          disabled={
+            !stripe ||
+            cardDetails.number.length !== 16 ||
+            cardDetails.expiry.length !== 4 ||
+            cardDetails.cvc.length !== 3
+          }
         >
           <BsFillCreditCardFill /> Pay $ {classItem.classFee}
         </button>

@@ -22,6 +22,7 @@ import PaymentConfirmation from "./pages/SelectedClasses/PaymentConfirmation";
 import EnrolledClass from "./pages/EnrolledClass/EnrolledClass";
 import PaymentHistory from "./pages/PaymentHistory/PaymentHistory";
 import InstructorRegister from "./pages/Authentication/InstructorRegister/InstructorRegister";
+import AddClass from "./pages/AddClass/AddClass";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "instructor-register",
-        element: <InstructorRegister></InstructorRegister>
+        element: <InstructorRegister></InstructorRegister>,
       },
       {
         path: "instructors",
@@ -65,7 +66,7 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/instructor/${params.id}`),
-      }
+      },
     ],
   },
   {
@@ -121,7 +122,11 @@ const router = createBrowserRouter([
       },
       {
         path: "add-class",
-        element: <PrivateRoute></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <AddClass></AddClass>
+          </PrivateRoute>
+        ),
       },
     ],
   },

@@ -7,6 +7,7 @@ import { PropagateLoader } from "react-spinners";
 import useTitle from "../../Helmet/useTitle";
 import UpdateProfileForm from "./UpdateProfileForm";
 import DashboardPageTitle from "../../shared_components/DashboardPageTitle/DashboardPageTitle";
+import ChangePassword from "./ChangePassword";
 
 const MyProfile = () => {
   const { user } = useContext(AuthContext);
@@ -75,18 +76,25 @@ const MyProfile = () => {
             <p className="z-[10]">
               <strong>Account Type :</strong> {userDetails?.role || "Student"}
             </p>
-            <div className="z-[10] mt-3">
+            <div className="z-[10] mt-3 flex gap-2">
               <button
                 onClick={() => window.my_modal_3.showModal()}
                 className="btn btn-sm rounded-xl bg-stone-700 hover:bg-stone-800"
               >
                 Update Profile Info
               </button>
+              <button
+                onClick={()=>window.my_modal_1.showModal()}
+                className="btn btn-sm rounded-xl bg-stone-700 hover:bg-stone-800"
+              >
+                Change Password
+              </button>
             </div>
           </div>
         </div>
       </div>
       <UpdateProfileForm userDetails={userDetails}></UpdateProfileForm>
+      <ChangePassword></ChangePassword>
     </>
   );
 };

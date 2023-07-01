@@ -8,7 +8,7 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineSchool, MdShoppingCart } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { AuthContext } from "../../providers/AuthProvider";
 import { getUserData } from "../../api/authApi";
@@ -19,7 +19,17 @@ const Navbar = () => {
   const { user, logOut, loading, booking } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
   const [userBookings, setUserBookings] = useState([]);
-  
+  const location = useLocation();
+  if (
+    !user &&
+    (location.pathname === "/" ||
+      location.pathname === "/instructors" ||
+      location.pathname === "/classes" ||
+      location.pathname === "/about-us")
+  ) {
+    localStorage.setItem("location", location.pathname);
+  }
+
   useEffect(() => {
     if (user && user.email) {
       getUserData(user.email)
@@ -45,7 +55,6 @@ const Navbar = () => {
       setUserBookings([]);
     }
   }, [user, userDetails._id, booking]);
-  
 
   const handleLogOut = () => {
     logOut()
@@ -159,7 +168,7 @@ const Navbar = () => {
             className="tooltip tooltip-bottom tooltip-warning"
           >
             {user.photoURL ? (
-              <div className="flex flex-col items-center">
+              <div className="hover:scale-110 duration-200 flex flex-col items-center">
                 <div className="indicator">
                   <img
                     className="rounded-full glow-effect cursor-pointer w-[55px] h-[55px]"
@@ -198,21 +207,18 @@ const Navbar = () => {
         <div className="navbar-end uppercase gap-5 lg:flex hidden">
           <Link
             to="/login"
-            className="hover:scale-110 duration-200 font-light text-yellow-400 text-xl">
-            <div
-
-              className="flex tracking-[2px] items-center gap-2"
-            >
+            className="hover:scale-110 duration-200 font-light text-yellow-400 text-xl"
+          >
+            <div className="flex tracking-[2px] items-center gap-2">
               <FiLogIn />
               <span className="text-xl">Login</span>
             </div>
           </Link>
           <Link
             to="/register"
-            className="hover:scale-110 duration-200 text-white font-light text-xl">
-            <div
-
-              className="flex tracking-[2px] items-center gap-2">
+            className="hover:scale-110 duration-200 text-white font-light text-xl"
+          >
+            <div className="flex tracking-[2px] items-center gap-2">
               <SlNote />
               <span className="text-xl">Register</span>
             </div>

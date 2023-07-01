@@ -3,10 +3,10 @@ import { FaEyeSlash, FaEye, FaFacebookF } from "react-icons/fa";
 import useTitle from "../../../Helmet/useTitle";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
-import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { saveInstructor, saveInstructorViaSocial } from "../../../api/authApi";
 import { FcGoogle } from "react-icons/fc";
+import Swal from "sweetalert2";
 
 const InstructorRegister = () => {
   const [error, setError] = useState("");
@@ -20,14 +20,15 @@ const InstructorRegister = () => {
     logOut,
     googleSignIn,
     facebookSignIn,
+    emailVerification
   } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
   const navigate = useNavigate();
   const location = useLocation();
-  const from =
-    location.state?.from?.pathname || "/";
+  const getPrevLocation = localStorage.getItem("location");
+  const from = location.state?.from?.pathname || getPrevLocation;
   useTitle("| Instructor-Registration");
 
   const handleSelectGender = (event) => {
@@ -45,17 +46,19 @@ const InstructorRegister = () => {
     const gender = selectedGender;
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
-  
+
     const image = form.image.files[0];
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`;
-  
+    const url = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_IMGBB_KEY
+    }`;
+
     if (image) {
       if (selectedGender === "Male" || selectedGender === "Female") {
         if (password === confirmPassword) {
           setError("");
-  
+
           if (password.length < 6) {
             setError("Password must be at least 6 characters long!");
             return;
@@ -71,25 +74,25 @@ const InstructorRegister = () => {
             setError("Password must contain at least one special character");
             return;
           }
-  
+
           // Create an HTMLImageElement to load the image
           const imgElement = document.createElement("img");
           imgElement.onload = () => {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
-  
+
             // Set the desired width and height for the cropped image (1:1 ratio)
             const width = imgElement.width;
             const height = imgElement.width;
-  
+
             // Calculate the offset for cropping the image from the top
             const xOffset = 0;
             const yOffset = 0;
-  
+
             // Set the canvas width and height to match the desired cropped size
             canvas.width = width;
             canvas.height = height;
-  
+
             // Draw the cropped image onto the canvas
             ctx.drawImage(
               imgElement,
@@ -102,73 +105,79 @@ const InstructorRegister = () => {
               width,
               height
             );
-  
+
             // Convert the canvas image to a Blob object
-            canvas.toBlob((blob) => {
-              // Append the Blob to the form data
-              formData.append("image", blob);
-  
-              // Upload the cropped image
-              fetch(url, {
-                method: "POST",
-                body: formData,
-              })
-                .then((res) => res.json())
-                .then((imageData) => {
-                  const imageUrl = imageData.data.display_url;
-                  const user = {
-                    name,
-                    email,
-                    contactNo,
-                    address,
-                    gender,
-                    image: imageUrl,
-                  };
-  
-                  createUser(email, password)
-                    .then(() => {
-                      updateUser(name, imageUrl, contactNo)
-                        .then(() => {
-                          toast.success(
-                            "Registration successful! You can now login.",
-                            {
-                              position: "top-center",
-                              autoClose: 1100,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                              theme: "dark",
-                            }
+            canvas.toBlob(
+              (blob) => {
+                // Append the Blob to the form data
+                formData.append("image", blob);
+
+                // Upload the cropped image
+                fetch(url, {
+                  method: "POST",
+                  body: formData,
+                })
+                  .then((res) => res.json())
+                  .then((imageData) => {
+                    const imageUrl = imageData.data.display_url;
+                    const user = {
+                      name,
+                      email,
+                      contactNo,
+                      address,
+                      gender,
+                      image: imageUrl,
+                    };
+
+                    createUser(email, password)
+                      .then((result) => {
+                        const createdUser = result.user;
+                        emailVerification(createdUser);
+                        saveInstructor(user);
+                        logOut();
+                        setSuccess("Registration Successful!");
+                        setError("");
+                        updateUser(name, imageUrl, contactNo)
+                          .then(() => {
+                            Swal.fire({
+                              title: `A verification email has been sent to ${email}`,
+                              text: "After verifying your email you can log in",
+                              icon: "success",
+                              color: "white",
+                              iconColor: "lightgreen",
+                              showCancelButton: false,
+                              confirmButtonColor: "lightgreen",
+                              confirmButtonText: "Okay",
+                              background: "#201e1e",
+                              backdrop: "#00000",
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                window.location.href = "/login";
+                              }
+                            });
+                          })
+                          .catch((err) => {
+                            setLoading(false);
+                            console.error(err);
+                          });
+                      })
+                      .catch((error) => {
+                        console.error(error);
+                        if (error.message.includes("email")) {
+                          setError(
+                            "This email is already in use. Please use a different email."
                           );
-                          saveInstructor(user);
-                          logOut();
-                          setSuccess("Registration Successful!");
-                          setError("");
-                          setTimeout(function () {
-                            window.location.href = "/login";
-                          }, 2000);
-                        })
-                        .catch((err) => {
-                          setLoading(false);
-                          console.error(err);
-                        });
-                    })
-                    .catch((error) => {
-                      console.error(error);
-                      if (error.message.includes("email")) {
-                        setError(
-                          "This email is already in use. Please use a different email."
-                        );
-                        setSuccess("");
-                      }
-                      setLoading(false);
-                    });
-                });
-            }, "image/jpeg", 0.9); // Set the desired image type and quality (here it is JPEG with 90% quality)
+                          setSuccess("");
+                        }
+                        setLoading(false);
+                      });
+                  });
+              },
+              "image/jpeg",
+              0.9
+            ); // Set the desired image type and quality (here it is JPEG with 90% quality)
           };
-  
+
           // Load the image file
           const reader = new FileReader();
           reader.onload = (e) => {
@@ -179,7 +188,10 @@ const InstructorRegister = () => {
           setError("Passwords do not match!");
           return;
         }
-      } else if (!selectedGender && (!name || !email || !password || !confirmPassword)) {
+      } else if (
+        !selectedGender &&
+        (!name || !email || !password || !confirmPassword)
+      ) {
         return;
       } else {
         setError("Please select a gender");
@@ -215,11 +227,6 @@ const InstructorRegister = () => {
       .then((result) => {
         saveInstructorViaSocial(result.user);
         navigate(from, { replace: true });
-        const redirectUrl = localStorage.getItem("redirectUrl");
-        localStorage.removeItem("redirectUrl");
-        if (redirectUrl) {
-          window.location.replace(redirectUrl);
-        }
         setLoading(false);
       })
       .catch((error) => {
@@ -231,13 +238,8 @@ const InstructorRegister = () => {
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
-        saveInstructorViaSocial(result.user)
+        saveInstructorViaSocial(result.user);
         navigate(from, { replace: true });
-        const redirectUrl = localStorage.getItem("redirectUrl");
-        localStorage.removeItem("redirectUrl");
-        if (redirectUrl) {
-          window.location.replace(redirectUrl);
-        }
         setLoading(false);
       })
       .catch((error) => {
@@ -275,7 +277,10 @@ const InstructorRegister = () => {
             on a rewarding journey as a mountain biking instructor!
           </p>
           <div>
-            <Link to="/register" className="description text-sm link link-hover">
+            <Link
+              to="/register"
+              className="description text-sm link link-hover"
+            >
               Not an instructor?{" "}
               <span className="text-yellow-500">Register as an student</span>
             </Link>

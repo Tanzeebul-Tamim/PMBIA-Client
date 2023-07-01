@@ -3,10 +3,10 @@ import { FaEyeSlash, FaEye, FaFacebookF } from "react-icons/fa";
 import useTitle from "../../../Helmet/useTitle";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
-import { toast } from "react-toastify";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { saveStudent, saveStudentViaSocial } from "../../../api/authApi";
 import { FcGoogle } from "react-icons/fc";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -27,8 +27,8 @@ const Register = () => {
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
   const navigate = useNavigate();
   const location = useLocation();
-  const from =
-    location.state?.from?.pathname || localStorage.getItem("location") || "/";
+  const getPrevLocation = localStorage.getItem("location");
+  const from = location.state?.from?.pathname || getPrevLocation;
   useTitle("| Student-Registration");
 
   const handleSelectGender = (event) => {
@@ -132,29 +132,29 @@ const Register = () => {
                     createUser(email, password)
                       .then((result) => {
                         const createdUser = result.user;
+                        emailVerification(createdUser);
+                        saveStudent(user);
+                        logOut();
+                        setSuccess("Registration Successful!");
+                        setError("");
                         updateUser(name, imageUrl, contactNo)
                           .then(() => {
-                            toast.success(
-                              `A verification email has been sent to ${email} After verifying your email you can log in.`,
-                              {
-                                position: "top-center",
-                                autoClose: 3500,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                                theme: "dark",
+                            Swal.fire({
+                              title: `A verification email has been sent to ${email}`,
+                              text: "After verifying your email you can log in",
+                              icon: "success",
+                              color: "white",
+                              iconColor: "lightgreen",
+                              showCancelButton: false,
+                              confirmButtonColor: "lightgreen",
+                              confirmButtonText: "Okay",
+                              background: "#201e1e",
+                              backdrop: "#00000",
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                window.location.href = "/login";
                               }
-                            );
-                            emailVerification(createdUser);
-                            saveStudent(user);
-                            logOut();
-                            setSuccess("Registration Successful!");
-                            setError("");
-                            setTimeout(function () {
-                              window.location.href = "/login";
-                            }, 4400);
+                            });
                           })
                           .catch((err) => {
                             setLoading(false);
@@ -229,11 +229,6 @@ const Register = () => {
       })
       .then(() => {
         navigate(from, { replace: true });
-        const redirectUrl = localStorage.getItem("redirectUrl");
-        localStorage.removeItem("redirectUrl");
-        if (redirectUrl) {
-          window.location.replace(redirectUrl);
-        }
         setLoading(false);
       })
       .catch((error) => {
@@ -249,11 +244,6 @@ const Register = () => {
       })
       .then(() => {
         navigate(from, { replace: true });
-        const redirectUrl = localStorage.getItem("redirectUrl");
-        localStorage.removeItem("redirectUrl");
-        if (redirectUrl) {
-          window.location.replace(redirectUrl);
-        }
         setLoading(false);
       })
       .catch((error) => {

@@ -9,8 +9,9 @@ import { toast } from "react-toastify";
 
 const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
   const availableSeat = classItem.studentSlot - classItem.totalStudent;
-  const { user, booking, setBooking } = useContext(AuthContext);
+  const { user, booking, setBooking, loading } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
+  const [userLoading, setUserLoading] = useState(false);
   const [userBookings, setUserBookings] = useState([]);
   const [bookedClasses, setBookedClasses] = useState([]);
   const [enrolledClasses, setEnrolledClasses] = useState([]);
@@ -23,9 +24,11 @@ const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
 
   useEffect(() => {
     if (user && user.email) {
+      setUserLoading(true);
       getUserData(user.email)
         .then((data) => {
           setUserDetails(data);
+          setUserLoading(false);
         })
         .catch((error) => console.error(error));
     }
@@ -107,7 +110,7 @@ const SingleInstructorClassCard = ({ classItem, index, instructorId }) => {
             <strong>Available Slots:</strong> {availableSeat}
           </div>
         )}
-        {userDetails.role !== "Instructor" && (
+        {userDetails.role !== "Instructor" && !loading && !userLoading && (
           <button
             onClick={handleBook}
             disabled={

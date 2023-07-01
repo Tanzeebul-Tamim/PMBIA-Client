@@ -11,8 +11,9 @@ import { Link } from "react-router-dom";
 
 const ClassesTable = ({ classes, tableRef }) => {
   const [totalClasses, setTotalClasses] = useState({});
-  const { user, booking, setBooking } = useContext(AuthContext);
+  const { user, booking, setBooking, loading } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
+  const [userLoading, setUserLoading] = useState(false);
   const [userBookings, setUserBookings] = useState([]);
   const [bookedClasses, setBookedClasses] = useState([]);
   const [enrolledClasses, setEnrolledClasses] = useState([]);
@@ -33,9 +34,11 @@ const ClassesTable = ({ classes, tableRef }) => {
 
   useEffect(() => {
     if (user && user.email) {
+      setUserLoading(true);
       getUserData(user.email)
         .then((data) => {
           setUserDetails(data);
+          setUserLoading(false);
         })
         .catch((error) => console.error(error));
     } else if (!user) {
@@ -85,7 +88,11 @@ const ClassesTable = ({ classes, tableRef }) => {
           </div>
           <table className="table text-center description text-white">
             {/* head */}
-            <ClassesTableHead userDetails={userDetails} />
+            <ClassesTableHead
+              loading={loading}
+              userLoading={userLoading}
+              userDetails={userDetails}
+            />
             <tbody className="text-xl">
               {classes.map((classItem, index) => {
                 const availableSeat =
@@ -108,8 +115,6 @@ const ClassesTable = ({ classes, tableRef }) => {
                       theme: "dark",
                     });
                     setTimeout(function () {
-                      const currentUrl = window.location.href;
-                      localStorage.setItem("redirectUrl", currentUrl);
                       window.location.replace("/login");
                     }, 2000);
                   } else if (user && !isBooked) {
@@ -166,36 +171,38 @@ const ClassesTable = ({ classes, tableRef }) => {
                       {availableSeat == 0 ? "Fully Booked" : availableSeat}
                     </td>
                     <td>$ {classItem?.price}</td>
-                    {userDetails.role !== "Instructor" && (
-                      <td>
-                        {isBooked ? (
-                          "Booked"
-                        ) : isEnrolled ? (
-                          availableSeat == 0 ? (
-                            <div className="text-red-500">Enrolled</div>
+                    {userDetails.role !== "Instructor" &&
+                      !loading &&
+                      !userLoading && (
+                        <td>
+                          {isBooked ? (
+                            "Booked"
+                          ) : isEnrolled ? (
+                            availableSeat == 0 ? (
+                              <div className="text-red-500">Enrolled</div>
+                            ) : (
+                              "Enrolled"
+                            )
                           ) : (
-                            "Enrolled"
-                          )
-                        ) : (
-                          <button
-                            onClick={handleBook}
-                            disabled={
-                              availableSeat == 0 ||
-                              userDetails.role == "Instructor" ||
-                              isBooked ||
-                              isEnrolled
-                            }
-                            className={`${
-                              availableSeat == 0
-                                ? "disabled:bg-red-900"
-                                : "disabled:bg-stone-900"
-                            } btn text-white btn-sm rounded-lg hover:bg-stone-700 bg-stone-800`}
-                          >
-                            <MdLibraryAdd /> <span>Book Course</span>
-                          </button>
-                        )}
-                      </td>
-                    )}
+                            <button
+                              onClick={handleBook}
+                              disabled={
+                                availableSeat == 0 ||
+                                userDetails.role == "Instructor" ||
+                                isBooked ||
+                                isEnrolled
+                              }
+                              className={`${
+                                availableSeat == 0
+                                  ? "disabled:bg-red-900"
+                                  : "disabled:bg-stone-900"
+                              } btn text-white btn-sm rounded-lg hover:bg-stone-700 bg-stone-800`}
+                            >
+                              <MdLibraryAdd /> <span>Book Course</span>
+                            </button>
+                          )}
+                        </td>
+                      )}
                   </tr>
                 );
               })}

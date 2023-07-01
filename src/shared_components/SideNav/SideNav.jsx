@@ -8,21 +8,29 @@ import { getUserData } from "../../api/authApi";
 import { useContext, useState } from "react";
 import { ScaleLoader } from "react-spinners";
 import { AuthContext } from "../../providers/AuthProvider";
+import { useEffect } from "react";
 
 const SideNav = () => {
   const { user, loading } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
+  const [userLoading, setUserLoading] = useState(false);
   const [title, setTitle] = useState(null);
 
-  getUserData(user?.email).then((data) => {
-    setUserDetails(data);
-    if (userDetails.role == "Instructor") {
-      setTitle("Instructor");
-    }
-    else {
-      setTitle("Student");
-    }
-  });
+  useEffect(() => {
+    setUserLoading(true);
+    getUserData(user?.email).then((data) => {
+      setUserDetails(data);
+      setUserLoading(false);
+      if (userDetails.role == "Instructor" && !loading && !userLoading) {
+        setTitle("Instructor");
+      } else if ((userDetails.role == "Student" || typeof userDetails.role === "undefined") &&
+        !loading &&
+        !userLoading
+      ) {
+        setTitle("Student");
+      }
+    });
+  }, [user?.email, userDetails.role]);
 
   return (
     <div
@@ -72,20 +80,24 @@ const SideNav = () => {
         </Link>
 
         <div className="divider"></div>
-        {userDetails.role == "Student" || !userDetails.role ? (
-          <>
-            <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
-            <ActiveLink2 to="/dashboard/selected-classes">
-              My Booked Courses
-            </ActiveLink2>
-            <ActiveLink2 to="/dashboard/enrolled-classes">
-              My Enrolled Courses
-            </ActiveLink2>
-            <ActiveLink2 to="/dashboard/payment">
-              My Payment History
-            </ActiveLink2>
-          </>
-        ) : userDetails.role == "Instructor" ? (
+        {(userDetails.role == "Student" ||
+          typeof userDetails.role === "undefined") &&
+          !loading &&
+          !userLoading && (
+            <>
+              <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
+              <ActiveLink2 to="/dashboard/selected-classes">
+                My Booked Courses
+              </ActiveLink2>
+              <ActiveLink2 to="/dashboard/enrolled-classes">
+                My Enrolled Courses
+              </ActiveLink2>
+              <ActiveLink2 to="/dashboard/payment">
+                My Payment History
+              </ActiveLink2>
+            </>
+          )}
+        {userDetails.role == "Instructor" && !loading && !userLoading && (
           <>
             <ActiveLink2 to="/dashboard/profile">My Profile</ActiveLink2>
             <ActiveLink2 to="/dashboard/add-class">Add a Course</ActiveLink2>
@@ -94,13 +106,13 @@ const SideNav = () => {
               My Pending Courses
             </ActiveLink2>
           </>
-        ) : !userDetails.role || !userDetails || loading ? (
-          <div className="flex mt-20 gap-11 justify-center">
-              <ScaleLoader color="white" height={50} width={10}/>
-          </div>
-        ) : (
-          ""
         )}
+        {loading ||
+          (userLoading && (
+            <div className="flex mt-20 gap-11 justify-center">
+              <ScaleLoader color="white" height={50} width={10} />
+            </div>
+          ))}
       </div>
     </div>
   );

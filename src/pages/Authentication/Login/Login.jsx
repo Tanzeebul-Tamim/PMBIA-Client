@@ -22,7 +22,8 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const getPrevLocation = localStorage.getItem('location');
+  const from = location.state?.from?.pathname || getPrevLocation;
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const emailRef = useRef();
@@ -54,11 +55,6 @@ const Login = () => {
       })
       .then(() => {
         navigate(from, { replace: true });
-        const redirectUrl = localStorage.getItem("redirectUrl");
-        localStorage.removeItem("redirectUrl");
-        if (redirectUrl) {
-          window.location.replace(redirectUrl);
-        }
         setLoading(false);
       })
       .catch((error) => {
@@ -74,11 +70,6 @@ const Login = () => {
       })
       .then(() => {
         navigate(from, { replace: true });
-        const redirectUrl = localStorage.getItem("redirectUrl");
-        localStorage.removeItem("redirectUrl");
-        if (redirectUrl) {
-          window.location.replace(redirectUrl);
-        }
         setLoading(false);
       })
       .catch((error) => {
@@ -103,11 +94,6 @@ const Login = () => {
           return;
         }
         navigate(from, { replace: true });
-        const redirectUrl = localStorage.getItem("redirectUrl");
-        localStorage.removeItem("redirectUrl");
-        if (redirectUrl) {
-          window.location.replace(redirectUrl);
-        }
       })
       .catch((error) => {
         console.error(error);

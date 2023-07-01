@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { saveUser } from "../../api/authApi";
 import { toast } from "react-toastify";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const UpdateProfileForm = ({ userDetails }) => {
   const [imageButtonText, setImageButtonText] = useState("Upload Image");
@@ -10,6 +11,7 @@ const UpdateProfileForm = ({ userDetails }) => {
     userDetails.gender || ""
   );
   const { updateUser, user, setLoading } = useContext(AuthContext);
+  const [loading2, setLoading2] = useState(false);
 
   const handleImageButtonText = (image) => {
     const imageName = image.name;
@@ -69,46 +71,52 @@ const UpdateProfileForm = ({ userDetails }) => {
           height
         );
 
-        canvas.toBlob((blob) => {
-          formData.append("image", blob);
-
-          fetch(url, {
-            method: "POST",
-            body: formData,
-          })
-            .then((res) => res.json())
-            .then((imageData) => {
-              const imageUrl = imageData.data.display_url;
-              const user = {
-                name,
-                email,
-                contactNo,
-                address,
-                gender,
-                quote,
-                image: imageUrl,
-              };
-              updateUser(name, imageUrl, contactNo)
-                .then(() => {
-                  saveUser(user);
-                  toast.success("Profile Updated", {
-                    position: "top-center",
-                    autoClose: 1100,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
+        canvas.toBlob(
+          (blob) => {
+            formData.append("image", blob);
+            setLoading2(true);
+            fetch(url, {
+              method: "POST",
+              body: formData,
+            })
+              .then((res) => res.json())
+              .then((imageData) => {
+                const imageUrl = imageData.data.display_url;
+                const user = {
+                  name,
+                  email,
+                  contactNo,
+                  address,
+                  gender,
+                  quote,
+                  image: imageUrl,
+                };
+                updateUser(name, imageUrl, contactNo)
+                  .then(() => {
+                    saveUser(user);
+                    toast.success("Profile Updated", {
+                      position: "top-center",
+                      autoClose: 1100,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
+                    setLoading(false);
+                    setLoading2(false);
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                    setLoading(false);
+                    setLoading2(false);
                   });
-                  setLoading(false);
-                })
-                .catch((err) => {
-                  console.error(err);
-                  setLoading(false);
-                });
-            });
-        }, "image/jpeg", 0.9);
+              });
+          },
+          "image/jpeg",
+          0.9
+        );
       };
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -124,6 +132,7 @@ const UpdateProfileForm = ({ userDetails }) => {
         gender,
         quote,
       };
+      setLoading2(true);
       updateUser(name)
         .then(() => {
           saveUser(user);
@@ -138,17 +147,23 @@ const UpdateProfileForm = ({ userDetails }) => {
             theme: "dark",
           });
           setLoading(false);
+          setLoading2(false);
         })
         .catch((err) => {
           console.error(err);
           setLoading(false);
+          setLoading2(false);
         });
     }
   };
 
   return (
     <dialog id="my_modal_3" className="modal text-white description">
-      <form onSubmit={handleSubmit} method="dialog" className="modal-box">
+      <form
+        onSubmit={handleSubmit}
+        method="dialog"
+        className="modal-box bg-opacity-90"
+      >
         <h1 className="z-[10] text-white text-2xl tracking-[9px] text-center uppercase font-extrabold">
           Update Profile
         </h1>
@@ -198,7 +213,7 @@ const UpdateProfileForm = ({ userDetails }) => {
             </div>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-2">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">User image</span>
@@ -214,12 +229,11 @@ const UpdateProfileForm = ({ userDetails }) => {
                   hidden
                   accept="image/*"
                 />
-                <div className="btn btn-sm hover:bg-stone-700 bg-stone-800">
+                <div className="btn btn-sm hover:bg-stone-800 bg-stone-700">
                   {imageButtonText}
                 </div>
               </label>
             </div>
-
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Gender</span>
@@ -256,10 +270,15 @@ const UpdateProfileForm = ({ userDetails }) => {
 
           <div className="form-control mt-6">
             <button
+              disabled={loading2}
               type="submit"
-              className="btn btn-md text-md rounded-md bg-base-200 hover:bg-stone-800"
+              className="btn btn-md disabled:bg-stone-900 text-md rounded-md bg-stone-700 hover:bg-stone-800"
             >
-              Update
+              {loading2 ? (
+                <TbFidgetSpinner className="text-2xl animate-spin" />
+              ) : (
+                "Update"
+              )}
             </button>
           </div>
         </div>

@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const SelectedClassesTable = ({ userBookings, userDetails }) => {
   const handleClearList = () => {
     Swal.fire({
-      title: "Are you sure that you want to clear your booking list?",
+      title: "Are you sure you want to clear your booking list?",
       text: "You won't be able to revert this!",
       icon: "warning",
       color: "white",
@@ -82,7 +82,7 @@ const SelectedClassesTable = ({ userBookings, userDetails }) => {
         </strong>{" "}
         <button
           onClick={handleClearList}
-          className="z-[100] btn text-white btn-xs text-sx border-0 rounded-lg hover:bg-stone-700 bg-stone-800"
+          className="z-[100] btn text-white btn-xs text-sx border-0 rounded-lg hover:bg-stone-800 bg-stone-700"
         >
           <span>Clear List</span>
         </button>
@@ -125,7 +125,7 @@ const SelectedClassesTable = ({ userBookings, userDetails }) => {
                       userDetails.gender &&
                       `/dashboard/payment/${classItem.studentId}/${classItem._id}`
                     }
-                    className="btn text-white btn-xs text-sx border-0 rounded-lg hover:bg-stone-700 bg-stone-800"
+                    className="btn text-white btn-xs text-sx border-0 rounded-lg hover:bg-stone-800 bg-stone-700"
                   >
                     <BsFillCreditCardFill /> <span>Pay</span>
                   </Link>
@@ -139,7 +139,7 @@ const SelectedClassesTable = ({ userBookings, userDetails }) => {
                         classItem.classIndex
                       )
                     }
-                    className="btn text-white btn-xs text-sx border-0 rounded-lg hover:bg-stone-700 bg-stone-800"
+                    className="btn text-white btn-xs text-sx border-0 rounded-lg hover:bg-stone-800 bg-stone-700"
                   >
                     <BsFillTrash3Fill /> <span>Delete</span>
                   </button>
