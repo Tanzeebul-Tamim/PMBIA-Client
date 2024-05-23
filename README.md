@@ -66,6 +66,11 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
        <img src="public/dashboard-4.png" alt="Home 1"/>
     </p>
 
+    - ***Receive confirmation email after successfully purchasing a course:***
+    <p align="center">
+       <img src="public/screencapture-mail-google-mail-u-0-2024-05-24-04_01_42.png" width="450" alt="Home 1"/>
+    </p>
+
 <br/>
 
 - ***Instructor Dashboard:***
