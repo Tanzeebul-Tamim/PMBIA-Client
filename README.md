@@ -27,18 +27,26 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
 
 4. **Registration & Login System:** The website supports user registration and login with fields for name, email, password, photo URL, and optional fields like gender, phone number, and address. Social login is also integrated.
 <p align="center">
-   <img src="public/login.png" width="300" alt="Home 1"/>
-   <img src="public/registration-1.png" width="300" alt="Home 1"/>
-   <img src="public/registrations-2.png" width="300" alt="Home 1"/>
+   <img src="public/login.png" alt="Home 1"/>
+</p>
+<p align="center">
+   <img src="public/registration-1.png"  alt="Home 1"/>
+</p>
+<p align="center">
+   <img src="public/registrations-2.png" alt="Home 1"/>
 </p>
 
 <br/>
 
 5. **Interactive Dashboard:** Separate dashboards for students and instructors with functionalities like selecting and enrolling in courses, managing courses, and courses payments.
 <p align="center">
-   <img src="public/dashboard-1.png" width="300" alt="Home 1"/>
-   <img src="public/dashboard-2.png" width="300" alt="Home 1"/>
-   <img src="public/dashboard-3.png" width="300" alt="Home 1"/>
+   <img src="public/dashboard-1.png" alt="Home 1"/>
+</p>
+<p align="center">
+   <img src="public/dashboard-2.png" alt="Home 1"/>
+</p>
+<p align="center">
+   <img src="public/dashboard-3.png" alt="Home 1"/>
 </p>
 
 <br/>
