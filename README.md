@@ -5,10 +5,47 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
 ## Website Features
 
 1. **Visually Appealing Design:** The website is designed with a unique and visually appealing layout, ensuring proper alignment, color contrast, and customization of component libraries.
-2. **Responsive Navigation Bar:** The navbar includes the website logo, Home, Instructors, Classes, Dashboard, and User Profile Picture. It dynamically shows the Login button or user profile picture based on user authentication status.
-3. **Registration & Login System:** The website supports user registration and login with fields for name, email, password, photo URL, and optional fields like gender, phone number, and address. Social login is also integrated.
-4. **Dynamic Home Page:** The homepage features a top slider section, popular classes section, popular instructors section, and an extra section with animations.
+<p align="center">
+  <img src="public/visually-appealing-design-1.png" alt="Banner"/>
+</p>
+
+<br/>
+
+2. **Dynamic Home Page:** The homepage features a top slider section, popular classes section, popular instructors section, and an extra section with animations.
+<p align="center">
+   <img src="public/dynamic-home-page.png" width="450" alt="Home 1"/>
+</p>
+
+<br/>
+
+3. **Responsive Navigation Bar:** The navbar includes the website logo, Home, Instructors, Classes, Dashboard, and User Profile Picture. It dynamically shows the Login button or user profile picture based on user authentication status.
+<p align="center">
+   <img src="public/responsive.png" width="200" alt="Home 1"/>
+</p>
+
+<br/>
+
+4. **Registration & Login System:** The website supports user registration and login with fields for name, email, password, photo URL, and optional fields like gender, phone number, and address. Social login is also integrated.
+<p align="center">
+   <img src="public/login.png" width="300" alt="Home 1"/>
+   <img src="public/registration-1.png" width="300" alt="Home 1"/>
+   <img src="public/registrations-2.png" width="300" alt="Home 1"/>
+</p>
+
+<br/>
+
 5. **Interactive Dashboard:** Separate dashboards for students and instructors with functionalities like selecting and enrolling in courses, managing courses, and courses payments.
+<p align="center">
+   <img src="public/dashboard-1.png" width="300" alt="Home 1"/>
+   <img src="public/dashboard-2.png" width="300" alt="Home 1"/>
+   <img src="public/dashboard-3.png" width="300" alt="Home 1"/>
+</p>
+
+<br/>
+
+## Live Deployment
+
+Check out the live site: https://pmbia-55816.web.app/
 
 ## Used Packages/Technologies
 
@@ -32,10 +69,6 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
 - **React Leaflet**: For interactive maps
 - **React Simple Typewriter**: For typewriter effects
 - **React Awesome Reveal**: For animations
-
-## Live Site
-
-Check out the live site: https://pmbia-55816.web.app/
 
 ## Getting Started
 
@@ -66,3 +99,7 @@ Check out the live site: https://pmbia-55816.web.app/
 ```sh
 npm run dev
 ```
+
+## Contributing
+
+Feel free to contribute by submitting a pull request. Please ensure that your code follows the project's coding standards and includes relevant tests.
