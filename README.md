@@ -2,6 +2,15 @@
 
 Welcome to the client-side repository of the PMBIA (Professional Mountain Biking Instructors' Association) website.
 
+## Table of Contents
+- [Website Features](#website-features)
+- [Live Deployment](#live-deployment)
+- [Used Packages and Technologies](#used-packages-and-technologies)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Running the Project](#running-the-project)
+- [Contributing](#contributing)
+
 ## Website Features
 
 - ***Visually Appealing Design:*** The website is designed with a unique and visually appealing layout, ensuring proper alignment, color contrast, and customization of component libraries.
@@ -101,7 +110,7 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
 
 Check out the live site: https://pmbia-55816.web.app/
 
-## Used Packages/Technologies
+## Used Packages and Technologies
 
 - **React**: Core library for building user interfaces
 - **React Router**: For routing and navigation
@@ -124,14 +133,12 @@ Check out the live site: https://pmbia-55816.web.app/
 - **React Simple Typewriter**: For typewriter effects
 - **React Awesome Reveal**: For animations
 
-## Getting Started
-
-### Prerequisites
+## Prerequisites
 
 - Node.js
 - npm
 
-### Installation
+## Installation
 
 1. Clone the repository:
    ```sh
@@ -148,7 +155,7 @@ Check out the live site: https://pmbia-55816.web.app/
    MONGODB_URI=your-mongodb-uri
    ```
 
-### Running the Project
+## Running the Project
 
 ```sh
 npm run dev
