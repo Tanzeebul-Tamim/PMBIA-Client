@@ -4,52 +4,93 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
 
 ## Website Features
 
-1. **Visually Appealing Design:** The website is designed with a unique and visually appealing layout, ensuring proper alignment, color contrast, and customization of component libraries.
+- ***Visually Appealing Design:*** The website is designed with a unique and visually appealing layout, ensuring proper alignment, color contrast, and customization of component libraries.
 <p align="center">
   <img src="public/visually-appealing-design-1.png" alt="Banner"/>
 </p>
 
 <br/>
 
-2. **Dynamic Home Page:** The homepage features a top slider section, popular classes section, popular instructors section, and an extra section with animations.
+- ***Dynamic Home Page:*** The homepage features a top slider section, popular classes section, popular instructors section, and an extra section with animations.
 <p align="center">
    <img src="public/dynamic-home-page.png" width="450" alt="Home 1"/>
 </p>
 
 <br/>
 
-3. **Responsive Navigation Bar:** The navbar includes the website logo, Home, Instructors, Classes, Dashboard, and User Profile Picture. It dynamically shows the Login button or user profile picture based on user authentication status.
+- ***Responsive Navigation Bar:*** The navbar includes the website logo, Home, Instructors, Classes, Dashboard, and User Profile Picture. It dynamically shows the Login button or user profile picture based on user authentication status.
 <p align="center">
    <img src="public/responsive.png" width="200" alt="Home 1"/>
 </p>
 
 <br/>
 
-4. **Registration & Login System:** The website supports user registration and login with fields for name, email, password, photo URL, and optional fields like gender, phone number, and address. Social login is also integrated.
-<p align="center">
-   <img src="public/login.png" alt="Home 1"/>
-</p>
-<p align="center">
-   <img src="public/registration-1.png"  alt="Home 1"/>
-</p>
-<p align="center">
-   <img src="public/registrations-2.png" alt="Home 1"/>
-</p>
+- ***Registration & Login System:*** The website supports user registration and login with fields for name, email, password, photo URL, and optional fields like gender, phone number, and address. Captcha and Social login is also integrated.
+  - ***Login:***
+  <p align="center">
+     <img src="public/login.png" alt="Home 1"/>
+  </p>
+
+  - ***Register as a student:***
+  <p align="center">
+     <img src="public/registration-1.png"  alt="Home 1"/>
+  </p>
+
+  - ***Register as an insturctor:***
+  <p align="center">
+     <img src="public/registrations-2.png" alt="Home 1"/>
+  </p>
 
 <br/>
 
-5. **Interactive Dashboard:** Separate dashboards for students and instructors with functionalities like selecting and enrolling in courses, managing courses, and courses payments.
-<p align="center">
-   <img src="public/dashboard-1.png" alt="Home 1"/>
-</p>
-<p align="center">
-   <img src="public/dashboard-2.png" alt="Home 1"/>
-</p>
-<p align="center">
-   <img src="public/dashboard-3.png" alt="Home 1"/>
-</p>
+- ***Interactive Dashboard:*** Separate dashboards for students and instructors with functionalities like selecting and enrolling in courses, managing courses, and courses payments.
+  - ***Student Dashboard:***
+
+    - ***User  Profile:***
+    <p align="center">
+       <img src="public/dashboard-1.png" alt="Home 1"/>
+    </p>
+
+    - ***Booked Courses:***
+    <p align="center">
+       <img src="public/dashboard-2.png" alt="Home 1"/>
+    </p>
+
+    - ***Payment Methods:***
+    <p align="center">
+       <img src="public/dashboard-3.png" alt="Home 1"/>
+    </p>
+
+    - ***Payment History:***
+    <p align="center">
+       <img src="public/dashboard-4.png" alt="Home 1"/>
+    </p>
 
 <br/>
+
+- ***Instructor Dashboard:***
+
+    - ***User  Profile:***
+    <p align="center">
+       <img src="public/dashboard-5.png" alt="Home 1"/>
+    </p>
+
+    - ***My Courses:***
+    <p align="center">
+       <img src="public/dashboard-7.png" alt="Home 1"/>
+    </p>
+
+    - ***Add a Course:***
+    <p align="center">
+       <img src="public/dashboard-6.png" alt="Home 1"/>
+    </p>
+
+<br/>
+
+- ***Instructor's Wall:*** Separate dedicated page for each instructor to showcases all the courses offered by them.
+<p align="center">
+  <img src="public/instructor-wall.png" alt="Home 1"/>
+</p>
 
 ## Live Deployment
 
