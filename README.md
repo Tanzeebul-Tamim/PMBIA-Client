@@ -9,6 +9,7 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running the Project](#running-the-project)
+- [Also checkout PMBIA-Server](#also-checkout-pmbia-server)
 - [Contributing](#contributing)
 
 ## Website Features
@@ -181,6 +182,9 @@ Check out the live site: https://pmbia-55816.web.app/
 ```sh
 npm run dev
 ```
+
+## Also checkout PMBIA-Server
+Visit the server-side repository of the PMBIA website - https://github.com/Tanzeebul-Tamim/PMBIA-Server
 
 ## Contributing
 
