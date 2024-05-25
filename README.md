@@ -153,7 +153,7 @@ Check out the live site: https://pmbia-55816.web.app/
 - **React Icons**: For icons
 - **React Leaflet**: For interactive maps
 - **React Simple Typewriter**: For typewriter effects
-- **React Awesome Reveal**: For animations
+- **React Awesome Reveal**: For awesome animations
 
 ## Prerequisites
 
