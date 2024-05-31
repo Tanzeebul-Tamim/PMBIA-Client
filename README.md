@@ -1,6 +1,6 @@
 # PMBIA - Client Side
 
-Welcome to the client-side repository of the PMBIA (Professional Mountain Biking Instructors' Association) website.
+Welcome to the client-side repository of the PMBIA (Professional Mountain Biking Instructors' Association) website. This platform is dedicated to connecting aspiring mountain bikers with professional instructors, offering a comprehensive range of courses and resources to enhance their skills.
 
 ## Table of Contents
 - [Website Features](#website-features)
@@ -24,6 +24,11 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
 - ***Dynamic Home Page:*** The homepage features a top slider section, popular classes section, popular instructors section, and an extra section with animations.
 <p align="center">
    <img src="public/dynamic-home-page.png" width="550" alt="Home 1"/>
+</p>
+
+- ***Footer:*** A meaningful footer is present on all pages except dashboard, including a mini map, ensuring consistency and providing essential links or information.
+<p align="center">
+  <img src="public/footer.png" width="550" alt="Banner"/>
 </p>
 
 <br/>
@@ -87,7 +92,12 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
        <img src="public/dashboard-2.png" width="550" alt="Home 1"/>
     </p>
 
-    - ***Payment Methods:***
+    - ***Enrolled Courses:***
+    <p align="center">
+       <img src="public/enrolled-courses.png" width="550" alt="Home 1"/>
+    </p>
+
+    - ***Payment Method:***
     <p align="center">
        <img src="public/dashboard-3.png" width="550" alt="Home 1"/>
     </p>
@@ -96,12 +106,6 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
     <p align="center">
        <img src="public/dashboard-4.png" width="550" alt="Home 1"/>
     </p>
-
-    - ***Receive confirmation email after successfully purchasing a course:***
-    <p align="center">
-       <img src="public/screencapture-mail-google-mail-u-0-2024-05-24-04_01_42.png" width="550" alt="Home 1"/>
-    </p>
-
 <br/>
 
 - ***Instructor Dashboard:***
@@ -128,9 +132,14 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
   <img src="public/instructor-wall.png" width="550" alt="Home 1"/>
 </p>
 
+- ***404 Page:*** A custom 404 page is created with an added GIF, enhancing the user experience in case of page not found errors.
+<p align="center">
+  <img src="public/not-found-404.gif" width="550" alt="Banner"/>
+</p>
+
 ## Live Deployment
 
-Check out the live site: https://pmbia-55816.web.app/
+Check out the live site [at this following URL](https://pmbia-55816.web.app/)
 
 ## Used Packages and Technologies
 
@@ -164,17 +173,19 @@ Check out the live site: https://pmbia-55816.web.app/
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/Tanzeebul-Tamim/PMBIA-client-assignment-12
+   git clone https://github.com/Tanzeebul-Tamim/PMBIA-Client
+   cd PMBIA-Client
    ```
 2. Install dependencies:
    ```sh
-   cd summer-camp-client
    npm install
    ```
 3. Create a `.env` file and add your environment variables:
    ```sh
-   REACT_APP_API_URL=your-api-url
-   MONGODB_URI=your-mongodb-uri
+   PORT=5000
+   DB_USER=your_db_user
+   DB_PASS=your_db_password
+   MONGODB_URI=your_mongodb_connection_string
    ```
 
 ## Running the Project
@@ -184,7 +195,7 @@ npm run dev
 ```
 
 ## Also checkout PMBIA-Server
-Visit the server-side repository of the PMBIA website - https://github.com/Tanzeebul-Tamim/PMBIA-Server
+Visit the server-side repository of [PMBIA](https://github.com/Tanzeebul-Tamim/PMBIA-Server) website
 
 ## Contributing
 
