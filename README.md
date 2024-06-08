@@ -200,3 +200,7 @@ Visit the server-side repository of [PMBIA](https://github.com/Tanzeebul-Tamim/P
 ## Contributing
 
 Feel free to contribute by submitting a pull request. Please ensure that your code follows the project's coding standards and includes relevant tests.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
