@@ -11,6 +11,7 @@ Welcome to the client-side repository of the PMBIA (Professional Mountain Biking
 - [Running the Project](#running-the-project)
 - [Also checkout PMBIA-Server](#also-checkout-pmbia-server)
 - [Contributing](#contributing)
+- [License](#license)
 
 ## Website Features
 
