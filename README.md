@@ -1,4 +1,4 @@
-# PMBIA - Client Side
+# <img src="./public/logo.png" alt="Logo" width="75"/> PMBIA - Client Side
 
 Welcome to the client-side repository of the PMBIA (Professional Mountain Biking Instructors' Association) website. This platform is dedicated to connecting aspiring mountain bikers with professional instructors, offering a comprehensive range of courses and resources to enhance their skills.
 
